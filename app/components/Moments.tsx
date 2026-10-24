@@ -9,19 +9,19 @@ export default function Moments() {
         <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
           Moments worth the journey
         </h2>
-        <p className="sub reveal">A few favourites from the road.</p>
+        <p className="sub reveal">Friends, couples and groups — the moments they remember most.</p>
 
         <div className="moments">
           {MOMENTS.map((m) => (
             <figure className="moment reveal" key={m.caption}>
               <Image
                 src={m.image}
-                alt={`${m.place}: ${m.caption}`}
+                alt={`${m.label}: ${m.caption}`}
                 fill
                 sizes="(max-width: 899px) 50vw, 25vw"
               />
               <figcaption>
-                <span>{m.place}</span>
+                <span>{m.label}</span>
                 <em>{m.caption}</em>
                 <small>
                   <svg viewBox="0 0 24 24" aria-hidden="true">

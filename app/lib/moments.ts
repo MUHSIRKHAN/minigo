@@ -1,10 +1,11 @@
 // SAMPLE DATA — stock photos and made-up traveller credits standing in for your own
 // travellers' favourite moments. Before launch, replace each entry with a real photo
-// from your tours, credit the traveller who actually took it (with their permission)
-// and write a caption that matches the picture.
+// from your tours — groups, couples, friends, happy faces — credit the traveller who
+// actually took it (with everyone's permission) and write a caption that matches.
 
 export type Moment = {
-  place: string;
+  /** Short category shown above the caption, e.g. "Group trip" or "Couple's getaway" */
+  label: string;
   caption: string;
   image: string;
   /** Who captured the photo */
@@ -18,59 +19,59 @@ const photo = (id: string) =>
 
 export const MOMENTS: Moment[] = [
   {
-    place: "Vietnam",
-    caption: "Looking out over limestone karsts and green water",
-    image: photo("1575986767340-5d17ae767ab0"),
+    label: "Group trip",
+    caption: "One big laugh, the whole group together",
+    image: photo("1566371485846-1d68080f9f4a"),
     by: "Rahul Nair",
     from: "Kochi",
   },
   {
-    place: "Kashmir",
-    caption: "A quiet morning in a Himalayan meadow",
-    image: photo("1627894485200-b92fb4353967"),
-    by: "Anjali Menon",
-    from: "Kozhikode",
-  },
-  {
-    place: "Thailand",
-    caption: "Limestone cliffs on the Andaman coast",
-    image: photo("1616394585067-d3e824140aa1"),
+    label: "Couple's getaway",
+    caption: "Smiling at each other after a long day of travel",
+    image: photo("1586022045128-730988f570c9"),
     by: "Priya Das",
     from: "Bengaluru",
   },
   {
-    place: "Kazakhstan",
-    caption: "Trekking a snowy mountain trail",
-    image: photo("1756062435245-8dceacaa47a8"),
-    by: "Dr. Suresh Pillai",
-    from: "Thiruvananthapuram",
+    label: "Friends on tour",
+    caption: "Four friends and the view they hiked for",
+    image: photo("1599828586134-fbaff96c63d5"),
+    by: "Anjali Menon",
+    from: "Kozhikode",
   },
   {
-    place: "Kashmir",
-    caption: "A horse ride across fresh snow",
-    image: photo("1706353222367-d0b0fb602f07"),
-    by: "Faisal Rahman",
-    from: "Malappuram",
-  },
-  {
-    place: "Vietnam",
-    caption: "Hanoi's Train Street at train time",
-    image: photo("1726346234848-a6c0e78efd8c"),
-    by: "Rahul Nair",
-    from: "Kochi",
-  },
-  {
-    place: "Tajikistan",
-    caption: "Beside a turquoise mountain lake",
-    image: photo("1788072723182-69f3e04d7e10"),
+    label: "Together",
+    caption: "Two friends, one quiet lakeside moment",
+    image: photo("1504836054726-3e36882ddaf9"),
     by: "Neha Varghese",
     from: "Kozhikode",
   },
   {
-    place: "Kazakhstan",
-    caption: "An evening at a yurt camp",
-    image: photo("1621425022689-308a7b7691a3"),
+    label: "Couple's getaway",
+    caption: "Watching the sunset side by side",
+    image: photo("1529566321973-795c4f4138bb"),
     by: "Dr. Suresh Pillai",
     from: "Thiruvananthapuram",
+  },
+  {
+    label: "Pure joy",
+    caption: "Friends laughing it up in the mountains",
+    image: photo("1539635278303-d4002c07eae3"),
+    by: "Faisal Rahman",
+    from: "Malappuram",
+  },
+  {
+    label: "Experience",
+    caption: "A couple, a sky full of balloons",
+    image: photo("1530789253388-582c481c54b0"),
+    by: "Priya Das",
+    from: "Bengaluru",
+  },
+  {
+    label: "Couple's getaway",
+    caption: "Above the clouds, side by side",
+    image: photo("1566759996874-04d713cc224a"),
+    by: "Rahul Nair",
+    from: "Kochi",
   },
 ];
