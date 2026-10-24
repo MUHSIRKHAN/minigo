@@ -26,24 +26,26 @@ export default function PackageCard({ pkg }: { pkg: TourPackage }) {
           sizes="(max-width: 759px) 100vw, (max-width: 1100px) 50vw, 33vw"
         />
       </div>
-      <span className="chip">{pkg.nights} nights</span>
+
+      <span className="tag tag-date">
+        <small>Next departure</small>
+        {next ? formatDate(next.date) : "Dates soon"}
+      </span>
+      {status && status.tone === "few" ? <span className="tag tag-alert">{status.label}</span> : null}
+
       <div className="body">
         <p className="dest">{pkg.destination}</p>
         <h3>{route ?? pkg.title}</h3>
         <p className="blurb">{pkg.tagline}</p>
         <div className="foot">
-          <div className="facts">
-            <div>
-              <span>From</span>
-              <strong>{price !== null ? formatPrice(price) : "On request"}</strong>
-            </div>
-            <div>
-              <span>Next departure</span>
-              <strong>{next ? formatDate(next.date) : "Soon"}</strong>
-              {status && status.tone === "few" ? <em className="few">{status.label}</em> : null}
-            </div>
-          </div>
-          <span className="go">Explore trip</span>
+          <p className="facts">
+            <span className="from">From</span>
+            <strong>{price !== null ? formatPrice(price) : "On request"}</strong>
+            <span className="len">{pkg.nights + 1} days</span>
+          </p>
+          <span className="go" aria-hidden="true">
+            &rarr;
+          </span>
         </div>
       </div>
     </Link>

@@ -809,3 +809,30 @@ h1,h2,h3,.display,.h-sec,.manifesto p,.showcase .cap h2,.value-card h3,.vm-card 
 @media(min-width:1024px){ .brand .logo{height:46px;} }
 .brand-tag{display:block; font-family:var(--body); font-size:10px; font-weight:600; letter-spacing:.05em; line-height:1; color:var(--brand); white-space:nowrap;}
 @media(min-width:1024px){ .brand-tag{font-size:11.5px; letter-spacing:.06em;} }
+
+/* ---------- TRIP CARDS: decluttered ----------
+   Date and seat alerts move to tags on the photo; the bottom carries only the
+   destination, the route, one price line and an arrow. The tagline shows only on
+   the two wide cards, where there is room for it. */
+.pkg-card .body{padding:24px 24px 22px;}
+.pkg-card h3{margin-top:6px; font-size:clamp(1.65rem,2.1vw,2.2rem); line-height:1.08;}
+.pkg-card .blurb{display:none; margin-top:10px; max-width:40ch; font-size:14.5px;}
+@media(min-width:760px){ .pkg-grid:not(.three) .pkg-card:nth-child(-n+2) .blurb{display:-webkit-box;} }
+.pkg-card .foot{margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,.28); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:nowrap;}
+.pkg-card .facts{display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 10px; font-size:12px; letter-spacing:.06em; color:rgba(255,255,255,.82);}
+.pkg-card .facts .from{font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;}
+.pkg-card .facts strong{font-family:var(--display); font-size:1.5rem; font-weight:600; letter-spacing:0; line-height:1; color:#fff;}
+.pkg-card .facts .len{position:relative; padding-left:12px;}
+.pkg-card .facts .len::before{content:""; position:absolute; left:0; top:50%; width:4px; height:4px; margin-top:-2px; border-radius:50%; background:rgba(255,255,255,.6);}
+.pkg-card .go{flex:none; display:flex; align-items:center; justify-content:center; width:40px; height:40px; padding:0; border:1px solid rgba(255,255,255,.75); border-radius:50%;
+  font-size:16px; letter-spacing:0; background:rgba(20,38,30,.3); transition:background-color .3s, color .3s, transform .3s;}
+.pkg-card:hover .go{background:#fff; color:var(--brand); transform:translateX(3px);}
+
+/* Tags on the photo */
+.pkg-card .chip{display:none;}
+.pkg-card .tag{position:absolute; top:16px; z-index:1; padding:7px 12px; font-size:12px; font-weight:600; letter-spacing:.04em; line-height:1.2; color:#fff;
+  background:rgba(20,38,30,.66); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); text-shadow:none;}
+.pkg-card .tag small{display:block; margin-bottom:2px; font-size:9.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.75);}
+.pkg-card .tag-date{left:16px;}
+.pkg-card .tag-alert{right:16px; align-self:start; background:#fff; color:var(--brand); font-weight:700;}
+.pkg-card .few{display:none;}
