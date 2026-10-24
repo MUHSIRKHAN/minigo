@@ -52,7 +52,7 @@ export default function EnquiryForm({
           </div>
           <div className="field">
             <label htmlFor="service">Tour package or destination</label>
-            <input id="service" name="service" type="text" defaultValue={defaultService} placeholder="e.g. Maldives Overwater Retreat" />
+            <input id="service" name="service" type="text" defaultValue={defaultService} placeholder="e.g. Vietnam: Hanoi, Ha Long & Hoi An" />
           </div>
           <div className="field">
             <label htmlFor="message">Travel dates, group size &amp; anything else</label>
