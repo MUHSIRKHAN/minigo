@@ -8,6 +8,7 @@ import PackageCard from "./components/PackageCard";
 import DepartureList from "./components/DepartureList";
 import EnquiryForm from "./components/EnquiryForm";
 import Testimonials from "./components/Testimonials";
+import Moments from "./components/Moments";
 import { formatPostDate, getBlogPosts, getGalleryImages, getMediaUrl } from "./lib/payload";
 import { PACKAGES, REGIONS, allUpcomingDepartures } from "./lib/packages";
 import { BUSINESS, DEFAULT_WHATSAPP_MESSAGE, whatsappLink } from "./lib/site";
@@ -206,6 +207,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <Moments />
 
       <Testimonials />
 

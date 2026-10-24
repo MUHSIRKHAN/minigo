@@ -749,3 +749,48 @@ h1,h2,h3,.display,.h-sec,.manifesto p,.showcase .cap h2,.value-card h3,.vm-card 
 .star-fill{position:absolute; left:0; top:0; height:100%; overflow:hidden;}
 .star-fill svg{width:18px; height:18px;}
 .star-fill path{fill:var(--brand);}
+
+/* ======================================================================
+   LEGIBILITY — white text over photography always gets a soft shadow, a
+   darker overlay behind it, or a translucent backing.
+   ====================================================================== */
+.mhero-inner h1,.mhero-inner .sub,.mhero-place,.mhero-next small,.mhero-next em,
+.page-hero h1,.page-hero p,.page-hero .kicker,.page-hero .crumbs,
+.pkg-card .dest,.pkg-card h3,.pkg-card .blurb,.pkg-card .facts span,.pkg-card .facts strong,.pkg-card .few,
+.moment figcaption{
+  text-shadow:0 1px 3px rgba(0,0,0,.55), 0 2px 26px rgba(0,0,0,.45);}
+
+/* Home hero: deeper left-hand scrim behind the copy, translucent backing on small labels and controls */
+.mhero::after{
+  background:
+    linear-gradient(to right, rgba(20,38,30,.84) 0%, rgba(20,38,30,.64) 40%, rgba(20,38,30,.22) 74%, rgba(20,38,30,.04) 100%),
+    linear-gradient(to bottom, rgba(20,38,30,.62) 0%, rgba(20,38,30,.2) 28%, rgba(20,38,30,.3) 55%, rgba(20,38,30,.9) 100%);}
+@media(max-width:700px){
+  .mhero::after{background:linear-gradient(to bottom, rgba(20,38,30,.66) 0%, rgba(20,38,30,.56) 45%, rgba(20,38,30,.68) 70%, rgba(20,38,30,.92) 100%);}
+}
+.mhero-place{display:inline-block; padding:7px 14px; background:rgba(20,38,30,.5); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);}
+.mhero-bar{background:rgba(255,255,255,.5);}
+.mhero-arrows button{background:rgba(20,38,30,.45); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);}
+.btn.outline-light{background:rgba(20,38,30,.34); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px); border-color:rgba(255,255,255,.9);}
+.btn.outline-light:hover{background:#fff;}
+
+/* Interior page banners */
+.page-hero .overlay{background:linear-gradient(180deg, rgba(20,38,30,.8), rgba(20,38,30,.58) 50%, rgba(20,38,30,.8));}
+
+/* Trip cards: darker base, and the night count sits on a pill */
+.pkg-card::after{
+  background:linear-gradient(to top, rgba(20,38,30,.95) 0%, rgba(20,38,30,.74) 36%, rgba(20,38,30,.26) 64%, rgba(20,38,30,.4) 100%);}
+.pkg-card .chip{top:18px; right:18px; padding:7px 13px; background:rgba(20,38,30,.64); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); text-shadow:none;}
+.pkg-card .go{background:rgba(20,38,30,.4);}
+
+/* ---------- TRAVELLERS' BEST MOMENTS ---------- */
+.moments{margin-top:48px; display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+@media(min-width:900px){ .moments{grid-template-columns:repeat(4,1fr); gap:16px;} }
+.moment{position:relative; margin:0; overflow:hidden; aspect-ratio:3/4; background:var(--brand-strong); isolation:isolate;}
+.moment img{width:100%; height:100%; object-fit:cover; transition:transform 1s cubic-bezier(.16,1,.3,1);}
+.moment:hover img{transform:scale(1.06);}
+.moment::after{content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(to top, rgba(20,38,30,.9) 0%, rgba(20,38,30,.5) 30%, rgba(20,38,30,0) 58%);}
+.moment figcaption{position:absolute; left:0; right:0; bottom:0; z-index:1; padding:16px 16px 18px; color:#fff;}
+.moment figcaption span{display:block; font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#dbe8e1;}
+.moment figcaption em{display:block; margin-top:4px; font-family:var(--serif); font-style:italic; font-weight:500; font-size:1.12rem; line-height:1.25;}
