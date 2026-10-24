@@ -18,7 +18,7 @@ export const BUSINESS = {
   email: "hello@minigoholidays.com",
   instagramUrl: "https://www.instagram.com/minigoholidays/",
   // ISO 4217 code used to format every package price.
-  currency: "USD",
+  currency: "INR",
   logo: "/assets/minigo-logo.svg",
   // Share-card image must be a raster file on an absolute URL for most crawlers.
   ogImage:

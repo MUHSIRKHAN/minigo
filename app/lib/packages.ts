@@ -3,6 +3,7 @@ import { BUSINESS } from "./site";
 // SAMPLE DATA — every package, price and departure date below is a placeholder.
 // Edit this file to publish real tours: add/remove entries in PACKAGES and keep
 // each `departures` list current. Past departures are hidden automatically.
+// Prices are per person in rupees (BUSINESS.currency).
 
 export type Region = "Southeast Asia" | "Central Asia" | "South Asia";
 
@@ -64,10 +65,10 @@ export const PACKAGES: TourPackage[] = [
     included: ["9 nights hotels, including one night on a cruise", "Daily breakfast and listed meals", "Domestic flights", "Private transfers and local guides", "Cooking class and Mekong boat trip"],
     notIncluded: ["International flights", "Travel insurance", "Other meals and drinks", "Vietnam e-visa fee", "Personal expenses and tips"],
     departures: [
-      { date: "2026-11-21", price: 2490, seatsLeft: 7 },
-      { date: "2027-01-16", price: 2590, seatsLeft: 3 },
-      { date: "2027-02-13", price: 2590, seatsLeft: 10 },
-      { date: "2027-03-13", price: 2490, seatsLeft: 12 },
+      { date: "2026-11-21", price: 125000, seatsLeft: 7 },
+      { date: "2027-01-16", price: 135000, seatsLeft: 3 },
+      { date: "2027-02-13", price: 135000, seatsLeft: 10 },
+      { date: "2027-03-13", price: 125000, seatsLeft: 12 },
     ],
   },
   {
@@ -98,10 +99,10 @@ export const PACKAGES: TourPackage[] = [
     included: ["8 nights hotels and mountain lodge", "Daily breakfast and listed meals", "Domestic flight Almaty–Astana", "Private 4x4 transport and guide", "Entrance fees listed"],
     notIncluded: ["International flights", "Travel insurance", "Other meals and drinks", "Visa where required", "Personal expenses and tips"],
     departures: [
-      { date: "2027-05-22", price: 2290, seatsLeft: 12 },
-      { date: "2027-06-19", price: 2390, seatsLeft: 6 },
-      { date: "2027-08-14", price: 2390, seatsLeft: 12 },
-      { date: "2027-09-11", price: 2290, seatsLeft: 12 },
+      { date: "2027-05-22", price: 139000, seatsLeft: 12 },
+      { date: "2027-06-19", price: 149000, seatsLeft: 6 },
+      { date: "2027-08-14", price: 149000, seatsLeft: 12 },
+      { date: "2027-09-11", price: 139000, seatsLeft: 12 },
     ],
   },
   {
@@ -131,10 +132,10 @@ export const PACKAGES: TourPackage[] = [
     included: ["9 nights guesthouses, homestays and hotels", "Breakfast and dinner on the road", "Private 4x4 with driver-guide", "Pamir (GBAO) permits", "Entrance fees listed"],
     notIncluded: ["International flights", "Travel insurance", "Lunches and snacks", "Tajikistan e-visa fee", "Personal expenses and tips"],
     departures: [
-      { date: "2027-06-26", price: 3190, seatsLeft: 8 },
-      { date: "2027-07-17", price: 3290, seatsLeft: 4 },
-      { date: "2027-08-07", price: 3290, seatsLeft: 8 },
-      { date: "2027-09-04", price: 3190, seatsLeft: 8 },
+      { date: "2027-06-26", price: 215000, seatsLeft: 8 },
+      { date: "2027-07-17", price: 229000, seatsLeft: 4 },
+      { date: "2027-08-07", price: 229000, seatsLeft: 8 },
+      { date: "2027-09-04", price: 215000, seatsLeft: 8 },
     ],
   },
   {
@@ -164,10 +165,10 @@ export const PACKAGES: TourPackage[] = [
     included: ["6 nights hotels and houseboat", "Daily breakfast and dinner", "Private vehicle with driver", "Shikara ride and gondola ticket", "Local guide"],
     notIncluded: ["Flights to and from Srinagar", "Travel insurance", "Lunches and snacks", "Pony rides and optional activities", "Personal expenses and tips"],
     departures: [
-      { date: "2026-11-07", price: 1590, seatsLeft: 9 },
-      { date: "2027-04-10", price: 1690, seatsLeft: 5 },
-      { date: "2027-05-15", price: 1690, seatsLeft: 14 },
-      { date: "2027-06-12", price: 1690, seatsLeft: 14 },
+      { date: "2026-11-07", price: 58000, seatsLeft: 9 },
+      { date: "2027-04-10", price: 64000, seatsLeft: 5 },
+      { date: "2027-05-15", price: 64000, seatsLeft: 14 },
+      { date: "2027-06-12", price: 64000, seatsLeft: 14 },
     ],
   },
   {
@@ -197,10 +198,10 @@ export const PACKAGES: TourPackage[] = [
     included: ["7 nights hotels and resorts", "Daily breakfast", "Domestic flights", "Private longtail charter and kayak trip", "Airport transfers and guides"],
     notIncluded: ["International flights", "Travel insurance", "Most lunches and dinners", "National park fees where charged", "Personal expenses and tips"],
     departures: [
-      { date: "2026-12-05", price: 1890, seatsLeft: 6 },
-      { date: "2027-01-09", price: 2090, seatsLeft: 2 },
-      { date: "2027-02-06", price: 2090, seatsLeft: 10 },
-      { date: "2027-03-06", price: 1990, seatsLeft: 12 },
+      { date: "2026-12-05", price: 89000, seatsLeft: 6 },
+      { date: "2027-01-09", price: 104000, seatsLeft: 2 },
+      { date: "2027-02-06", price: 104000, seatsLeft: 10 },
+      { date: "2027-03-06", price: 96000, seatsLeft: 12 },
     ],
   },
 ];
@@ -236,7 +237,7 @@ export function departureStatus(d: Departure): { label: string; tone: "open" | "
 }
 
 export function formatPrice(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: BUSINESS.currency,
     maximumFractionDigits: 0,
