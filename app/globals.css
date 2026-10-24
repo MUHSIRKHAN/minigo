@@ -802,3 +802,10 @@ h1,h2,h3,.display,.h-sec,.manifesto p,.showcase .cap h2,.value-card h3,.vm-card 
 .moment figcaption small b{font-weight:600; color:#fff;}
 
 .moment figcaption cite{font-style:normal; line-height:1.35;}
+
+/* Tagline printed under the header logo */
+.brand{flex-direction:column; align-items:flex-start; justify-content:center; gap:3px;}
+.brand .logo{height:40px;}
+@media(min-width:1024px){ .brand .logo{height:46px;} }
+.brand-tag{display:block; font-family:var(--body); font-size:10px; font-weight:600; letter-spacing:.05em; line-height:1; color:var(--brand); white-space:nowrap;}
+@media(min-width:1024px){ .brand-tag{font-size:11.5px; letter-spacing:.06em;} }

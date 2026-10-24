@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { usePathname } from "next/navigation";
+import { BUSINESS } from "../lib/site";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -65,6 +66,7 @@ export default function Header() {
       <div className="wrap nav-inner">
         <Link href="/" className="brand">
           <Image className="logo" src="/assets/minigo-horizontal.png" alt="Minigo Holidays" width={965} height={420} priority />
+          <span className="brand-tag">{BUSINESS.logoTagline}</span>
         </Link>
         <nav className="links" aria-label="Primary">
           {NAV_LINKS.map((link) => (

@@ -17,6 +17,8 @@ export const BUSINESS = {
   name: "Minigo Holidays",
   shortName: "Minigo Holidays",
   tagline: "Go anywhere, stay prepared.",
+  // The line printed under the logo, spelled exactly as in the logo artwork.
+  logoTagline: "Go Anywhere, stay Prepared",
   description:
     "Minigo Holidays designs premium small-group and private tours to Vietnam, Kazakhstan, Tajikistan, Kashmir and Thailand — handpicked stays, expert local guides and fixed departure dates you can book today.",
   streetAddress,
