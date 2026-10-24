@@ -10,25 +10,27 @@ export default function Footer() {
     <footer>
       <div className="wrapc foot-top">
         <div className="foot-brand">
-          <Image className="logo" src={BUSINESS.logo} alt={BUSINESS.name} width={640} height={170} />
+          <Image className="logo" src={BUSINESS.logo} alt={BUSINESS.name} width={558} height={615} />
           <p>
-            Premium small-group and private tours to Vietnam, Kazakhstan, Tajikistan, Kashmir and
-            Thailand, with fixed departure dates and expert local guides.
+            {BUSINESS.tagline} Premium small-group and private tours to Vietnam, Kazakhstan,
+            Tajikistan, Kashmir and Thailand.
           </p>
-          <div className="foot-social">
-            <Link
-              href={BUSINESS.instagramUrl}
-              target="_blank"
-              rel="noopener"
-              aria-label={`${BUSINESS.name} on Instagram`}
-            >
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.6" />
-                <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.6" />
-                <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
-              </svg>
-            </Link>
-          </div>
+          {BUSINESS.instagramUrl ? (
+            <div className="foot-social">
+              <Link
+                href={BUSINESS.instagramUrl}
+                target="_blank"
+                rel="noopener"
+                aria-label={`${BUSINESS.name} on Instagram`}
+              >
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.6" />
+                  <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.6" />
+                  <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
+                </svg>
+              </Link>
+            </div>
+          ) : null}
         </div>
 
         <div className="foot-links">
@@ -58,7 +60,7 @@ export default function Footer() {
             <div className="foot-contact">
               <div>
                 <span className="dot"></span>
-                {BUSINESS.streetAddress}, {BUSINESS.addressLocality}, {BUSINESS.addressCountry}
+                {BUSINESS.address}
               </div>
               <Link href={`tel:${BUSINESS.telephoneHref}`}>{BUSINESS.telephone}</Link>
               <Link href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</Link>

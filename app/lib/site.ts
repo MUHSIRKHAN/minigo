@@ -1,25 +1,36 @@
-// TODO: replace the placeholder domain and contact details below with Minigo Holidays' real ones.
 // Every page, the header/footer, WhatsApp button and structured data read from here.
+// TODO: replace the placeholder domain below (and add the Instagram URL) once they exist.
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://minigoholidays.com").replace(/\/$/, "");
+
+const streetAddress = "Door No. 2120, 1st Floor, Tower 2, Hilite Business Park";
+const addressLocality = "Kozhikode";
+const addressRegion = "Kerala";
+const postalCode = "673014";
+const addressCountry = "India";
 
 export const BUSINESS = {
   name: "Minigo Holidays",
   shortName: "Minigo Holidays",
-  tagline: "Premium journeys across Asia.",
+  tagline: "Go anywhere, stay prepared.",
   description:
     "Minigo Holidays designs premium small-group and private tours to Vietnam, Kazakhstan, Tajikistan, Kashmir and Thailand — handpicked stays, expert local guides and fixed departure dates you can book today.",
-  streetAddress: "Your office address, street and area",
-  addressLocality: "City",
-  addressCountry: "Country",
+  streetAddress,
+  addressLocality,
+  addressRegion,
+  postalCode,
+  addressCountry,
+  // One-line form used in the footer, contact details and legal pages.
+  address: `${streetAddress}, ${addressLocality} ${postalCode}, ${addressRegion}, ${addressCountry}`,
   // Display forms and dial forms are kept separate: `tel:` and wa.me need digits only.
-  telephone: "+00 000 000 0000",
-  telephoneHref: "+000000000000",
-  whatsappNumber: "000000000000",
-  email: "hello@minigoholidays.com",
-  instagramUrl: "https://www.instagram.com/minigoholidays/",
+  telephone: "+91 88911 55157",
+  telephoneHref: "+918891155157",
+  whatsappNumber: "918891155157",
+  email: "minigoholidays@gmail.com",
+  // Leave empty to hide the Instagram icon in the footer.
+  instagramUrl: "",
   // ISO 4217 code used to format every package price.
   currency: "INR",
-  logo: "/assets/minigo-logo.svg",
+  logo: "/assets/minigo-logo.png",
   // Share-card image must be a raster file on an absolute URL for most crawlers.
   ogImage:
     "https://images.unsplash.com/photo-1643029891412-92f9a81a8c16?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format",

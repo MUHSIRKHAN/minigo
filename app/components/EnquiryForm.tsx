@@ -26,7 +26,7 @@ export default function EnquiryForm({
         <div className="contact-info">
           <div>
             <span className="dot"></span>
-            {BUSINESS.streetAddress}, {BUSINESS.addressLocality}, {BUSINESS.addressCountry}
+            {BUSINESS.address}
           </div>
           <Link href={`tel:${BUSINESS.telephoneHref}`}>
             <span className="dot"></span>

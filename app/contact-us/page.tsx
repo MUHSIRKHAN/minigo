@@ -57,6 +57,16 @@ export default async function ContactUsPage({
       <section className="contact">
         <div className="wrapc" style={{ paddingTop: 96, paddingBottom: 128 }}>
           <EnquiryForm defaultService={service} defaultMessage={message} />
+
+          <div className="map-embed reveal">
+            <iframe
+              src={`https://www.google.com/maps?q=${encodeURIComponent(`Hilite Business Park, ${BUSINESS.addressLocality}`)}&output=embed`}
+              title={`${BUSINESS.name} location`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
       </section>
 

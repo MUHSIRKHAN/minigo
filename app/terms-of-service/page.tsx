@@ -133,7 +133,7 @@ export default function TermsOfServicePage() {
             <p>
               {BUSINESS.name}
               <br />
-              {BUSINESS.streetAddress}, {BUSINESS.addressLocality}, {BUSINESS.addressCountry}
+              {BUSINESS.address}
               <br />
               Email: <Link href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</Link>
               <br />

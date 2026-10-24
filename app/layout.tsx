@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   title: DEFAULT_TITLE,
   description: BUSINESS.description,
   icons: {
-    icon: "/assets/favicon.svg",
+    icon: "/assets/favicon.png",
   },
   openGraph: {
     type: "website",
@@ -62,6 +62,8 @@ const localBusinessSchema = {
     "@type": "PostalAddress",
     streetAddress: BUSINESS.streetAddress,
     addressLocality: BUSINESS.addressLocality,
+    addressRegion: BUSINESS.addressRegion,
+    postalCode: BUSINESS.postalCode,
     addressCountry: BUSINESS.addressCountry,
   },
   description: BUSINESS.description,

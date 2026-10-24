@@ -64,7 +64,7 @@ export default function Header() {
     >
       <div className="wrap nav-inner">
         <Link href="/" className="brand">
-          <Image className="logo" src="/assets/minigo-logo.svg" alt="Minigo Holidays" width={640} height={170} priority />
+          <Image className="logo" src="/assets/minigo-horizontal.png" alt="Minigo Holidays" width={965} height={420} priority />
         </Link>
         <nav className="links" aria-label="Primary">
           {NAV_LINKS.map((link) => (
