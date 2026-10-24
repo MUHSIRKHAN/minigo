@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import { BUSINESS, SITE_URL } from "../lib/site";
 import Link from "next/link";
 
-const TITLE = "Business Setup in Dubai | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Business Setup in Dubai | Minigo Holidays";
 const DESCRIPTION =
-  "End-to-end company formation in Dubai Mainland, Free Zones, and Offshore — trade name reservation, MOA drafting, licence issuance, and bank account assistance from Bizpoint Prime Business Solutions LLC.";
+  "End-to-end company formation in Dubai Mainland, Free Zones, and Offshore — trade name reservation, MOA drafting, licence issuance, and bank account assistance from Minigo Holidays.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1574188231145-5f204395d7d5?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/business-setup-dubai";
@@ -279,7 +279,7 @@ export default function BusinessSetupDubaiPage() {
               <span>Request a Free Consultation</span>
             </Link>
             <Link
-              href="https://wa.me/971543084251?text=Hi%20Bizpoint%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+              href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
               className="btn outline-light"
               target="_blank"
               rel="noopener noreferrer"

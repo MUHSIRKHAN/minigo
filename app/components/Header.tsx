@@ -82,7 +82,7 @@ export default function Header() {
     >
       <div className="wrap nav-inner">
         <Link href="/" className="brand">
-          <Image className="logo" src="/assets/logo-nav.png" alt="Bizpoint Prime" width={1193} height={650} priority />
+          <Image className="logo" src="/assets/logo-nav.png" alt="Minigo Holidays" width={1193} height={650} priority />
         </Link>
         <nav className="links" aria-label="Primary">
           {NAV_LINKS.map((link) => (

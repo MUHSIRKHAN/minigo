@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import { BUSINESS, SITE_URL } from "../lib/site";
 import Link from "next/link";
 
-const TITLE = "Document Attestation in Dubai | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Document Attestation in Dubai | Minigo Holidays";
 const DESCRIPTION =
-  "Fast, reliable MOFA and embassy attestation for educational, personal, and commercial documents in the UAE — handled end-to-end by Bizpoint Prime Business Solutions LLC.";
+  "Fast, reliable MOFA and embassy attestation for educational, personal, and commercial documents in the UAE — handled end-to-end by Minigo Holidays.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/document-attestation";
@@ -293,7 +293,7 @@ export default function DocumentAttestationPage() {
               <span>Request a Free Consultation</span>
             </Link>
             <Link
-              href="https://wa.me/971543084251?text=Hi%20Bizpoint%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+              href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
               className="btn outline-light"
               target="_blank"
               rel="noopener noreferrer"

@@ -66,7 +66,7 @@ async function sendEmail(fields: {
 
   try {
     await transporter.sendMail({
-      from: `Bizpoint Prime Website <${gmailUser}>`,
+      from: `Minigo Holidays Website <${gmailUser}>`,
       to,
       replyTo: fields.email,
       subject: `New consultation request from ${fields.name}`,

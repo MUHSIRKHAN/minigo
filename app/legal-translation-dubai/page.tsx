@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { BUSINESS, SITE_URL } from "../lib/site";
 import Link from "next/link";
 
-const TITLE = "Legal Translation in Dubai | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Legal Translation in Dubai | Minigo Holidays";
 const DESCRIPTION =
   "MOJ-certified legal translation in Dubai for contracts, court documents, and certificates in 120+ language pairs — accepted by UAE Courts, MOFA, and embassies.";
 const OG_IMAGE =
@@ -96,7 +96,7 @@ export default function LegalTranslationDubaiPage() {
             className="reveal"
             style={{ marginTop: 16, maxWidth: "62ch", fontSize: "15.5px", lineHeight: 1.6, color: "var(--fg-muted)" }}
           >
-            Bizpoint Prime&rsquo;s translators hold official MOJ certification, meaning every
+            Minigo Holidays&rsquo;s translators hold official MOJ certification, meaning every
             document we translate carries legal authority that is recognised across the entire UAE
             legal system and internationally through UAE embassies — combining certified expertise
             with fast turnaround and full compliance.
@@ -201,7 +201,7 @@ export default function LegalTranslationDubaiPage() {
               <summary>
                 <span className="faq-left">
                   <span className="faq-num">01</span>
-                  <span className="faq-q">Is Bizpoint Prime&rsquo;s legal translation MOJ-approved?</span>
+                  <span className="faq-q">Is Minigo Holidays&rsquo;s legal translation MOJ-approved?</span>
                 </span>
                 <span className="faq-icon" aria-hidden="true">+</span>
               </summary>
@@ -309,7 +309,7 @@ export default function LegalTranslationDubaiPage() {
               <span>Get a Free Quote Now</span>
             </Link>
             <Link
-              href="https://wa.me/971543084251?text=Hi%20Bizpoint%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+              href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
               className="btn outline-light"
               target="_blank"
               rel="noopener noreferrer"

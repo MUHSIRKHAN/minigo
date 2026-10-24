@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import { BUSINESS, SITE_URL } from "../lib/site";
 import Link from "next/link";
 
-const TITLE = "Typing Services in Dubai | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Typing Services in Dubai | Minigo Holidays";
 const DESCRIPTION =
-  "Accurate, fast typing for Emirates ID, visa, medical, and Ejari applications, plus legal document typing in Arabic and English — from Bizpoint Prime Business Solutions LLC.";
+  "Accurate, fast typing for Emirates ID, visa, medical, and Ejari applications, plus legal document typing in Arabic and English — from Minigo Holidays.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1664575262619-b28fef7a40a4?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/typing-services";

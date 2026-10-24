@@ -20,7 +20,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 const DEFAULT_TITLE =
-  "Bizpoint Prime Business Solutions LLC | Business Setup & Corporate Services in the UAE";
+  "Minigo Holidays | Business Setup & Corporate Services in the UAE";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

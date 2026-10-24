@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import { BUSINESS, SITE_URL } from "../lib/site";
 import Link from "next/link";
 
-const TITLE = "Family Visa Services in Dubai | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Family Visa Services in Dubai | Minigo Holidays";
 const DESCRIPTION =
-  "Family sponsorship applications, residence visa renewals, and status changes managed end to end by Bizpoint Prime Business Solutions LLC.";
+  "Family sponsorship applications, residence visa renewals, and status changes managed end to end by Minigo Holidays.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/family-visa-services";
@@ -265,7 +265,7 @@ export default function FamilyVisaServicesPage() {
               <span>Request a Free Consultation</span>
             </Link>
             <Link
-              href="https://wa.me/971543084251?text=Hi%20Bizpoint%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+              href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
               className="btn outline-light"
               target="_blank"
               rel="noopener noreferrer"

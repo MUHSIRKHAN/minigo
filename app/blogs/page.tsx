@@ -6,9 +6,9 @@ import Footer from "../components/Footer";
 import { formatPostDate, getBlogPosts, getMediaUrl } from "../lib/payload";
 import { BUSINESS, SITE_URL } from "../lib/site";
 
-const TITLE = "Blogs | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Blogs | Minigo Holidays";
 const DESCRIPTION =
-  "Insights on business setup, legal translation, VAT, and compliance for companies operating in the UAE — from Bizpoint Prime Business Solutions LLC.";
+  "Insights on business setup, legal translation, VAT, and compliance for companies operating in the UAE — from Minigo Holidays.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/blogs";
@@ -60,7 +60,7 @@ export default async function BlogsPage() {
           <h1 className="reveal">Insights for businesses setting up in Dubai.</h1>
           <p className="reveal">
             Practical guidance on business setup, legal translation, VAT, and compliance — from
-            the Bizpoint Prime team.
+            the Minigo Holidays team.
           </p>
         </div>
       </section>
@@ -182,7 +182,7 @@ export default async function BlogsPage() {
               <span>Request a Free Consultation</span>
             </Link>
             <Link
-              href="https://wa.me/971543084251?text=Hi%20Bizpoint%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+              href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
               className="btn outline-light"
               target="_blank"
               rel="noopener noreferrer"

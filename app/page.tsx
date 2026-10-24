@@ -40,7 +40,7 @@ export default async function Home() {
             </span>
           </h1>
           <p className="hero-desc">
-            Bizpoint Prime Business Solutions LLC is a trusted business solutions and corporate
+            Minigo Holidays is a trusted business solutions and corporate
             services provider in the UAE — supporting individuals, entrepreneurs, and companies
             with business setup, legal translation, government services, visa assistance, and
             more.
@@ -317,7 +317,7 @@ export default async function Home() {
         <div className="wrapc" style={{ paddingTop: 96, paddingBottom: 112 }}>
           <div className="about-grid">
             <div>
-              <p className="kicker reveal">Welcome to Bizpoint Prime</p>
+              <p className="kicker reveal">Welcome to Minigo Holidays</p>
               <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "44ch" }}>
                 Smart Business Starts Here.
               </h2>
@@ -332,7 +332,7 @@ export default async function Home() {
                 }}
               >
                 Starting or managing a business in the UAE involves numerous legal,
-                administrative, and regulatory requirements. At Bizpoint Prime Business
+                administrative, and regulatory requirements. At Minigo Holidays Business
                 Solutions LLC, we simplify every step by offering comprehensive business and
                 corporate solutions under one roof. From company formation and government
                 approvals to legal documentation, visa services, branding, and marketing, our
@@ -381,15 +381,15 @@ export default async function Home() {
             <div className="why-photo reveal">
               <Image
                 src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=900&q=80&fm=jpg&fit=crop&auto=format"
-                alt="Bizpoint Prime consultants at work"
+                alt="Minigo Holidays consultants at work"
                 fill
                 sizes="(max-width: 900px) 100vw, 480px"
               />
             </div>
             <div>
-              <p className="kicker reveal">Why Bizpoint Prime</p>
+              <p className="kicker reveal">Why Minigo Holidays</p>
               <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "44ch" }}>
-                Why Choose Bizpoint Prime?
+                Why Choose Minigo Holidays?
               </h2>
               <div className="about-checklist">
                 <div className="reveal">
@@ -460,7 +460,7 @@ export default async function Home() {
         <div className="wrapc" style={padTop96Bottom128}>
           <p className="kicker reveal">Our Process</p>
           <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "52ch" }}>
-            How an engagement with Bizpoint Prime runs.
+            How an engagement with Minigo Holidays runs.
           </h2>
           <div className="proc-grid">
             <div className="proc reveal">
@@ -495,12 +495,12 @@ export default async function Home() {
               <summary>
                 <span className="faq-left">
                   <span className="faq-num">01</span>
-                  <span className="faq-q">Is Bizpoint Prime&rsquo;s legal translation MOJ-approved?</span>
+                  <span className="faq-q">Is Minigo Holidays&rsquo;s legal translation MOJ-approved?</span>
                 </span>
                 <span className="faq-icon" aria-hidden="true">+</span>
               </summary>
               <p>
-                Yes. All Bizpoint Prime translators hold Ministry of Justice certification, and
+                Yes. All Minigo Holidays translators hold Ministry of Justice certification, and
                 every legal translation we produce is recognised by Dubai Courts, MOFA, and UAE
                 embassies.
               </p>
@@ -509,7 +509,7 @@ export default async function Home() {
               <summary>
                 <span className="faq-left">
                   <span className="faq-num">02</span>
-                  <span className="faq-q">What documents can Bizpoint Prime translate legally?</span>
+                  <span className="faq-q">What documents can Minigo Holidays translate legally?</span>
                 </span>
                 <span className="faq-icon" aria-hidden="true">+</span>
               </summary>
@@ -570,7 +570,7 @@ export default async function Home() {
               <Link href="/gallery" className="cell" key={`${item.id}-${i}`}>
                 <Image
                   src={getMediaUrl(item.image)}
-                  alt={item.caption || "Bizpoint Prime gallery"}
+                  alt={item.caption || "Minigo Holidays gallery"}
                   fill
                   sizes="320px"
                 />
@@ -677,7 +677,7 @@ export default async function Home() {
             }}
           >
             Whether you&rsquo;re launching your first company, expanding your operations, or
-            seeking reliable corporate support, Bizpoint Prime Business Solutions LLC is here to
+            seeking reliable corporate support, Minigo Holidays is here to
             help. Let us simplify your business journey with professional solutions tailored to
             your success. Prime. Made. Easy.
           </p>
@@ -689,7 +689,7 @@ export default async function Home() {
               <span>Request a Free Consultation</span>
             </Link>
             <Link
-              href="https://wa.me/971543084251?text=Hi%20Bizpoint%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+              href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
               className="btn outline-light"
               target="_blank"
               rel="noopener noreferrer"
@@ -768,8 +768,8 @@ export default async function Home() {
 
           <div className="map-embed reveal">
             <iframe
-              src="https://www.google.com/maps?q=Bizpoint+Prime+Translation+and+Business+Solutions,25.2310317,55.3131134&output=embed"
-              title="Bizpoint Prime Business Solutions LLC location"
+              src="https://www.google.com/maps?q=Minigo Holidays+Prime+Translation+and+Business+Solutions,25.2310317,55.3131134&output=embed"
+              title="Minigo Holidays location"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen

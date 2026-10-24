@@ -11,7 +11,7 @@ export default function Footer() {
           <Image
             className="logo"
             src="/assets/logo-footer.png"
-            alt="Bizpoint Prime Business Solutions LLC"
+            alt="Minigo Holidays"
             width={1193}
             height={759}
           />
@@ -24,7 +24,7 @@ export default function Footer() {
               href="https://www.instagram.com/bizpointprime.ae/"
               target="_blank"
               rel="noopener"
-              aria-label="Bizpoint Prime on Instagram"
+              aria-label="Minigo Holidays on Instagram"
             >
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.6" />
@@ -80,7 +80,7 @@ export default function Footer() {
       <div className="foot-bot">
         <div className="wrapc in">
           <span>
-            © <span id="year">{year}</span> Bizpoint Prime Business Solutions LLC. All rights
+            © <span id="year">{year}</span> Minigo Holidays. All rights
             reserved.
           </span>
           <span>

@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import { getGalleryImages, getMediaUrl } from "../lib/payload";
 import { BUSINESS, SITE_URL } from "../lib/site";
 
-const TITLE = "Gallery | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Gallery | Minigo Holidays";
 const DESCRIPTION =
-  "A look inside Bizpoint Prime Business Solutions LLC — our team, our office, and the work we do for businesses across the UAE.";
+  "A look inside Minigo Holidays — our team, our office, and the work we do for businesses across the UAE.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/gallery";
@@ -55,7 +55,7 @@ export default async function GalleryPage() {
           <p className="kicker reveal" style={{ color: "var(--accent)" }}>
             Gallery
           </p>
-          <h1 className="reveal">A look inside Bizpoint Prime.</h1>
+          <h1 className="reveal">A look inside Minigo Holidays.</h1>
           <p className="reveal">Our team, our office, and the work we do for clients across the UAE.</p>
         </div>
       </section>
@@ -69,7 +69,7 @@ export default async function GalleryPage() {
                 <div className="gallery-item reveal" key={item.id}>
                   <Image
                     src={getMediaUrl(item.image)}
-                    alt={item.caption || "Bizpoint Prime gallery"}
+                    alt={item.caption || "Minigo Holidays gallery"}
                     fill
                     sizes="(max-width: 700px) 50vw, 25vw"
                   />

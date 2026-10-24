@@ -26,9 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
   if (!post) {
-    return { title: "Post not found | Bizpoint Prime" };
+    return { title: "Post not found | Minigo Holidays" };
   }
-  const title = `${post.seoTitle || post.title} | Bizpoint Prime`;
+  const title = `${post.seoTitle || post.title} | Minigo Holidays`;
   const description = post.seoDescription || post.excerpt;
   const image = getMediaUrl(post.featuredImage);
   const url = `${SITE_URL}/blogs/${post.slug}`;

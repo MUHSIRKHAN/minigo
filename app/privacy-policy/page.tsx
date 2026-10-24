@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import { BUSINESS, SITE_URL } from "../lib/site";
 import Link from "next/link";
 
-const TITLE = "Privacy Policy | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Privacy Policy | Minigo Holidays";
 const DESCRIPTION =
-  "How Bizpoint Prime Business Solutions LLC collects, uses, and protects your personal data.";
+  "How Minigo Holidays collects, uses, and protects your personal data.";
 const PATH = "/privacy-policy";
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default function PrivacyPolicyPage() {
           <div className="rich-text reveal">
             <h2>1. Introduction</h2>
             <p>
-              Bizpoint Prime Business Solutions LLC (&ldquo;Bizpoint Prime&rdquo;, &ldquo;we&rdquo;,
+              Minigo Holidays (&ldquo;Minigo Holidays&rdquo;, &ldquo;we&rdquo;,
               &ldquo;our&rdquo;, or &ldquo;us&rdquo;) respects your privacy and is committed to
               protecting your personal data. This Privacy Policy outlines how we collect, use,
               disclose, and safeguard your information when you visit our website ({SITE_URL}) or

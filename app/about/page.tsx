@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import { BUSINESS, SITE_URL } from "../lib/site";
 import Link from "next/link";
 
-const TITLE = "About Us | Bizpoint Prime Business Solutions LLC";
+const TITLE = "About Us | Minigo Holidays";
 const DESCRIPTION =
-  "Bizpoint Prime Business Solutions LLC — our vision, mission, core values, and why businesses across the UAE trust us as their one-stop corporate solutions partner. Prime. Made. Easy.";
+  "Minigo Holidays — our vision, mission, core values, and why businesses across the UAE trust us as their one-stop corporate solutions partner. Prime. Made. Easy.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/about";
@@ -107,7 +107,7 @@ export default function AboutPage() {
           </p>
           <h1 className="reveal">Smart Business Starts Here.</h1>
           <p className="reveal">
-            At Bizpoint Prime Business Solutions LLC, we believe running a business should be
+            At Minigo Holidays, we believe running a business should be
             about building your vision — not spending valuable time managing paperwork, government
             procedures, and administrative tasks.
           </p>
@@ -159,7 +159,7 @@ export default function AboutPage() {
             <div className="why-photo reveal">
               <Image
                 src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=900&q=80&fm=jpg&fit=crop&auto=format"
-                alt="Bizpoint Prime consultants at work"
+                alt="Minigo Holidays consultants at work"
                 fill
                 sizes="(max-width: 900px) 100vw, 480px"
               />
@@ -266,18 +266,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* WHY CHOOSE BIZPOINT PRIME */}
+      {/* WHY CHOOSE MINIGO HOLIDAYS */}
       <section>
         <div className="wrapc" style={{ paddingTop: 96, paddingBottom: 128 }}>
-          <p className="kicker reveal">Why Bizpoint Prime</p>
+          <p className="kicker reveal">Why Minigo Holidays</p>
           <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "56ch" }}>
-            Why Choose Bizpoint Prime?
+            Why Choose Minigo Holidays?
           </h2>
           <p
             className="reveal"
             style={{ marginTop: 20, maxWidth: "70ch", fontSize: "15.5px", lineHeight: 1.6, color: "var(--fg-muted)" }}
           >
-            Choosing the right business partner can make all the difference. At Bizpoint Prime, we
+            Choosing the right business partner can make all the difference. At Minigo Holidays, we
             go beyond processing documents — we become your trusted corporate support partner,
             managing the essential backend operations so you can focus on running and growing your
             business.
@@ -305,7 +305,7 @@ export default function AboutPage() {
             className="reveal"
             style={{ marginTop: 20, maxWidth: "70ch", fontSize: "15.5px", lineHeight: 1.6, color: "var(--fg-muted)" }}
           >
-            At Bizpoint Prime Business Solutions LLC, we are committed to becoming more than just a
+            At Minigo Holidays, we are committed to becoming more than just a
             service provider — we strive to be a trusted partner in your business journey.
           </p>
           <p
@@ -368,7 +368,7 @@ export default function AboutPage() {
             }}
           >
             Whether you&rsquo;re starting a new venture, expanding your operations, or looking for
-            dependable corporate support, Bizpoint Prime Business Solutions LLC is here to help.
+            dependable corporate support, Minigo Holidays is here to help.
             Let us take care of the business essentials while you focus on what matters
             most — growing your business.
           </p>
@@ -380,7 +380,7 @@ export default function AboutPage() {
               <span>Request a Free Consultation</span>
             </Link>
             <Link
-              href="https://wa.me/971543084251?text=Hi%20Bizpoint%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+              href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
               className="btn outline-light"
               target="_blank"
               rel="noopener noreferrer"

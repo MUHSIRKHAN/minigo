@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import { BUSINESS, SITE_URL } from "../lib/site";
 import Link from "next/link";
 
-const TITLE = "Contact Us | Bizpoint Prime Business Solutions LLC";
+const TITLE = "Contact Us | Minigo Holidays";
 const DESCRIPTION =
-  "Get in touch with Bizpoint Prime Business Solutions LLC for business setup, legal translation, PRO services, and more — call, email, or send us a message.";
+  "Get in touch with Minigo Holidays for business setup, legal translation, PRO services, and more — call, email, or send us a message.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/contact-us";
@@ -129,8 +129,8 @@ export default function ContactUsPage() {
 
           <div className="map-embed reveal">
             <iframe
-              src="https://www.google.com/maps?q=Bizpoint+Prime+Translation+and+Business+Solutions,25.2310317,55.3131134&output=embed"
-              title="Bizpoint Prime Business Solutions LLC location"
+              src="https://www.google.com/maps?q=Minigo Holidays+Prime+Translation+and+Business+Solutions,25.2310317,55.3131134&output=embed"
+              title="Minigo Holidays location"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
