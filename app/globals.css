@@ -1,13 +1,13 @@
 :root{
-  --bg:#fafaf7; --bg-raised:#f2f1ea; --fg:#1d1c1a; --fg-muted:#5c584f; --border:#e6e3d9;
-  --brand:#125c3d; --brand-strong:#0c4530; --brand-tint:#e1ece5;
-  --accent:#c79a44; --accent-strong:#a97e33; --accent-tint:#f2e6c9; --accent-on:#19140a;
-  --display:var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --bg:#ffffff; --bg-raised:#f1f6f3; --fg:#14241c; --fg-muted:#55605a; --border:#dce5df;
+  --brand:#0e5a3a; --brand-strong:#093d27; --brand-tint:#e2efe7;
+  --accent:#2c8a5f; --accent-strong:#1f6f4a; --accent-tint:#dcefe4; --accent-on:#ffffff;
+  --display:var(--font-display), "League Gothic", Impact, "Arial Narrow", sans-serif;
+  --serif:var(--font-serif), Georgia, "Times New Roman", serif;
   --body:var(--font-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --max:1800px; --maxc:1400px;
   /* Nav geometry as tokens so the hero can pull itself up by exactly the
-     nav's height (see .hero). --nav-h includes the 1px border-bottom that
-     header.nav adds on top of .nav-inner's box. */
+     nav's height. --nav-h includes the 1px border-bottom that header.nav adds. */
   --nav-inner-h:64px; --nav-h:calc(var(--nav-inner-h) + 1px);
 }
 @media(min-width:1024px){ :root{ --nav-inner-h:78px; } }
@@ -120,143 +120,6 @@ header.nav.scrolled .nav-mobile__cta:hover span{color:var(--bg);}
 .btn.outline-light{background:transparent; color:var(--bg); border:1px solid rgba(250,250,247,.35);}
 .btn.outline-light:hover span{color:var(--accent-on);}
 
-/* ---------- HERO ---------- */
-/* Pulled up by exactly the sticky nav's height so the hero starts at the very
-   top of the viewport with the (translucent, backdrop-blurred) nav floating
-   over it — which is what that nav's rgba background + blur were built for,
-   and what .hero-content/.hero-seq__brand's padding-top already reserve
-   clearance for.
-   This is also what makes the pinned sequence sit still: ScrollTrigger pins at
-   "top top", so while the nav occupied 65px of flow the hero's top started
-   *below* the fold and the whole section had to slide up ~65px before the pin
-   could engage — a visible drift on the first flick of the wheel. Starting at
-   top:0 means the pin engages at scroll 0 and the hero never moves.
-   min-height pairs with it: without it the section would be 65px short of the
-   fold and the next section would peek in underneath. */
-.hero{position:relative; overflow:hidden; background:var(--fg); border-top:none;
-  margin-top:calc(-1 * var(--nav-h)); min-height:100svh;
-  display:flex; flex-direction:column;}
-
-/* Background is the scroll-linked canvas sequence (HeroSequence.tsx), which
-   carries its own cover-fit, camera push and contrast scrim. The old
-   Ken Burns image, vignette and film-grain layers were removed deliberately:
-   the hero is meant to read clean, with no bloom or noise over the footage. */
-/* No min-height below 1024px: forcing this to near-full-viewport height
-   pushed the trust row (now in normal flow below it, see .hero-trust-corner)
-   a further ~100svh down the page after it, opening a large empty gap of
-   bare footage between the chips and the trust line. Desktop keeps the
-   forced height, in the media query below, because the trust row there is
-   corner-pinned by position:absolute and doesn't depend on this box's
-   height at all — nothing to break by leaving it as-is. */
-/* flex:1 makes this absorb the hero's leftover height instead of leaving it
-   as dead space below the trust row. On mobile the hero is now a full 100svh
-   while this column is only as tall as its content, so without it the copy
-   stacked at the top and ~60px of empty footage sat under everything. Growing
-   the box lets its own justify-content:center actually centre the copy, and
-   pushes .hero-trust-corner onto the hero's bottom edge where it belongs.
-   padding-bottom is 32px rather than the old 72px for the same reason: that
-   larger value existed only to open the gap above the trust row back when the
-   two were simply stacked, and combined with the trust row's own fab
-   clearance it overran the 100svh hero by 20px on a 375x812 screen. */
-.hero-content{position:relative; display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
-  text-align:left; margin:0; max-width:640px; padding-top:64px; padding-bottom:32px; flex:1 1 auto;}
-/* Full 100svh, not 100svh minus the nav: the hero now spans the whole
-   viewport (it's pulled up under the nav, see .hero), so subtracting the nav
-   height again would leave the copy centred against a box a nav-height short
-   of the fold and ride visibly high. padding-top (80px) still clears the
-   79px nav, so the copy never sits under it. */
-@media(min-width:1024px){ .hero-content{max-width:720px; min-height:100svh; padding-top:80px; padding-bottom:88px;} }
-.hero h1{max-width:44rem; padding-bottom:4px; font-size:3rem; line-height:.95; font-weight:500; color:var(--bg);}
-@media(min-width:640px){ .hero h1{font-size:4.25rem;} }
-@media(min-width:1024px){ .hero h1{font-size:5.5rem;} }
-.hero h1 .line{display:block;}
-.hero-desc{margin-top:20px; max-width:52ch; font-size:15.5px; line-height:1.6; color:rgba(250,250,247,.75);}
-@media(min-width:1024px){ .hero-desc{font-size:16px;} }
-.hero-chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
-.hero-chip{padding:10px 18px; border-radius:999px; background:rgba(250,250,247,.08);
-  border:1px solid rgba(250,250,247,.22); color:var(--bg); font-size:13.5px; font-weight:500;
-  transition:background-color .3s, border-color .3s;}
-.hero-chip:hover{background:rgba(250,250,247,.16); border-color:rgba(250,250,247,.4);}
-/* Below 1024px this sits in normal flow, right after .hero-content. Because
-   .hero is a flex column and .hero-content grows to fill it, this row is
-   pushed onto the hero's bottom edge — and the hero being exactly 100svh and
-   pinned from scroll 0, that edge *is* the viewport's bottom edge, at every
-   scroll position.
-   That reliability is what lets the fixed WhatsApp fab be cleared vertically:
-   padding-bottom reserves the fab's whole footprint (56px circle + 20px fixed
-   inset) plus an 8px breathing gap, lifting this row's content clear of the
-   band the fab occupies.
-   It replaces an 84px padding-right that reserved the fab's *column* instead —
-   which was the only safe option while this row's flow position drifted with
-   content length and so couldn't be trusted to clear the fab vertically, but
-   which squeezed the trust line into ~130px beside the avatars and wrapped it
-   to three cramped lines.
-   It's a sibling of .wrap, not a child of it, so it carries no horizontal
-   inset of its own — give it .wrap's padding directly or it sits flush
-   against the viewport edge while the column above it doesn't.
-   Desktop keeps the floating corner, where the hero-card layout actually
-   leaves room for it, and drops padding entirely since position:absolute
-   there is offset from .hero itself, not from this padding box. */
-.hero-trust-corner{padding:0 20px 84px;}
-@media(min-width:1024px){
-  /* right clears the fab's column rather than its band: on desktop the fab is
-     right:32px and 56px wide, so anything ending nearer than 88px from the
-     edge runs underneath it — at the previous right:48px the trust line's last
-     word ("UAE.") sat behind the button. 104px is that 88px plus a 16px gap.
-     The clearance has to be horizontal here because the two genuinely share a
-     vertical band (fab bottom:32px, this bottom:28px); the mobile rule solves
-     the same collision the other way round, where this row spans the full
-     width and there is room below instead. */
-  .hero-trust-corner{position:absolute; right:104px; bottom:28px; z-index:1; padding:0;}
-}
-
-/* eyebrow badge above the H1 — keyword-carrying, real content, so (per
-   the pattern used throughout) never pre-hidden in CSS. */
-.hero-kicker{display:inline-flex; align-items:center; gap:8px; padding:8px 16px 8px 14px;
-  border-radius:999px; background:var(--accent-tint); color:var(--accent-strong);
-  font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; margin-bottom:20px;}
-.hero-kicker .dot{width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none;}
-
-.hero-cta{margin-top:28px;}
-
-.hero-trust-row{display:flex; align-items:center; gap:14px; margin-top:20px;}
-.hero-trust-row .hero-trust{margin-top:0;}
-.hero-avatars{display:flex; flex:none;}
-.hero-avatars span{width:32px; height:32px; border-radius:50%; margin-left:-8px;
-  display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:600;
-  color:var(--bg); background:var(--brand); border:2px solid rgba(250,250,247,.35);}
-.hero-avatars span:first-child{margin-left:0;}
-.hero-avatars span:nth-child(2){background:var(--accent-strong);}
-.hero-avatars span:nth-child(3){background:var(--fg);}
-.hero-avatars span:nth-child(4){background:var(--brand-strong);}
-.hero-avatars span:nth-child(5){background:var(--accent);}
-
-/* ground line — the single hero beat borrowed from the "Structural Grid"
-   direction. Pure decoration (no informational content), so it's safe to
-   default to invisible (scaleX 0) in CSS before JS ever runs. */
-.hero-groundline{position:absolute; left:0; right:0; top:38%; height:1px;
-  background:rgba(250,250,247,.22); transform:scaleX(0); transform-origin:left center; pointer-events:none;}
-
-/* faint vertical hairlines extending the groundline into a sparse
-   blueprint-style grid — fills the hero's empty background with texture
-   instead of clutter. Same "pure decoration, safe to default-hidden"
-   reasoning as the groundline above. */
-.hero-grid-lines{position:absolute; inset:0; pointer-events:none;}
-.hero-grid-lines .v{position:absolute; top:0; bottom:0; width:1px;
-  background:rgba(250,250,247,.12); transform:scaleY(0); transform-origin:top;}
-
-/* short supporting line under the H1 — real content, so (per the no-JS
-   rule used throughout) it is never pre-hidden in CSS, only animated by
-   JS once this script is confirmed running. */
-.hero-left{max-width:44rem;}
-.hero-trust{margin-top:20px; max-width:36ch; font-size:15px; line-height:1.55; color:rgba(250,250,247,.75);}
-@media(min-width:1024px){ .hero-trust{font-size:16px;} }
-
-/* curtain wipes — created by JS only, never present without it, so a
-   no-JS visitor can never end up with content stuck under a curtain. */
-.wipe-overlay{position:absolute; inset:0; pointer-events:none; z-index:5;}
-.wipe-overlay--caption{background:#0c0b09;}
-
 /* ---------- generic section heading ---------- */
 .sec-pad{padding-top:80px; padding-bottom:80px;}
 @media(min-width:1024px){ .sec-pad{padding-top:112px; padding-bottom:112px;} }
@@ -316,42 +179,6 @@ header.nav.scrolled .nav-mobile__cta:hover span{color:var(--bg);}
 .about-checklist .check{flex:none; margin-top:1px; width:20px; height:20px; border-radius:50%;
   background:var(--brand-tint); color:var(--brand-strong); font-size:11px; font-weight:700;
   display:flex; align-items:center; justify-content:center;}
-
-/* Homepage-only About layout: copy beside a framed 2x2 mosaic, replacing the
-   plain checklist above for this section specifically. .about-checklist
-   itself is untouched — every service subpage still uses it as-is. */
-.about-grid{display:grid; grid-template-columns:1fr; gap:48px; align-items:center;}
-@media(min-width:1024px){ .about-grid{grid-template-columns:1.05fr .95fr; gap:64px;} }
-
-/* Framed like a piece of signage: rounded, elevated off the page with a soft
-   long shadow rather than a hard drop shadow, so it reads as inset rather
-   than pasted on. */
-.about-mosaic{display:grid; grid-template-columns:1fr 1fr; border-radius:20px; overflow:hidden;
-  box-shadow:0 44px 88px -34px rgba(29,28,26,.4), 0 1px 1px rgba(29,28,26,.06);}
-/* Height is content-driven (min-height as a floor, not a fixed aspect-ratio):
-   two of the four labels wrap to three lines while the others wrap to two,
-   and a fixed aspect-ratio clipped that third line on narrow screens. Grid
-   rows still size evenly within themselves, so the 2x2 block stays a block. */
-.about-tile{position:relative; display:flex; flex-direction:column; gap:14px;
-  padding:26px 24px; min-height:clamp(128px, 34vw, 172px); overflow:hidden;
-  transition:filter .35s ease;}
-@media(min-width:640px){ .about-tile{padding:32px 28px;} }
-.about-tile:hover{filter:brightness(1.1);}
-/* Checkerboard: dark / brand-green diagonally, matching the logo's two-tone
-   palette rather than introducing a third colour. */
-.about-tile:nth-child(1),.about-tile:nth-child(4){background:var(--fg);}
-.about-tile:nth-child(2),.about-tile:nth-child(3){background:var(--brand);}
-/* Soft top sheen on every tile — the "layering" that keeps four flat colour
-   blocks from reading as a flat colour swatch. Pure light, no texture, so it
-   holds up at any tile size. */
-.about-tile::before{content:""; position:absolute; inset:0; pointer-events:none;
-  background:linear-gradient(165deg, rgba(255,255,255,.10), rgba(255,255,255,0) 46%);}
-.about-tile .chk{position:relative; flex:none; width:26px; height:26px; border-radius:50%;
-  border:1px solid rgba(199,154,68,.5); color:var(--accent); font-size:12px; font-weight:700;
-  display:flex; align-items:center; justify-content:center;}
-.about-tile p{position:relative; max-width:20ch; font-size:14px; line-height:1.45;
-  color:var(--accent-tint);}
-@media(min-width:640px){ .about-tile p{font-size:14.5px;} }
 
 /* ---------- WHY CHOOSE US ---------- */
 .why-layout{margin-top:56px; display:grid; grid-template-columns:1fr; gap:40px; align-items:center;}
@@ -636,14 +463,7 @@ footer{border-top:1px solid var(--border);}
    hide-then-reveal happens a beat later, visible on every hard refresh. */
 @media not all and (prefers-reduced-motion: reduce){
   html.js .reveal,
-  html.js .faq-item,
-  html.js .hero-kicker,
-  html.js .hero-desc,
-  html.js .hero-cta,
-  html.js .hero-chip,
-  html.js .hero-trust-corner{opacity:0;}
-  html.js .hero h1 .line{overflow:hidden;}
-  html.js .hero-seq__line-inner{transform:translateY(110%);}
+  html.js .faq-item{opacity:0;}
 }
 
 /* ---------- MOBILE TOUCH TARGETS ----------
@@ -655,7 +475,6 @@ footer{border-top:1px solid var(--border);}
    both untouched; scoped below 1024px to match the breakpoint used
    throughout rather than shipping chunkier buttons to mouse users. */
 @media(max-width:1023px){
-  .hero-chip{padding-top:12px; padding-bottom:12px;}      /* 40.2 -> 44.2 */
   .svc-index a{padding-top:12px; padding-bottom:12px;}    /* 39.1 -> 45.1 */
   .btn.sm{padding-top:12px; padding-bottom:12px;}         /* 41.9 -> 45.9 */
 }
@@ -669,63 +488,201 @@ footer{border-top:1px solid var(--border);}
 }
 
 /* ---------- TOUR PACKAGES ---------- */
-.pkg-grid{margin-top:48px; display:grid; grid-template-columns:1fr; gap:24px;}
-@media(min-width:640px){ .pkg-grid{grid-template-columns:1fr 1fr;} }
-@media(min-width:1024px){ .pkg-grid{grid-template-columns:repeat(3,1fr); gap:28px;} }
-.pkg-card{display:flex; flex-direction:column; overflow:hidden; border:1px solid var(--border); border-radius:16px; background:#fff;
-  transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;}
-.pkg-card:hover{transform:translateY(-4px); box-shadow:0 18px 40px -22px rgba(12,11,9,.45);}
-.pkg-card .photo{position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--bg-raised);}
-.pkg-card .photo img{width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.16,1,.3,1);}
+/* Portrait/landscape image cards: first two are wide, the rest are tall, so five
+   destinations tile as a 2 + 3 grid on desktop. */
+.pkg-grid{margin-top:48px; display:grid; grid-template-columns:1fr; gap:16px;}
+@media(min-width:760px){
+  .pkg-grid{grid-template-columns:repeat(6,1fr); gap:20px;}
+  .pkg-card{grid-column:span 2; aspect-ratio:3/4.1;}
+  .pkg-card:nth-child(-n+2){grid-column:span 3; aspect-ratio:5/4;}
+}
+.pkg-card{position:relative; display:block; overflow:hidden; isolation:isolate; aspect-ratio:4/5; background:#0b1a13; color:#fff;}
+.pkg-card .photo{position:absolute; inset:0;}
+.pkg-card .photo img{width:100%; height:100%; object-fit:cover; transition:transform 1s cubic-bezier(.16,1,.3,1);}
 .pkg-card:hover .photo img{transform:scale(1.06);}
-.pkg-card .chip{position:absolute; top:14px; left:14px; padding:6px 12px; border-radius:999px; background:rgba(12,11,9,.72); color:var(--bg);
-  font-size:12px; font-weight:600; letter-spacing:.04em;}
-.pkg-card .body{display:flex; flex-direction:column; gap:8px; flex:1; padding:22px 22px 24px;}
-.pkg-card .dest{font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-strong);}
-.pkg-card .dest .sep{opacity:.5; padding:0 4px;}
-.pkg-card h3{font-family:var(--display); font-weight:600; font-size:1.5rem; line-height:1.15; letter-spacing:-.02em;}
-.pkg-card .blurb{font-size:14px; line-height:1.55; color:var(--fg-muted);}
-.pkg-card .foot{margin-top:auto; padding-top:18px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:16px; align-items:flex-end;}
-.pkg-card .label{display:block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-muted);}
-.pkg-card .price{font-family:var(--display); font-weight:600; font-size:1.6rem; color:var(--brand);}
-.pkg-card .per{font-size:12px; color:var(--fg-muted);}
-.pkg-card .next{text-align:right;}
-.pkg-card .date{display:block; font-size:14px; font-weight:600;}
-.pkg-card .few{display:block; margin-top:2px; font-size:12px; font-weight:600; color:#b4532a;}
+.pkg-card::after{content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(to top, rgba(4,22,13,.9) 0%, rgba(4,22,13,.45) 42%, rgba(4,22,13,.1) 68%, rgba(4,22,13,.3) 100%);}
+.pkg-card .chip{position:absolute; top:22px; right:22px; z-index:1; font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;}
+.pkg-card .body{position:absolute; left:0; right:0; bottom:0; z-index:1; padding:26px;}
+.pkg-card .dest{font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#cfe9da;}
+.pkg-card h3{margin-top:8px; font-size:clamp(2rem,2.8vw,2.75rem); color:#fff;}
+.pkg-card .blurb{margin-top:10px; max-width:42ch; font-size:14.5px; line-height:1.5; color:rgba(255,255,255,.86);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+.pkg-card .foot{margin-top:20px; display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px;}
+.pkg-card .facts{display:flex; gap:26px;}
+.pkg-card .facts span{display:block; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.75);}
+.pkg-card .facts strong{display:block; margin-top:2px; font-family:var(--display); font-weight:400; font-size:1.7rem; line-height:1; letter-spacing:.04em; color:#fff;}
+.pkg-card .few{display:block; margin-top:4px; font-size:11.5px; font-weight:700; letter-spacing:.06em; color:#ffd9a8;}
+.pkg-card .go{padding:13px 22px; border:1px solid rgba(255,255,255,.9); font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; transition:background-color .3s, color .3s;}
+.pkg-card:hover .go{background:#fff; color:var(--brand);}
 
 .region-filter{margin-top:32px; display:flex; flex-wrap:wrap; gap:10px;}
-.region-filter a{padding:9px 18px; border:1px solid var(--border); border-radius:999px; font-size:14px; color:var(--fg-muted); transition:all .25s ease;}
+.region-filter a{padding:11px 22px; border:1px solid var(--border); font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--fg-muted); transition:all .25s ease;}
 .region-filter a:hover{border-color:var(--brand); color:var(--brand);}
-.region-filter a.on{background:var(--brand); border-color:var(--brand); color:var(--bg);}
+.region-filter a.on{background:var(--brand); border-color:var(--brand); color:#fff;}
 
 /* Departure calendar */
-.dep-list{margin-top:32px; border:1px solid var(--border); border-radius:16px; overflow:hidden; background:#fff;}
-.dep-row{display:grid; grid-template-columns:1fr; gap:12px; padding:20px 22px; align-items:center;}
-.dep-row + .dep-row{border-top:1px solid var(--border);}
+.dep-list{margin-top:32px; border-top:1px solid var(--fg); background:transparent;}
+.dep-row{display:grid; grid-template-columns:1fr; gap:12px; padding:24px 0; align-items:center; border-bottom:1px solid var(--border);}
 @media(min-width:900px){ .dep-row{grid-template-columns:1.6fr 1fr 1fr auto; gap:24px;} }
-.dep-date strong{display:block; font-family:var(--display); font-size:1.35rem; font-weight:600;}
-.dep-sub,.dep-pkg{font-size:13.5px; color:var(--fg-muted);}
+.dep-date strong{display:block; font-family:var(--display); font-size:2rem; font-weight:400; letter-spacing:.05em; text-transform:uppercase; color:var(--fg); line-height:1.05;}
+.dep-sub,.dep-pkg{font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--fg-muted);}
 .dep-pkg:hover{color:var(--brand); text-decoration:underline;}
-.dep-price{font-family:var(--display); font-size:1.4rem; font-weight:600; color:var(--brand);}
-.dep-price span{font-family:var(--body); font-size:12px; font-weight:400; color:var(--fg-muted);}
-.dep-status{display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600;}
+.dep-price{font-family:var(--display); font-size:1.9rem; font-weight:400; letter-spacing:.04em; color:var(--brand);}
+.dep-price span{font-family:var(--body); font-size:12px; font-weight:400; letter-spacing:.04em; color:var(--fg-muted);}
+.dep-status{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;}
 .dep-status .dot{width:8px; height:8px; border-radius:50%; background:#2f8f5b;}
 .dep-status.few{color:#b4532a;} .dep-status.few .dot{background:#d9772d;}
-.dep-status.full{color:var(--fg-muted);} .dep-status.full .dot{background:#a09b8e;}
+.dep-status.full{color:var(--fg-muted);} .dep-status.full .dot{background:#a3aea7;}
 .dep-actions{display:flex; gap:10px; flex-wrap:wrap;}
 .dep-empty{margin-top:24px; font-size:15px; color:var(--fg-muted);}
 
 /* Package detail */
-.pkg-facts{display:grid; grid-template-columns:1fr 1fr; gap:24px 16px;}
+.pkg-facts{display:grid; grid-template-columns:1fr 1fr; gap:28px 16px;}
 @media(min-width:900px){ .pkg-facts{grid-template-columns:repeat(4,1fr);} }
-.pkg-facts .k{display:block; font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-muted);}
-.pkg-facts .v{display:block; margin-top:6px; font-family:var(--display); font-size:1.4rem; font-weight:600; color:var(--brand);}
+.pkg-facts .k{display:block; font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--fg-muted);}
+.pkg-facts .v{display:block; margin-top:6px; font-family:var(--display); font-size:2rem; font-weight:400; letter-spacing:.05em; text-transform:uppercase; color:var(--brand); line-height:1.05;}
 .pkg-cols{display:grid; grid-template-columns:1fr; gap:48px;}
 @media(min-width:1000px){ .pkg-cols{grid-template-columns:1fr 1fr; gap:72px;} }
-.pkg-list{margin-top:20px; display:grid; gap:12px;}
-.pkg-list div{display:flex; gap:12px; font-size:15px; line-height:1.5;}
-.pkg-list .check{flex:none; color:var(--brand); font-weight:700;}
-.pkg-list.no .check{color:#a09b8e;}
-.page-hero .crumbs{margin-bottom:14px; font-size:13px; color:rgba(250,250,247,.7);}
-.page-hero .crumbs a:hover{color:var(--bg); text-decoration:underline;}
+.pkg-list{margin-top:20px; display:grid; gap:14px;}
+.pkg-list div{display:flex; gap:12px; font-size:15.5px; line-height:1.55;}
+.pkg-list .check{flex:none; color:var(--accent-strong); font-weight:700;}
+.pkg-list.no .check{color:#a3aea7;}
+.page-hero .crumbs{margin-bottom:14px; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.78);}
+.page-hero .crumbs a:hover{color:#fff; text-decoration:underline;}
 .page-hero .hero-actions{margin-top:28px; display:flex; flex-wrap:wrap; gap:14px;}
+
+/* ======================================================================
+   THEME — editorial travel typography on a green & white palette.
+   Condensed uppercase display, clean geometric body, italic serif sub-lines,
+   small bold letter-spaced buttons and square image cards.
+   ====================================================================== */
+html{font-synthesis:none;}
+body{font-family:var(--body); font-size:16.5px; line-height:1.65; letter-spacing:.025em; color:var(--fg-muted); background:var(--bg);}
+
+h1,h2,h3,.display,.h-sec,.manifesto p,.showcase .cap h2,.value-card h3,.vm-card h3,.page-hero h1,
+.proc h3,.blog-feat h3,.blog-sec h3,.post-card h3,.thanks h3,.rich-text h2,.rich-text h3,.rich-text h4{
+  font-family:var(--display); font-weight:400; text-transform:uppercase; letter-spacing:.05em; line-height:1.05; color:var(--fg);}
+.h-sec{font-size:clamp(2.3rem,4.4vw,3.6rem);}
+.rich-text h2{font-size:2rem;} .rich-text h3{font-size:1.6rem;}
+.value-card h3,.vm-card h3,.proc h3{font-size:1.9rem;}
+.blog-feat h3{font-size:2.1rem;} .blog-sec h3,.post-card h3{font-size:1.6rem;}
+.page-hero h1{color:#fff; font-size:clamp(3rem,7.5vw,6rem);}
+.page-hero .overlay{background:linear-gradient(180deg, rgba(4,22,13,.72), rgba(4,22,13,.42) 50%, rgba(4,22,13,.72));}
+.page-hero p{color:rgba(255,255,255,.9);}
+.page-hero .kicker{color:#d4ecdf !important;}
+.value-num{font-family:var(--display); font-weight:400; font-size:1.2rem; letter-spacing:.1em; color:var(--accent-strong);}
+
+.kicker{font-family:var(--body); font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-strong);}
+.sub{margin-top:14px; font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(1.25rem,2vw,1.6rem); letter-spacing:.01em; line-height:1.3; color:var(--fg-muted);}
+
+/* Stats */
+.stat .num{font-family:var(--display); font-weight:400; font-size:3.4rem; line-height:1; letter-spacing:.03em; color:var(--brand);}
+@media(min-width:1024px){ .stat .num{font-size:4.6rem;} }
+.stat p{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; line-height:1.4;}
+
+/* Buttons: small, bold, uppercase, square. */
+.btn{border-radius:0; padding:16px 30px; font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; background:var(--brand); color:#fff;}
+.btn::before{background:var(--brand-strong);}
+.btn:hover span{color:#fff;}
+.btn.sm{padding:12px 20px; font-size:11.5px;}
+.btn.outline{background:transparent; color:var(--fg); border:1px solid var(--fg);}
+.btn.outline::before{background:var(--brand);}
+.btn.outline:hover span{color:#fff;}
+.btn.outline:hover{border-color:var(--brand);}
+.btn.on-brand{background:#fff; color:var(--brand);}
+.btn.on-brand::before{background:var(--accent-tint);}
+.btn.on-brand span{color:var(--brand);}
+.btn.on-brand:hover span{color:var(--brand-strong);}
+.btn.outline-light{background:transparent; color:#fff; border:1px solid rgba(255,255,255,.85);}
+.btn.outline-light::before{background:#fff;}
+.btn.outline-light:hover span{color:var(--brand);}
+
+/* Header */
+header.nav{background:rgba(255,255,255,.95);}
+nav.links a{font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--fg);}
+nav.links a:hover{color:var(--accent-strong);}
+header.nav.scrolled nav.links a{color:rgba(255,255,255,.88);}
+header.nav.scrolled nav.links a:hover{color:#fff;}
+header.nav.scrolled .btn.nav-cta{background:#fff;}
+header.nav.scrolled .btn.nav-cta span{color:var(--brand);}
+header.nav.scrolled .btn.nav-cta::before{background:var(--accent-tint);}
+.nav-mobile__links a{font-size:13px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;}
+header.nav.scrolled .nav-mobile__cta{background:#fff;}
+header.nav.scrolled .nav-mobile__cta span{color:var(--brand);}
+/* Over the home hero the bar is transparent with white type until the page scrolls. */
+header.nav.nav--overlay{background:transparent; border-bottom-color:transparent; backdrop-filter:none; color:#fff;}
+header.nav.nav--overlay .brand .logo{filter:brightness(0) invert(1);}
+header.nav.nav--overlay nav.links a{color:rgba(255,255,255,.92);}
+header.nav.nav--overlay nav.links a:hover{color:#fff;}
+header.nav.nav--overlay .nav-menu-btn{color:#fff;}
+header.nav.nav--overlay .btn.nav-cta{background:transparent; border:1px solid rgba(255,255,255,.85);}
+header.nav.nav--overlay .btn.nav-cta::before{background:#fff;}
+header.nav.nav--overlay .btn.nav-cta:hover span{color:var(--brand);}
+
+/* Square photography */
+.why-photo,.post-card .img,.gallery-item,.marquee-track .cell,.svc-row-photo,.map-embed{border-radius:0;}
+.marquee{background:var(--bg-raised);}
+.about-checklist .check{background:var(--brand-tint); color:var(--brand-strong);}
+
+/* FAQ */
+.faq-item{border-top-color:var(--fg);}
+.faq-item:last-child{border-bottom-color:var(--fg);}
+.faq-num{font-family:var(--display); font-weight:400; font-size:1.4rem; letter-spacing:.06em; color:var(--accent-strong);}
+.faq-q{font-family:var(--body); font-weight:700; font-size:15px; letter-spacing:.08em; text-transform:uppercase; color:var(--fg);}
+@media(min-width:1024px){ .faq-q{font-size:16px;} }
+
+/* Final CTA (inline sizes on some pages, hence !important) */
+.final-cta{background:var(--brand);}
+.final-cta .kicker{color:#cfe9da;}
+.final-cta h2{font-family:var(--display) !important; font-weight:400 !important; text-transform:uppercase; letter-spacing:.05em !important; line-height:1.04 !important;
+  font-size:clamp(2.8rem,6vw,4.8rem) !important; color:#fff !important;}
+
+/* Forms, footer */
+.field label{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--fg);}
+.field input,.field textarea{border-radius:0; background:#fff; border-color:var(--border);}
+.field input:focus,.field textarea:focus{border-color:var(--brand);}
+.contact-info .dot{background:var(--accent);}
+.foot-h{font-family:var(--body); font-weight:700; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--fg);}
+.foot-nav a{letter-spacing:.03em;}
+.rich-text a{color:var(--accent-strong);}
+.rich-text blockquote{border-left-color:var(--accent);}
+
+/* ---------- HOME HERO: full-bleed photo slider ---------- */
+.mhero{position:relative; margin-top:calc(-1 * var(--nav-h)); min-height:100svh; overflow:hidden; background:#06180f; color:#fff; display:flex; align-items:flex-end; border-top:none;}
+.mhero-slide{position:absolute; inset:0; opacity:0; transition:opacity 1.4s ease;}
+.mhero-slide.on{opacity:1;}
+.mhero-slide img{width:100%; height:100%; object-fit:cover; transform:scale(1.04); transition:transform 9s linear;}
+.mhero-slide.on img{transform:scale(1.13);}
+.mhero::after{content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(to bottom, rgba(4,22,13,.55) 0%, rgba(4,22,13,.12) 32%, rgba(4,22,13,.2) 55%, rgba(4,22,13,.82) 100%);}
+.mhero-inner{position:relative; z-index:2; width:100%; padding-bottom:150px;}
+.mhero-place{font-size:12px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:#d4ecdf;}
+.mhero h1{margin-top:14px; max-width:15ch; color:#fff; font-size:clamp(3.6rem,10.5vw,9rem); line-height:.95; letter-spacing:.04em;}
+.mhero .sub{max-width:44ch; margin-top:22px; color:rgba(255,255,255,.92); font-size:clamp(1.25rem,2.2vw,1.7rem);}
+.mhero-cta{margin-top:30px; display:flex; flex-wrap:wrap; gap:14px;}
+.mhero-ui{position:absolute; z-index:3; left:0; right:0; bottom:0; padding:0 0 30px;}
+.mhero-ui .wrap{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+.mhero-next{min-width:150px; text-align:left; background:none; border:none; color:#fff; cursor:pointer; padding:0;}
+.mhero-next small{display:block; font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.8);}
+.mhero-next em{display:block; margin-top:2px; font-family:var(--serif); font-size:1.5rem; font-weight:500; letter-spacing:.01em;}
+.mhero-bars{display:flex; gap:8px; flex:1 1 160px; max-width:340px;}
+.mhero-bar{position:relative; flex:1; height:3px; padding:0; border:none; cursor:pointer; background:rgba(255,255,255,.35); overflow:hidden;}
+.mhero-bar span{position:absolute; inset:0; background:#fff; transform:scaleX(0); transform-origin:left;}
+.mhero-bar.done span{transform:scaleX(1);}
+.mhero-bar.on span{animation:mheroFill var(--mhero-ms, 6500ms) linear forwards;}
+@keyframes mheroFill{from{transform:scaleX(0);} to{transform:scaleX(1);}}
+.mhero-arrows{display:flex; gap:10px;}
+.mhero-arrows button{width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.7); background:rgba(255,255,255,.08); color:#fff; font-size:18px; line-height:1; cursor:pointer; transition:background-color .25s, color .25s;}
+.mhero-arrows button:hover{background:#fff; color:var(--brand);}
+@media(max-width:700px){ .mhero-inner{padding-bottom:170px;} .mhero-ui .wrap{gap:16px;} .mhero-arrows{margin-left:auto; margin-right:72px;} }
+@media(prefers-reduced-motion:reduce){ .mhero-slide,.mhero-slide img{transition:none;} .mhero-slide.on img{transform:none;} .mhero-bar.on span{animation:none; transform:scaleX(1);} }
+
+/* ---------- HOME INTRO ---------- */
+.intro-grid{display:grid; grid-template-columns:1fr; gap:36px; align-items:start;}
+@media(min-width:1024px){ .intro-grid{grid-template-columns:1fr 1fr; gap:96px;} }
+.intro-grid p.body-copy{max-width:56ch; font-size:17px; line-height:1.75;}
+
+.stats-grid.cols-4{grid-template-columns:1fr 1fr;}
+@media(min-width:1024px){ .stats-grid.cols-4{grid-template-columns:repeat(4,1fr);} }
+@media(min-width:760px){ .pkg-grid.three .pkg-card:nth-child(n){grid-column:span 2; aspect-ratio:3/4.1;} }

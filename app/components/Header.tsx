@@ -75,9 +75,12 @@ export default function Header() {
     };
   }, [open]);
 
+  // Transparent over the home hero until the page scrolls or the menu opens.
+  const overlay = pathname === "/" && !scrolled && !open;
+
   return (
     <header
-      className={`nav${scrolled ? " scrolled" : ""}${open ? " menu-open" : ""}`}
+      className={`nav${scrolled ? " scrolled" : ""}${open ? " menu-open" : ""}${overlay ? " nav--overlay" : ""}`}
       id="nav"
     >
       <div className="wrap nav-inner">

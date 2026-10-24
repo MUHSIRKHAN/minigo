@@ -231,7 +231,7 @@ export default async function PackageDetailPage({
           <h2 className="h-sec reveal" style={{ marginTop: 12 }}>
             More journeys.
           </h2>
-          <div className="pkg-grid">
+          <div className="pkg-grid three">
             {related.map((p) => (
               <PackageCard key={p.slug} pkg={p} />
             ))}

@@ -12,8 +12,8 @@ export default function Footer() {
         <div className="foot-brand">
           <Image className="logo" src={BUSINESS.logo} alt={BUSINESS.name} width={640} height={170} />
           <p>
-            {BUSINESS.tagline} Premium tour packages with fixed departure dates, handpicked stays
-            and expert local guides.
+            Premium small-group and private tours to Vietnam, Kazakhstan, Tajikistan, Kashmir and
+            Thailand, with fixed departure dates and expert local guides.
           </p>
           <div className="foot-social">
             <Link

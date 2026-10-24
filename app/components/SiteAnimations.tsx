@@ -160,10 +160,8 @@ export default function SiteAnimations() {
         gsap.ticker.lagSmoothing(0);
 
         // ---- HERO ----
-        // The hero's entrance is owned entirely by <HeroSequence>: it pins the
-        // section, scrubs the canvas flight-in, and stages the copy against
-        // that same scroll. Nothing here may animate hero content, or the two
-        // would fight over the same transforms.
+        // The home hero (HeroSlider) animates itself — nothing here may touch
+        // hero content, or the two would fight over the same transforms.
         gsap.from("#nav", { opacity: 0, y: -8, duration: DUR.micro, ease: EASE_OUT });
 
         // ---- MANIFESTO ----

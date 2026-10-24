@@ -13,6 +13,8 @@ export default function PackageCard({ pkg }: { pkg: TourPackage }) {
   const price = startingPrice(pkg);
   const next = nextDeparture(pkg);
   const status = next ? departureStatus(next) : null;
+  // "Vietnam: Hanoi, Ha Long & Hoi An" → the country is the label, the route is the title.
+  const [, route] = pkg.title.split(": ");
 
   return (
     <Link href={`/packages/${pkg.slug}`} className="pkg-card reveal">
@@ -21,35 +23,27 @@ export default function PackageCard({ pkg }: { pkg: TourPackage }) {
           src={pkg.image}
           alt={pkg.title}
           fill
-          sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+          sizes="(max-width: 759px) 100vw, (max-width: 1100px) 50vw, 33vw"
         />
-        <span className="chip">
-          {pkg.nights + 1} days · {pkg.nights} nights
-        </span>
       </div>
+      <span className="chip">{pkg.nights} nights</span>
       <div className="body">
-        <p className="dest">
-          {pkg.destination} <span className="sep">/</span> {pkg.style}
-        </p>
-        <h3>{pkg.title}</h3>
-        <p className="blurb">{pkg.summary}</p>
+        <p className="dest">{pkg.destination}</p>
+        <h3>{route ?? pkg.title}</h3>
+        <p className="blurb">{pkg.tagline}</p>
         <div className="foot">
-          <div>
-            <span className="label">From</span>
-            <span className="price">{price !== null ? formatPrice(price) : "On request"}</span>
-            {price !== null ? <span className="per"> / person</span> : null}
+          <div className="facts">
+            <div>
+              <span>From</span>
+              <strong>{price !== null ? formatPrice(price) : "On request"}</strong>
+            </div>
+            <div>
+              <span>Next departure</span>
+              <strong>{next ? formatDate(next.date) : "Soon"}</strong>
+              {status && status.tone === "few" ? <em className="few">{status.label}</em> : null}
+            </div>
           </div>
-          <div className="next">
-            {next ? (
-              <>
-                <span className="label">Next departure</span>
-                <span className="date">{formatDate(next.date)}</span>
-                {status && status.tone === "few" ? <span className="few">{status.label}</span> : null}
-              </>
-            ) : (
-              <span className="label">Dates coming soon</span>
-            )}
-          </div>
+          <span className="go">Explore trip</span>
         </div>
       </div>
     </Link>

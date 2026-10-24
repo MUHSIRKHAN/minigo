@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import HeroSequence from "./components/HeroSequence";
+import HeroSlider from "./components/HeroSlider";
 import PackageCard from "./components/PackageCard";
 import DepartureList from "./components/DepartureList";
 import EnquiryForm from "./components/EnquiryForm";
@@ -15,7 +15,7 @@ const padTop96Bottom128: CSSProperties = { paddingTop: 96, paddingBottom: 128 };
 
 const WHY_US = [
   "Fixed departure dates & transparent prices",
-  "Handpicked hotels, villas and lodges",
+  "Handpicked hotels, houseboats, lodges and homestays",
   "Expert local guides on every tour",
   "Small groups for a more personal trip",
   "Tailor-made itineraries on request",
@@ -39,12 +39,12 @@ const FAQS = [
     a: "Every package lists exactly what is included — usually accommodation, breakfast, internal transfers, guides and the activities in the itinerary — and what is not, such as international flights and travel insurance.",
   },
   {
-    q: "Can I travel on different dates or customise a tour?",
-    a: "Yes. We design private and tailor-made versions of every itinerary for couples, families and groups, with the dates, pace and hotels you prefer.",
+    q: "When is the best time to visit each destination?",
+    a: "Vietnam and Thailand are at their best from November to March, Kashmir in spring and autumn, and Kazakhstan and Tajikistan from late May to September. Our departure dates follow those seasons.",
   },
   {
-    q: "How do I book and pay?",
-    a: "Send an enquiry from any departure. We confirm availability, share a final quote and send secure payment instructions — your seats are not charged until you have confirmed.",
+    q: "Can I travel on different dates or customise a tour?",
+    a: "Yes. We design private and tailor-made versions of every itinerary for couples, families and groups, with the dates, pace and hotels you prefer.",
   },
   {
     q: "Do you help with visas and travel insurance?",
@@ -60,79 +60,33 @@ export default async function Home() {
 
   const departures = allUpcomingDepartures();
   const nextDepartures = departures.slice(0, 5);
+  const heroSlides = PACKAGES.map((pkg) => ({
+    label: pkg.destination.split(",")[0],
+    image: pkg.image,
+    href: `/packages/${pkg.slug}`,
+  }));
 
   return (
     <>
       <Header />
 
-      {/* HERO */}
-      <section id="top" className="hero">
-        <HeroSequence />
-        <div className="hero-groundline" aria-hidden="true"></div>
-        <div className="hero-grid-lines" aria-hidden="true">
-          <span className="v" style={{ left: "20%" }}></span>
-          <span className="v" style={{ left: "50%" }}></span>
-          <span className="v" style={{ left: "80%" }}></span>
-        </div>
-        <div className="wrap hero-content">
-          <span className="hero-kicker">
-            <span className="dot" aria-hidden="true"></span>Premium tours · Fixed departure dates
-          </span>
-          <h1 className="display">
-            <span className="line">
-              <span className="hero-seq__line-inner">Journeys worth</span>
-            </span>
-            <span className="line accent">
-              <span className="hero-seq__line-inner">leaving home for.</span>
-            </span>
-          </h1>
-          <p className="hero-desc">
-            {BUSINESS.name} designs premium tour packages with handpicked stays, expert local
-            guides and dated departures you can book today — from overwater villas and alpine
-            railways to desert camps and blossom-season Japan.
-          </p>
-          <div className="hero-cta" style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <Link href="/packages" className="btn">
-              <span>Explore Tour Packages</span>
-            </Link>
-            <Link href="#departures" className="btn outline-light">
-              <span>See Departure Dates</span>
-            </Link>
-          </div>
-          <div className="hero-chips">
-            {REGIONS.map((region) => (
-              <Link key={region} href={`/packages?region=${encodeURIComponent(region)}`} className="hero-chip">
-                {region}
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div className="hero-trust-row hero-trust-corner">
-          <p className="hero-trust">Small groups · Local experts · Dated departures</p>
-        </div>
-      </section>
+      <HeroSlider slides={heroSlides} />
 
       {/* STATS */}
       <section>
         <div className="wrapc" style={{ paddingTop: 64, paddingBottom: 64 }}>
-          <div className="stats-grid">
+          <div className="stats-grid cols-4">
             <div className="stat reveal">
               <div className="num" data-count={PACKAGES.length} data-suffix="">
                 0
               </div>
-              <p>Curated tour packages</p>
+              <p>Destinations across Asia</p>
             </div>
             <div className="stat reveal">
               <div className="num" data-count={departures.length} data-suffix="">
                 0
               </div>
               <p>Upcoming departures open to book</p>
-            </div>
-            <div className="stat reveal">
-              <div className="num" data-count={REGIONS.length} data-suffix="">
-                0
-              </div>
-              <p>Regions of the world covered</p>
             </div>
             <div className="stat reveal">
               <div className="num" data-count="14" data-suffix="">
@@ -150,29 +104,48 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* MANIFESTO */}
-      <section className="manifesto">
-        <div className="wrap">
-          <p>
-            {BUSINESS.tagline} <em>Travel, beautifully planned.</em>
-          </p>
-          <div className="reveal" style={{ marginTop: 40 }}>
-            <Link href="/about" className="btn">
-              <span>About Us</span>
-            </Link>
+      {/* INTRO */}
+      <section id="about">
+        <div className="wrapc" style={padTop96Bottom128}>
+          <div className="intro-grid">
+            <div>
+              <p className="kicker reveal">Welcome to {BUSINESS.name}</p>
+              <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
+                What we do and why we do it
+              </h2>
+              <p className="sub reveal">Remarkable places, thoughtfully planned.</p>
+            </div>
+            <div className="reveal">
+              <p className="body-copy">
+                A great holiday is rarely about ticking off sights — it is the pace, the people and
+                the places you stay. {BUSINESS.name} builds premium tours to Vietnam, Kazakhstan,
+                Tajikistan, Kashmir and Thailand around handpicked stays, knowledgeable local
+                guides and itineraries with room to breathe, then puts real dates and clear prices
+                on every one so planning is simple.
+              </p>
+              <div style={{ marginTop: 32, display: "flex", gap: 16, flexWrap: "wrap" }}>
+                <Link href="/about" className="btn">
+                  <span>About Us</span>
+                </Link>
+                <Link href="/contact-us#enquiry" className="btn outline">
+                  <span>Plan My Trip</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* FEATURED TOURS */}
-      <section id="tours">
-        <div className="wrapc sec-pad" style={padTop96Bottom128}>
+      {/* TRIPS */}
+      <section id="tours" style={{ background: "var(--bg-raised)" }}>
+        <div className="wrapc" style={padTop96Bottom128}>
           <p className="kicker reveal">Tour packages</p>
-          <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "40ch" }}>
-            Handpicked journeys, ready to book.
+          <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
+            Explore our trips
           </h2>
+          <p className="sub reveal">Remarkable journeys to inspire the mind.</p>
           <div className="pkg-grid">
-            {PACKAGES.slice(0, 6).map((pkg) => (
+            {PACKAGES.map((pkg) => (
               <PackageCard key={pkg.slug} pkg={pkg} />
             ))}
           </div>
@@ -185,66 +158,18 @@ export default async function Home() {
       </section>
 
       {/* DEPARTURES */}
-      <section id="departures" style={{ background: "var(--bg-raised)" }}>
+      <section id="departures">
         <div className="wrapc" style={padTop96Bottom128}>
           <p className="kicker reveal">Next departures</p>
-          <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "40ch" }}>
-            Dates you can book right now.
+          <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
+            Dates you can book right now
           </h2>
+          <p className="sub reveal">Fixed dates, fixed prices, live seat availability.</p>
           <DepartureList rows={nextDepartures} showPackage />
           <div className="reveal" style={{ marginTop: 40 }}>
             <Link href="/packages#departures" className="btn outline">
               <span>Full departure calendar</span>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT */}
-      <section id="about">
-        <div className="wrapc" style={{ paddingTop: 96, paddingBottom: 112 }}>
-          <div className="about-grid">
-            <div>
-              <p className="kicker reveal">Welcome to {BUSINESS.name}</p>
-              <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "44ch" }}>
-                Travel designed around how you want to feel.
-              </h2>
-              <p
-                className="reveal"
-                style={{ marginTop: 20, maxWidth: "52ch", fontSize: "15.5px", lineHeight: 1.6, color: "var(--fg-muted)" }}
-              >
-                A great holiday is rarely about ticking off sights — it is the pace, the people
-                and the places you stay. At {BUSINESS.name} we build every package around
-                handpicked hotels, knowledgeable local guides and itineraries with room to breathe,
-                then put real dates and clear prices on them so planning is simple.
-              </p>
-              <div className="reveal" style={{ marginTop: 32, display: "flex", gap: 16, flexWrap: "wrap" }}>
-                <Link href="/contact-us#enquiry" className="btn">
-                  <span>Plan My Trip</span>
-                </Link>
-                <Link href="/packages" className="btn outline">
-                  <span>Browse tours</span>
-                </Link>
-              </div>
-            </div>
-            <div className="about-mosaic reveal">
-              <div className="about-tile">
-                <span className="chk" aria-hidden="true">✓</span>
-                <p>Handpicked stays &amp; experiences</p>
-              </div>
-              <div className="about-tile">
-                <span className="chk" aria-hidden="true">✓</span>
-                <p>Expert local guides</p>
-              </div>
-              <div className="about-tile">
-                <span className="chk" aria-hidden="true">✓</span>
-                <p>Fixed dates &amp; transparent pricing</p>
-              </div>
-              <div className="about-tile">
-                <span className="chk" aria-hidden="true">✓</span>
-                <p>Private &amp; tailor-made options</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -255,17 +180,18 @@ export default async function Home() {
           <div className="why-layout">
             <div className="why-photo reveal">
               <Image
-                src="https://images.unsplash.com/photo-1527668752968-14dc70a27c95?w=900&q=80&fm=jpg&fit=crop&auto=format"
-                alt="Travellers on a scenic mountain railway"
+                src="https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=1000&q=80&fm=jpg&fit=crop&auto=format"
+                alt="Boats on Dal Lake, Kashmir"
                 fill
                 sizes="(max-width: 900px) 100vw, 480px"
               />
             </div>
             <div>
               <p className="kicker reveal">Why {BUSINESS.name}</p>
-              <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "44ch" }}>
-                Why travel with us?
+              <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
+                Why travel with us
               </h2>
+              <p className="sub reveal">Small groups. Local experts. Nothing left to chance.</p>
               <div className="about-checklist">
                 {WHY_US.map((item) => (
                   <div className="reveal" key={item}>
@@ -279,21 +205,18 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* DESTINATIONS */}
+      {/* REGIONS */}
       <section id="destinations">
-        <div className="wrapc" style={padTop96Bottom128}>
+        <div className="wrapc" style={{ paddingTop: 80, paddingBottom: 96 }}>
           <p className="kicker reveal">Where we take you</p>
-          <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "46ch" }}>
-            Destinations on our departure calendar.
-          </h2>
-          <div className="jur-list">
-            {PACKAGES.map((pkg) => (
-              <Link key={pkg.slug} href={`/packages/${pkg.slug}`} className="reveal">
-                {pkg.destination}
-                <span className="comma">,</span>
+          <nav className="region-filter reveal" aria-label="Browse by region">
+            {REGIONS.map((region) => (
+              <Link key={region} href={`/packages?region=${encodeURIComponent(region)}`}>
+                {region}
               </Link>
             ))}
-          </div>
+            <Link href="/packages">All destinations</Link>
+          </nav>
         </div>
       </section>
 
@@ -301,12 +224,13 @@ export default async function Home() {
       <section style={{ borderTop: "none" }}>
         <div className="wrapc" style={padTop96Bottom128}>
           <p className="kicker reveal">How it works</p>
-          <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "52ch" }}>
-            From first idea to boarding pass.
+          <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
+            From first idea to boarding pass
           </h2>
           <div className="proc-grid">
-            {PROCESS.map((step) => (
+            {PROCESS.map((step, i) => (
               <div className="proc reveal" key={step.title}>
+                <span className="value-num">{String(i + 1).padStart(2, "0")}</span>
                 <h3>{step.title}</h3>
                 <p>{step.body}</p>
               </div>
@@ -316,11 +240,11 @@ export default async function Home() {
       </section>
 
       {/* FAQ */}
-      <section id="faq">
+      <section id="faq" style={{ background: "var(--bg-raised)" }}>
         <div className="wrapc" style={padTop96Bottom128}>
           <p className="kicker reveal">FAQs</p>
-          <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "44ch" }}>
-            Frequently asked questions.
+          <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
+            Frequently asked questions
           </h2>
           <div className="faq-list">
             {FAQS.map((faq, i) => (
@@ -361,9 +285,7 @@ export default async function Home() {
       {featuredPost ? (
         <section id="insights">
           <div className="wrapc" style={padTop96Bottom128}>
-            <h2 className="h-sec reveal" style={{ maxWidth: "52ch" }}>
-              Stories and travel tips from the Travel Journal.
-            </h2>
+            <h2 className="h-sec reveal">Stories from the Travel Journal</h2>
             <div className="blog-grid">
               <Link href={`/blogs/${featuredPost.slug}`} className="blog-feat reveal">
                 <div className="img">
@@ -425,43 +347,23 @@ export default async function Home() {
 
       {/* FINAL CTA */}
       <section className="final-cta">
-        <div className="wrapc" style={{ paddingTop: 96, paddingBottom: 96, textAlign: "center" }}>
+        <div className="wrapc" style={{ paddingTop: 110, paddingBottom: 110, textAlign: "center" }}>
           <p className="kicker reveal">Ready when you are</p>
-          <h2
-            className="reveal display"
-            style={{
-              marginTop: 12,
-              maxWidth: "32ch",
-              marginLeft: "auto",
-              marginRight: "auto",
-              fontWeight: 500,
-              fontSize: "2.5rem",
-              lineHeight: 1.05,
-              color: "var(--bg)",
-            }}
-          >
+          <h2 className="reveal display" style={{ marginTop: 14, maxWidth: "20ch", marginLeft: "auto", marginRight: "auto" }}>
             Where will you wake up next?
           </h2>
           <p
-            className="reveal"
-            style={{
-              marginTop: 16,
-              maxWidth: "52ch",
-              marginLeft: "auto",
-              marginRight: "auto",
-              fontSize: "15.5px",
-              color: "rgba(250,250,247,.75)",
-            }}
+            className="sub reveal"
+            style={{ marginLeft: "auto", marginRight: "auto", maxWidth: "46ch", color: "rgba(255,255,255,.88)" }}
           >
-            Pick a departure, or tell us about the trip you have been dreaming of — {BUSINESS.name}{" "}
-            will take it from there.
+            Pick a departure, or tell us about the trip you have been dreaming of.
           </p>
           <div
             className="reveal"
-            style={{ marginTop: 32, display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}
+            style={{ marginTop: 36, display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}
           >
             <Link href="/packages" className="btn on-brand">
-              <span>Explore Tour Packages</span>
+              <span>Explore Trips</span>
             </Link>
             <Link
               href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}

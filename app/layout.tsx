@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { Cabin, Cormorant_Garamond, League_Gothic } from "next/font/google";
 import "./globals.css";
 import SiteAnimations from "./components/SiteAnimations";
 import WhatsAppButton from "./components/WhatsAppButton";
@@ -7,20 +7,28 @@ import GoogleTagManager from "./components/GoogleTagManager";
 import GoogleTagManagerNoscript from "./components/GoogleTagManagerNoscript";
 import { BUSINESS, SITE_URL } from "./lib/site";
 
-const cormorantGaramond = Cormorant_Garamond({
+// Display: condensed uppercase headings. Body: clean geometric sans. Serif italic: sub-headings.
+const leagueGothic = League_Gothic({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: "400",
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const cabin = Cabin({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
+const cormorantItalic = Cormorant_Garamond({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  style: ["italic"],
+  weight: ["400", "500", "600"],
+});
+
 const DEFAULT_TITLE =
-  "Minigo Holidays | Premium Tour Packages & Holidays";
+  "Minigo Holidays | Premium Tours to Vietnam, Kazakhstan, Tajikistan, Kashmir & Thailand";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -73,7 +81,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorantGaramond.variable} ${plusJakartaSans.variable}`}
+      className={`${leagueGothic.variable} ${cabin.variable} ${cormorantItalic.variable}`}
       suppressHydrationWarning
     >
       <body>

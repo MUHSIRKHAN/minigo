@@ -4,6 +4,8 @@ const payloadUrl = new URL(process.env.PAYLOAD_URL || "http://localhost:3000");
 
 const nextConfig: NextConfig = {
   images: {
+    // 85 is used by the full-bleed hero photos; 75 is the default everywhere else.
+    qualities: [75, 85],
     // Next.js 16 blocks optimizing images from local IPs by default.
     // Required for local Payload CMS media during development.
     dangerouslyAllowLocalIP: true,

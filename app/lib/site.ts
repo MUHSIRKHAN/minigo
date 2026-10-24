@@ -5,9 +5,9 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://minigoholi
 export const BUSINESS = {
   name: "Minigo Holidays",
   shortName: "Minigo Holidays",
-  tagline: "Discover. Wander. Belong.",
+  tagline: "Premium journeys across Asia.",
   description:
-    "Minigo Holidays designs premium, small-group and private tour packages — handpicked stays, expert local guides and seamless planning, with fixed departure dates you can book today.",
+    "Minigo Holidays designs premium small-group and private tours to Vietnam, Kazakhstan, Tajikistan, Kashmir and Thailand — handpicked stays, expert local guides and fixed departure dates you can book today.",
   streetAddress: "Your office address, street and area",
   addressLocality: "City",
   addressCountry: "Country",
@@ -22,7 +22,7 @@ export const BUSINESS = {
   logo: "/assets/minigo-logo.svg",
   // Share-card image must be a raster file on an absolute URL for most crawlers.
   ogImage:
-    "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format",
+    "https://images.unsplash.com/photo-1643029891412-92f9a81a8c16?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format",
 } as const;
 
 export function whatsappLink(message: string): string {
