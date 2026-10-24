@@ -28,24 +28,6 @@ export default function Header() {
     setOpen(false);
   }
 
-  // Whether the bar has scrolled far enough to switch to its solid brand
-  // styling. This has to live in React state rather than being toggled onto
-  // #nav imperatively from outside: the JSX below rewrites className on every
-  // render, so opening the menu wiped an externally-added `scrolled` class and
-  // dropped the bar back to its transparent treatment until the next scroll.
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const sync = () => setScrolled(window.scrollY > window.innerHeight * 0.55);
-    sync();
-    window.addEventListener("scroll", sync, { passive: true });
-    window.addEventListener("resize", sync);
-    return () => {
-      window.removeEventListener("scroll", sync);
-      window.removeEventListener("resize", sync);
-    };
-  }, []);
-
   useEffect(() => {
     if (!open) return;
 
@@ -75,12 +57,9 @@ export default function Header() {
     };
   }, [open]);
 
-  // Transparent over the home hero until the page scrolls or the menu opens.
-  const overlay = pathname === "/" && !scrolled && !open;
-
   return (
     <header
-      className={`nav${scrolled ? " scrolled" : ""}${open ? " menu-open" : ""}${overlay ? " nav--overlay" : ""}`}
+      className={`nav${open ? " menu-open" : ""}`}
       id="nav"
     >
       <div className="wrap nav-inner">
