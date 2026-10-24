@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cabin, Cormorant_Garamond, League_Gothic } from "next/font/google";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
 import SiteAnimations from "./components/SiteAnimations";
 import WhatsAppButton from "./components/WhatsAppButton";
@@ -7,24 +7,18 @@ import GoogleTagManager from "./components/GoogleTagManager";
 import GoogleTagManagerNoscript from "./components/GoogleTagManagerNoscript";
 import { BUSINESS, SITE_URL } from "./lib/site";
 
-// Display: condensed uppercase headings. Body: clean geometric sans. Serif italic: sub-headings.
-const leagueGothic = League_Gothic({
+// Display: refined high-contrast serif for headings. Body: clean geometric sans.
+const cormorant = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: "400",
-});
-
-const cabin = Cabin({
-  variable: "--font-body",
-  subsets: ["latin"],
+  style: ["normal", "italic"],
   weight: ["400", "500", "600", "700"],
 });
 
-const cormorantItalic = Cormorant_Garamond({
-  variable: "--font-serif",
+const jost = Jost({
+  variable: "--font-body",
   subsets: ["latin"],
-  style: ["italic"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const DEFAULT_TITLE =
@@ -81,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${leagueGothic.variable} ${cabin.variable} ${cormorantItalic.variable}`}
+      className={`${cormorant.variable} ${jost.variable}`}
       suppressHydrationWarning
     >
       <body>
