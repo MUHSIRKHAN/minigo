@@ -62,23 +62,23 @@ export default function AboutPage() {
         <div className="wrapc" style={{ paddingTop: 64, paddingBottom: 64 }}>
           <div className="stats-grid">
             <div className="stat reveal">
-              <div className="num" data-count={PACKAGES.length} data-suffix="">0</div>
+              <div className="num" data-count={PACKAGES.length} data-suffix="">{PACKAGES.length}</div>
               <p>Curated tour packages</p>
             </div>
             <div className="stat reveal">
-              <div className="num" data-count={departures} data-suffix="">0</div>
+              <div className="num" data-count={departures} data-suffix="">{departures}</div>
               <p>Upcoming departures</p>
             </div>
             <div className="stat reveal">
-              <div className="num" data-count={REGIONS.length} data-suffix="">0</div>
+              <div className="num" data-count={REGIONS.length} data-suffix="">{REGIONS.length}</div>
               <p>Regions covered</p>
             </div>
             <div className="stat reveal">
-              <div className="num" data-count="14" data-suffix="">0</div>
+              <div className="num" data-count="14" data-suffix="">14</div>
               <p>Guests at most per group</p>
             </div>
             <div className="stat reveal">
-              <div className="num" data-count="24" data-suffix="h">0h</div>
+              <div className="num" data-count="24" data-suffix="h">24h</div>
               <p>Typical reply time</p>
             </div>
           </div>

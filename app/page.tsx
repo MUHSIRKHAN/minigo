@@ -97,25 +97,25 @@ export default async function Home() {
           <div className="stats-grid cols-4">
             <div className="stat reveal">
               <div className="num" data-count={PACKAGES.length} data-suffix="">
-                0
+                {PACKAGES.length}
               </div>
               <p>Destinations across Asia</p>
             </div>
             <div className="stat reveal">
               <div className="num" data-count={departures.length} data-suffix="">
-                0
+                {departures.length}
               </div>
               <p>Upcoming departures open to book</p>
             </div>
             <div className="stat reveal">
               <div className="num" data-count="14" data-suffix="">
-                0
+                14
               </div>
               <p>Guests at most on a small-group tour</p>
             </div>
             <div className="stat reveal">
               <div className="num" data-count="24" data-suffix="h">
-                0h
+                24h
               </div>
               <p>Typical reply time to an enquiry</p>
             </div>

@@ -836,3 +836,142 @@ h1,h2,h3,.display,.h-sec,.manifesto p,.showcase .cap h2,.value-card h3,.vm-card 
 .pkg-card .tag-date{left:16px;}
 .pkg-card .tag-alert{right:16px; align-self:start; background:#fff; color:var(--brand); font-weight:700;}
 .pkg-card .few{display:none;}
+
+/* ======================================================================
+   MOBILE PASS — most visitors are on phones. Tighter rhythm, compact
+   departure rows, swipeable gallery and reviews, finger-sized tap targets,
+   16px form fields (no iOS zoom) and headings sized for small screens.
+   ====================================================================== */
+
+/* Trip card tags: never inherit the blog ".tag" pill styling */
+.pkg-card .tag{border:none; border-radius:0;}
+.pkg-card .tag small{font-size:10px;}
+.pkg-card .facts .len{white-space:nowrap;}
+
+/* Slider bars: 3px to look at, 24px to tap */
+.mhero-bar{height:24px; background:transparent; overflow:visible;}
+.mhero-bar::before{content:""; position:absolute; left:0; right:0; top:50%; height:3px; margin-top:-1.5px; background:rgba(255,255,255,.5);}
+.mhero-bar span{top:50%; bottom:auto; height:3px; margin-top:-1.5px;}
+
+@media(max-width:899px){
+  /* Departure rows as compact cards */
+  .dep-row{grid-template-columns:1fr auto; grid-template-areas:"date price" "date status" "actions actions"; gap:4px 16px; padding:18px 0;}
+  .dep-date{grid-area:date; min-width:0;}
+  .dep-date strong{font-size:1.45rem;}
+  .dep-sub,.dep-pkg{display:inline-block; padding:4px 0; font-size:11.5px; line-height:1.35;}
+  .dep-price{grid-area:price; justify-self:end; font-size:1.4rem; white-space:nowrap;}
+  .dep-price span{display:none;}
+  .dep-status{grid-area:status; justify-self:end; align-self:start; font-size:10.5px; letter-spacing:.08em; white-space:nowrap;}
+  .dep-actions{grid-area:actions; display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
+  .dep-actions .btn{width:100%;}
+  .dep-actions .btn:only-child{grid-column:1 / -1;}
+}
+
+@media(max-width:759px){
+  /* Swipeable gallery */
+  .moments{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+    margin-left:-24px; margin-right:-24px; padding:0 24px 6px; scroll-padding-left:24px; scrollbar-width:none;}
+  .moments::-webkit-scrollbar{display:none;}
+  .moment{flex:0 0 80%; scroll-snap-align:start;}
+  .moment figcaption em{font-size:1.2rem;}
+
+  /* Swipeable reviews */
+  .rev-grid{display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+    margin-left:-24px; margin-right:-24px; padding:0 24px 8px; scroll-padding-left:24px; scrollbar-width:none;}
+  .rev-grid::-webkit-scrollbar{display:none;}
+  .rev-card{flex:0 0 86%; scroll-snap-align:start; padding:26px 22px;}
+  .rev-card blockquote{font-size:1.18rem;}
+  .rev-score > strong{font-size:3.4rem;}
+}
+
+@media(max-width:700px){
+  /* Calmer vertical rhythm than desktop's 96–128px */
+  .wrapc[style*="padding-top: 96px"],.wrapc[style*="padding-top: 110px"]{padding-top:64px !important;}
+  .wrapc[style*="padding-bottom: 128px"],.wrapc[style*="padding-bottom: 120px"],.wrapc[style*="padding-bottom: 112px"],
+  .wrapc[style*="padding-bottom: 110px"],.wrapc[style*="padding-bottom: 96px"]{padding-bottom:72px !important;}
+  .wrapc[style*="padding-top: 80px"],.wrapc[style*="padding-top: 72px"]{padding-top:56px !important;}
+  .why-layout{margin-top:0;}
+  .faq-list,.proc-grid,.values-grid,.vm-grid,.blog-grid,.post-grid{margin-top:32px;}
+  .pkg-grid{margin-top:32px;}
+
+  /* Headings sized for phones */
+  .mhero h1{font-size:2.45rem; line-height:1.04;}
+  .mhero .sub{font-size:1.12rem; margin-top:16px;}
+  .mhero-cta{margin-top:24px;}
+  .page-hero{min-height:300px;}
+  .page-hero .inner{padding-top:72px; padding-bottom:44px;}
+  .page-hero h1{font-size:2.25rem; line-height:1.08;}
+  .h-sec{font-size:2.15rem;}
+  .stat .num{font-size:2.8rem;}
+
+  /* Buttons in a row share the width evenly */
+  [style*="flex-wrap"] > .btn,.mhero-cta .btn,.hero-actions .btn{flex:1 1 140px;}
+
+  /* Footer: finger-sized links, smaller logo */
+  .foot-brand .logo{height:96px;}
+  .foot-nav{gap:0;}
+  .foot-nav a,.foot-nav-cols a{display:block; padding:9px 0; margin-bottom:0;}
+  .foot-contact{gap:4px;}
+  .foot-contact a{display:inline-block; padding:8px 0;}
+  .foot-bot .in a{display:inline-block; padding:10px 0;}
+  .contact-info a{padding:6px 0;}
+  .page-hero .crumbs a{display:inline-block; padding:8px 0;}
+
+  /* WhatsApp button: a little smaller, tucked into the corner */
+  .whatsapp-fab{width:52px; height:52px; right:16px; bottom:16px;}
+  .whatsapp-fab svg{width:27px; height:27px;}
+}
+
+/* Form fields at 16px so iPhones don't zoom in on focus */
+@media(max-width:1023px){
+  .field input,.field textarea{font-size:16px;}
+  .faq-item summary{min-height:44px;}
+}
+
+/* "Show all dates" toggle under long departure calendars */
+.dep-more{margin-top:0;}
+.dep-more > summary{list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; min-height:52px; margin-top:20px;
+  border:1px solid var(--fg); font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--fg); transition:background-color .25s, color .25s;}
+.dep-more > summary::-webkit-details-marker{display:none;}
+.dep-more > summary::after{content:"+"; font-size:16px; letter-spacing:0;}
+.dep-more[open] > summary::after{content:"\2212";}
+.dep-more > summary:hover{background:var(--brand); border-color:var(--brand); color:#fff;}
+.dep-more .when-open{display:none;}
+.dep-more[open] .when-open{display:inline;}
+.dep-more[open] .when-closed{display:none;}
+.dep-more[open] > summary{margin-bottom:0;}
+.dep-list--more{margin-top:0; border-top:none;}
+
+@media(max-width:700px){
+  /* Shorter home page on phones */
+  #contact{display:none;}                 /* duplicate of the contact page; WhatsApp CTA sits right above */
+  .why-photo{aspect-ratio:4/3;}
+  .proc-grid{grid-template-columns:1fr 1fr; gap:28px 18px;}
+  .proc h3{font-size:1.45rem;}
+  .proc p{font-size:13.5px;}
+  .foot-col-services{display:none;}      /* same links as the menu and tour pages */
+  .pkg-card{aspect-ratio:4/4.6;}
+}
+
+/* Hero controls on phones: one compact row, clear of the copy and the WhatsApp button */
+@media(max-width:700px){
+  .mhero-inner{padding-bottom:104px;}
+  .mhero-ui{padding-bottom:22px;}
+  .mhero-ui .wrap{flex-wrap:nowrap; gap:14px;}
+  .mhero-next{display:none;}
+  .mhero-bars{flex:1 1 auto; max-width:none; gap:6px;}
+  .mhero-arrows{margin-left:0; margin-right:60px; gap:8px;}
+  .mhero-arrows button{width:42px; height:42px;}
+}
+
+/* Stats on phones: a real gap between the two columns so labels never touch */
+@media(max-width:700px){
+  .stats-grid,.stats-grid.cols-4{column-gap:20px; row-gap:32px;}
+  .stat p{max-width:none; font-size:11.5px; letter-spacing:.1em;}
+}
+
+/* Phones: button labels wrap instead of being clipped; tour-page hero buttons stack */
+@media(max-width:700px){
+  .btn{white-space:normal; text-align:center; line-height:1.3; padding-left:18px; padding-right:18px;}
+  .page-hero .hero-actions .btn{flex:1 1 100%;}
+}

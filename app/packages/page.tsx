@@ -105,7 +105,7 @@ export default async function PackagesPage({
           <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "40ch" }}>
             Every upcoming departure, soonest first.
           </h2>
-          <DepartureList rows={departures} showPackage />
+          <DepartureList rows={departures} showPackage visible={6} />
         </div>
       </section>
 

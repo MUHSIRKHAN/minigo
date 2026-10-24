@@ -133,6 +133,7 @@ export default function SiteAnimations() {
     const onWindowLoadRefresh = () => ScrollTrigger.refresh();
     let resizeObserver: ResizeObserver | null = null;
     let intersectionObserver: IntersectionObserver | null = null;
+    let counterObserver: IntersectionObserver | null = null;
 
     function teardownSplit() {
       manifestoSplit?.revert();
@@ -259,20 +260,33 @@ export default function SiteAnimations() {
         }
 
         // ---- STATS ----
-        gsap.utils.toArray<HTMLElement>(".stat").forEach((stat) => {
-          const numEl = stat.querySelector<HTMLElement>(".num");
-          if (!numEl) return;
-          const target = parseInt(numEl.getAttribute("data-count") || "0", 10);
-          const suffix = numEl.getAttribute("data-suffix") || "";
-          const proxy = { val: 0 };
-          gsap.to(proxy, {
-            val: target,
-            ease: "none",
-            onUpdate: () => {
-              numEl.textContent = Math.round(proxy.val) + suffix;
-            },
-            scrollTrigger: { trigger: stat, start: "top 85%", end: "top 40%", scrub: 1 },
-          });
+        // Count up once when a stat comes into view. Not scroll-scrubbed: a scrubbed
+        // counter shows a wrong, half-way number whenever the visitor stops scrolling
+        // mid-section. The real number is already in the HTML for no-JS visitors.
+        counterObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              counterObserver?.unobserve(entry.target);
+              const numEl = entry.target as HTMLElement;
+              const target = parseInt(numEl.getAttribute("data-count") || "0", 10);
+              const suffix = numEl.getAttribute("data-suffix") || "";
+              const proxy = { val: 0 };
+              gsap.to(proxy, {
+                val: target,
+                duration: 1.2,
+                ease: "power2.out",
+                onUpdate: () => {
+                  numEl.textContent = Math.round(proxy.val) + suffix;
+                },
+              });
+            });
+          },
+          { threshold: 0.6 },
+        );
+        gsap.utils.toArray<HTMLElement>(".stat .num").forEach((numEl) => {
+          numEl.textContent = "0" + (numEl.getAttribute("data-suffix") || "");
+          counterObserver?.observe(numEl);
         });
 
         // ---- MARQUEE ----
@@ -421,6 +435,7 @@ export default function SiteAnimations() {
       stopPrepare();
       resizeObserver?.disconnect();
       intersectionObserver?.disconnect();
+      counterObserver?.disconnect();
       if (onWindowLoadBatches) window.removeEventListener("load", onWindowLoadBatches);
       window.removeEventListener("load", onWindowLoadRefresh);
       teardownSplit();
