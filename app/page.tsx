@@ -180,10 +180,11 @@ export default async function Home() {
           <div className="why-layout">
             <div className="why-photo reveal">
               <Image
-                src="https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?w=1000&q=80&fm=jpg&fit=crop&auto=format"
-                alt="Boats on Dal Lake, Kashmir"
+                src="https://images.unsplash.com/photo-1568889753852-196c487a536e?w=1400&q=85&fm=jpg&fit=crop&auto=format"
+                alt="The Gulmarg gondola above snow-capped peaks, Kashmir"
                 fill
-                sizes="(max-width: 900px) 100vw, 480px"
+                quality={85}
+                sizes="(max-width: 900px) 100vw, 640px"
               />
             </div>
             <div>
