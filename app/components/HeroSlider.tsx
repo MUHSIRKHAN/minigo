@@ -52,7 +52,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
 
       <div className="wrap mhero-inner">
         <p className="mhero-place">{slides[index].label}</p>
-        <h1 className="display">Asia, beyond the guidebook.</h1>
+        <h1 className="display">Extraordinary journeys, effortlessly planned.</h1>
         <p className="sub">
           Premium small-group and private journeys to Vietnam, Kazakhstan, Tajikistan, Kashmir and
           Thailand &mdash; on dated departures you can book today.
