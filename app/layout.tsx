@@ -20,14 +20,14 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 const DEFAULT_TITLE =
-  "Minigo Holidays | Business Setup & Corporate Services in the UAE";
+  "Minigo Holidays | Premium Tour Packages & Holidays";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: DEFAULT_TITLE,
   description: BUSINESS.description,
   icons: {
-    icon: "/assets/favicon.png",
+    icon: "/assets/favicon.svg",
   },
   openGraph: {
     type: "website",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: BUSINESS.shortName,
     title: DEFAULT_TITLE,
     description: BUSINESS.description,
-    images: [{ url: BUSINESS.ogImage, width: 1193, height: 650, alt: BUSINESS.shortName }],
+    images: [{ url: BUSINESS.ogImage, width: 1200, height: 630, alt: BUSINESS.shortName }],
   },
   twitter: {
     card: "summary_large_image",
@@ -44,19 +44,16 @@ export const metadata: Metadata = {
     description: BUSINESS.description,
     images: [BUSINESS.ogImage],
   },
-  verification: {
-    google: "uzTWB57L-_rrjbcWuHdQZERvIVckxf_LOxoOOCDfVC0",
-  },
 };
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "TravelAgency",
   name: BUSINESS.name,
   alternateName: BUSINESS.shortName,
   url: SITE_URL,
-  logo: `${SITE_URL}${BUSINESS.ogImage}`,
-  image: `${SITE_URL}${BUSINESS.ogImage}`,
+  logo: `${SITE_URL}${BUSINESS.logo}`,
+  image: BUSINESS.ogImage,
   telephone: BUSINESS.telephone,
   email: BUSINESS.email,
   address: {

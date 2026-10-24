@@ -1,14 +1,32 @@
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://bizpointprime.ae").replace(/\/$/, "");
+// TODO: replace the placeholder domain and contact details below with Minigo Holidays' real ones.
+// Every page, the header/footer, WhatsApp button and structured data read from here.
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://minigoholidays.com").replace(/\/$/, "");
 
 export const BUSINESS = {
   name: "Minigo Holidays",
   shortName: "Minigo Holidays",
+  tagline: "Discover. Wander. Belong.",
   description:
-    "Minigo Holidays is a trusted business solutions and corporate services provider in the UAE — business setup, legal translation, government services, notary, visas, VAT registration, attestation, PRO services, and branding. Prime. Made. Easy.",
-  streetAddress: "Office No: A1-3, inside Unique Business World, Metha Plaza Building, Block A, Oud Metha",
-  addressLocality: "Dubai",
-  addressCountry: "AE",
-  telephone: "+971543084251",
-  email: "bizpointprime@gmail.com",
-  ogImage: "/assets/logo-nav.png",
+    "Minigo Holidays designs premium, small-group and private tour packages — handpicked stays, expert local guides and seamless planning, with fixed departure dates you can book today.",
+  streetAddress: "Your office address, street and area",
+  addressLocality: "City",
+  addressCountry: "Country",
+  // Display forms and dial forms are kept separate: `tel:` and wa.me need digits only.
+  telephone: "+00 000 000 0000",
+  telephoneHref: "+000000000000",
+  whatsappNumber: "000000000000",
+  email: "hello@minigoholidays.com",
+  instagramUrl: "https://www.instagram.com/minigoholidays/",
+  // ISO 4217 code used to format every package price.
+  currency: "USD",
+  logo: "/assets/minigo-logo.svg",
+  // Share-card image must be a raster file on an absolute URL for most crawlers.
+  ogImage:
+    "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format",
 } as const;
+
+export function whatsappLink(message: string): string {
+  return `https://wa.me/${BUSINESS.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+export const DEFAULT_WHATSAPP_MESSAGE = `Hi ${BUSINESS.name}, I'd like to know more about your tour packages.`;

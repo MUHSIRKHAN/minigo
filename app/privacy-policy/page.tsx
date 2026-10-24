@@ -41,7 +41,7 @@ export default function PrivacyPolicyPage() {
             Privacy Policy
           </h1>
           <p className="blog-lede reveal" style={{ marginTop: 16 }}>
-            Last updated: August 2026
+            Last updated: October 2026
           </p>
 
           <div className="rich-text reveal">
@@ -51,11 +51,11 @@ export default function PrivacyPolicyPage() {
               &ldquo;our&rdquo;, or &ldquo;us&rdquo;) respects your privacy and is committed to
               protecting your personal data. This Privacy Policy outlines how we collect, use,
               disclose, and safeguard your information when you visit our website ({SITE_URL}) or
-              engage our services in Dubai, United Arab Emirates.
+              book a tour with us.
             </p>
             <p>
-              This policy complies with the UAE Federal Decree-Law No. 45 of 2021 regarding the
-              Protection of Personal Data, as well as the data collection and tracking guidelines
+              This policy is intended to comply with the data-protection laws that apply to our
+              business, as well as the data collection and tracking guidelines
               set forth by major advertising platforms including Google and Meta.
             </p>
 
@@ -63,14 +63,15 @@ export default function PrivacyPolicyPage() {
             <h3>Personal Information</h3>
             <p>
               We may collect personal information that you voluntarily provide to us when you
-              request a consultation, use our WhatsApp chat, or fill out a contact form. This
+              send a travel enquiry, use our WhatsApp chat, or fill out a contact form. This
               includes:
             </p>
             <ul>
               <li>Full name</li>
               <li>Email address</li>
               <li>Phone number / WhatsApp number</li>
-              <li>Documents uploaded for translation, attestation, or business setup purposes</li>
+              <li>Travel details you share with us, such as preferred dates, group size and special requests</li>
+              <li>Passport and visa details, only when you confirm a booking and they are needed to arrange travel</li>
             </ul>
             <h3>Automatically Collected Data &amp; Cookies</h3>
             <p>
@@ -88,11 +89,11 @@ export default function PrivacyPolicyPage() {
             <h2>3. How We Use Your Data</h2>
             <p>We use the collected information for the following purposes:</p>
             <ul>
-              <li>To provide and manage our legal translation, PRO, and business setup services.</li>
-              <li>To communicate with you regarding your inquiries, quotes, or ongoing projects.</li>
+              <li>To plan, book and manage your tours and travel arrangements.</li>
+              <li>To communicate with you regarding your enquiries, quotes and bookings.</li>
               <li>
-                To comply with UAE legal obligations, including submitting necessary documents to
-                Dubai Courts, MOFA, or other government entities on your behalf.
+                To comply with legal obligations and to share the details airlines, hotels and
+                local operators need to deliver your trip.
               </li>
               <li>To improve our website performance and user experience.</li>
               <li>To deliver targeted advertising and promotional offers (see section 4).</li>
@@ -126,8 +127,8 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul>
               <li>
-                <strong>Government entities:</strong> to process your applications, attestation, or
-                business setup with UAE authorities (e.g. MOJ, MOFA, DED).
+                <strong>Travel suppliers:</strong> airlines, hotels, guides and local operators who need
+                your details to deliver the services you have booked.
               </li>
               <li>
                 <strong>Service providers:</strong> with trusted third-party vendors who assist us
@@ -135,7 +136,7 @@ export default function PrivacyPolicyPage() {
                 systems), subject to strict confidentiality agreements.
               </li>
               <li>
-                <strong>Legal requirements:</strong> if required to do so by UAE law or in response
+                <strong>Legal requirements:</strong> if required to do so by applicable law or in response
                 to a valid request by a law enforcement or governmental authority.
               </li>
             </ul>
@@ -143,13 +144,13 @@ export default function PrivacyPolicyPage() {
             <h2>6. Data Security</h2>
             <p>
               We implement robust technical and organizational security measures designed to
-              protect the security of any personal information we process. Documents submitted for
-              legal translation are treated with the highest level of confidentiality and are
-              securely deleted from our active servers once the project is completed and delivered.
+              protect the security of any personal information we process. Personal and travel documents submitted for
+              booking purposes are treated as confidential and are
+              deleted from our active systems once they are no longer needed.
             </p>
 
             <h2>7. Your Data Protection Rights</h2>
-            <p>Under UAE Data Protection Law, you have the right to:</p>
+            <p>Subject to applicable data-protection law, you have the right to:</p>
             <ul>
               <li>Request access to the personal data we hold about you.</li>
               <li>Request correction of inaccurate or incomplete data.</li>
@@ -167,7 +168,7 @@ export default function PrivacyPolicyPage() {
             <h2>8. Changes to This Privacy Policy</h2>
             <p>
               We may update this Privacy Policy from time to time to reflect changes in our
-              practices or relevant UAE laws. We will notify you of any significant changes by
+              practices or relevant laws. We will notify you of any significant changes by
               updating the &ldquo;Last Updated&rdquo; date at the top of this page.
             </p>
 
@@ -179,11 +180,11 @@ export default function PrivacyPolicyPage() {
             <p>
               {BUSINESS.name}
               <br />
-              {BUSINESS.streetAddress}, {BUSINESS.addressLocality}, United Arab Emirates
+              {BUSINESS.streetAddress}, {BUSINESS.addressLocality}, {BUSINESS.addressCountry}
               <br />
               Email: <Link href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</Link>
               <br />
-              Phone: <Link href={`tel:${BUSINESS.telephone}`}>{BUSINESS.telephone}</Link>
+              Phone: <Link href={`tel:${BUSINESS.telephoneHref}`}>{BUSINESS.telephone}</Link>
             </p>
           </div>
         </div>

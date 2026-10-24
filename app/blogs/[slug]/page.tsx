@@ -97,7 +97,7 @@ export default async function BlogPostPage({ params }: Props) {
           <RichText content={post.content} className="rich-text reveal" />
           <p style={{ marginTop: 48 }}>
             <Link href="/blogs" className="btn outline">
-              <span>← All insights</span>
+              <span>← All stories</span>
             </Link>
           </p>
         </div>

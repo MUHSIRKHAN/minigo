@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
         port: "3000",
         pathname: "/api/media/file/**",
       },
-      // Production / preview CMS media (PAYLOAD_URL), e.g. cms.bizpointprime.ae
+      // Production / preview CMS media (PAYLOAD_URL), e.g. cms.yourdomain.com
       {
         protocol: payloadUrl.protocol.replace(":", "") as "http" | "https",
         hostname: payloadUrl.hostname,

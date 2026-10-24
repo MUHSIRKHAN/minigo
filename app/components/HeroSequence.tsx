@@ -421,8 +421,8 @@ export default function HeroSequence({
           <span className="hero-seq__brand-glow" />
           <span className="hero-seq__brand-rule" />
           <span className="hero-seq__brand-words">
-            Prime<span className="hero-seq__brand-dot">.</span> Made
-            <span className="hero-seq__brand-dot">.</span> Easy
+            Discover<span className="hero-seq__brand-dot">.</span> Wander
+            <span className="hero-seq__brand-dot">.</span> Belong
             <span className="hero-seq__brand-dot">.</span>
           </span>
           <span className="hero-seq__brand-rule" />

@@ -7,7 +7,7 @@ import { BUSINESS, SITE_URL } from "../lib/site";
 
 const TITLE = "Gallery | Minigo Holidays";
 const DESCRIPTION =
-  "A look inside Minigo Holidays — our team, our office, and the work we do for businesses across the UAE.";
+  "Moments from our tours — destinations, travellers and the places we love, from Minigo Holidays.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/gallery";
@@ -55,8 +55,8 @@ export default async function GalleryPage() {
           <p className="kicker reveal" style={{ color: "var(--accent)" }}>
             Gallery
           </p>
-          <h1 className="reveal">A look inside Minigo Holidays.</h1>
-          <p className="reveal">Our team, our office, and the work we do for clients across the UAE.</p>
+          <h1 className="reveal">Moments from the road.</h1>
+          <p className="reveal">Destinations, travellers and the places we love.</p>
         </div>
       </section>
 

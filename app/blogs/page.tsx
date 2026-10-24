@@ -4,11 +4,11 @@ import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { formatPostDate, getBlogPosts, getMediaUrl } from "../lib/payload";
-import { BUSINESS, SITE_URL } from "../lib/site";
+import { BUSINESS, DEFAULT_WHATSAPP_MESSAGE, SITE_URL, whatsappLink } from "../lib/site";
 
-const TITLE = "Blogs | Minigo Holidays";
+const TITLE = "Travel Journal | Minigo Holidays";
 const DESCRIPTION =
-  "Insights on business setup, legal translation, VAT, and compliance for companies operating in the UAE — from Minigo Holidays.";
+  "Destination guides, travel tips and stories from the Minigo Holidays team.";
 const OG_IMAGE =
   "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format";
 const PATH = "/blogs";
@@ -55,11 +55,11 @@ export default async function BlogsPage() {
         <div className="overlay" aria-hidden="true"></div>
         <div className="wrap inner">
           <p className="kicker reveal" style={{ color: "var(--accent)" }}>
-            Blogs
+            Travel Journal
           </p>
-          <h1 className="reveal">Insights for businesses setting up in Dubai.</h1>
+          <h1 className="reveal">Stories and ideas for your next journey.</h1>
           <p className="reveal">
-            Practical guidance on business setup, legal translation, VAT, and compliance — from
+            Destination guides, packing lists and travel tips — from
             the Minigo Holidays team.
           </p>
         </div>
@@ -108,7 +108,7 @@ export default async function BlogsPage() {
       {rest.length > 0 ? (
         <section style={{ background: "var(--bg-raised)" }}>
           <div className="wrapc" style={{ paddingTop: 80, paddingBottom: 128 }}>
-            <p className="kicker reveal">More insights</p>
+            <p className="kicker reveal">More stories</p>
             <div className="post-grid">
               {rest.map((post) => (
                 <Link className="post-card reveal" href={`/blogs/${post.slug}`} key={post.id}>
@@ -144,7 +144,7 @@ export default async function BlogsPage() {
       {/* FINAL CTA */}
       <section className="final-cta">
         <div className="wrapc" style={{ paddingTop: 96, paddingBottom: 96, textAlign: "center" }}>
-          <p className="kicker reveal">Get Started</p>
+          <p className="kicker reveal">Plan your trip</p>
           <h2
             className="reveal display"
             style={{
@@ -158,7 +158,7 @@ export default async function BlogsPage() {
               color: "var(--bg)",
             }}
           >
-            Have a question these posts didn&rsquo;t answer?
+            Ready to turn inspiration into a trip?
           </h2>
           <p
             className="reveal"
@@ -171,18 +171,18 @@ export default async function BlogsPage() {
               color: "rgba(250,250,247,.75)",
             }}
           >
-            Tell us what you&rsquo;re working on and a consultant will walk you through it
-            directly. Prime. Made. Easy.
+            Tell us where you want to go and a travel designer will walk you through the
+            options and dates.
           </p>
           <div
             className="reveal"
             style={{ marginTop: 32, display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}
           >
-            <Link href="/contact-us" className="btn on-brand">
-              <span>Request a Free Consultation</span>
+            <Link href="/contact-us#enquiry" className="btn on-brand">
+              <span>Plan My Trip</span>
             </Link>
             <Link
-              href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+              href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
               className="btn outline-light"
               target="_blank"
               rel="noopener noreferrer"

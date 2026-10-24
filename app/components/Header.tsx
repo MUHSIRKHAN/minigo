@@ -7,9 +7,9 @@ import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
+  { href: "/packages", label: "Tour Packages" },
   { href: "/about", label: "About Us" },
-  { href: "/services", label: "Services" },
-  { href: "/blogs", label: "Blogs" },
+  { href: "/blogs", label: "Travel Journal" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact-us", label: "Contact Us" },
 ] as const;
@@ -82,7 +82,7 @@ export default function Header() {
     >
       <div className="wrap nav-inner">
         <Link href="/" className="brand">
-          <Image className="logo" src="/assets/logo-nav.png" alt="Minigo Holidays" width={1193} height={650} priority />
+          <Image className="logo" src="/assets/minigo-logo.svg" alt="Minigo Holidays" width={640} height={170} priority />
         </Link>
         <nav className="links" aria-label="Primary">
           {NAV_LINKS.map((link) => (
@@ -92,7 +92,7 @@ export default function Header() {
           ))}
         </nav>
         <Link href="/contact-us" className="btn sm nav-cta">
-          <span>Get Started</span>
+          <span>Plan My Trip</span>
         </Link>
         <button
           type="button"
@@ -124,7 +124,7 @@ export default function Header() {
           ))}
         </nav>
         <Link href="/contact-us" className="btn sm nav-mobile__cta" onClick={() => setOpen(false)}>
-          <span>Get Started</span>
+          <span>Plan My Trip</span>
         </Link>
       </div>
     </header>

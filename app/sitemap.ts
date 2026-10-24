@@ -1,23 +1,15 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "./lib/site";
 import { getBlogPosts } from "./lib/payload";
+import { PACKAGES } from "./lib/packages";
 
 const STATIC_ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
   { path: "", priority: 1, changeFrequency: "weekly" },
-  { path: "/about", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/services", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/blogs", priority: 0.7, changeFrequency: "weekly" },
-  { path: "/gallery", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/business-setup-dubai", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/legal-translation-dubai", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/notary-services", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/vat-registration", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/family-visa-services", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/document-attestation", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/pro-services-dubai", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/golden-visa-services", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/typing-services", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/branding-marketing", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/packages", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/about", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/contact-us", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/blogs", priority: 0.6, changeFrequency: "weekly" },
+  { path: "/gallery", priority: 0.5, changeFrequency: "monthly" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -28,6 +20,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route.priority,
   }));
 
+  const packageEntries: MetadataRoute.Sitemap = PACKAGES.map((pkg) => ({
+    url: `${SITE_URL}/packages/${pkg.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
   const posts = await getBlogPosts();
   const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${SITE_URL}/blogs/${post.slug}`,
@@ -36,5 +35,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...blogEntries];
+  return [...staticEntries, ...packageEntries, ...blogEntries];
 }

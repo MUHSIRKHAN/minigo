@@ -105,7 +105,7 @@ export default function SiteAnimations() {
         const wrap = form.parentNode as HTMLElement | null;
         if (wrap) {
           wrap.innerHTML =
-            '<div class="thanks"><h3>Request received.</h3><p>A consultant will reach out within one business day. Thank you for getting in touch with Minigo Holidays.</p></div>';
+            '<div class="thanks"><h3>Enquiry received.</h3><p>One of our travel designers will reply within one business day. Thank you for getting in touch with Minigo Holidays.</p></div>';
         }
       } catch (err) {
         const message = err instanceof Error ? err.message : "Something went wrong. Please try again.";

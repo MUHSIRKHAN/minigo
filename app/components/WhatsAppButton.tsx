@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { trackEvent } from "../lib/analytics";
+import { DEFAULT_WHATSAPP_MESSAGE, whatsappLink } from "../lib/site";
 
 export default function WhatsAppButton() {
   return (
     <Link
       className="whatsapp-fab"
-      href="https://wa.me/971543084251?text=Hi%20Minigo Holidays%20Prime%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+      href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"

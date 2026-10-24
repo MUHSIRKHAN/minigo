@@ -69,11 +69,11 @@ async function sendEmail(fields: {
       from: `Minigo Holidays Website <${gmailUser}>`,
       to,
       replyTo: fields.email,
-      subject: `New consultation request from ${fields.name}`,
+      subject: `New travel enquiry from ${fields.name}`,
       html: `
         <p><strong>Name:</strong> ${escapeHtml(fields.name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(fields.email)}</p>
-        <p><strong>Needs help with:</strong> ${escapeHtml(fields.service) || "—"}</p>
+        <p><strong>Package / destination:</strong> ${escapeHtml(fields.service) || "—"}</p>
         <p><strong>Message:</strong></p>
         <p>${escapeHtml(fields.message).replace(/\n/g, "<br />") || "—"}</p>
       `,
