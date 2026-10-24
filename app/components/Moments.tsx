@@ -23,6 +23,14 @@ export default function Moments() {
               <figcaption>
                 <span>{m.place}</span>
                 <em>{m.caption}</em>
+                <small>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 4l-1.5 2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-2.5L15 4H9zm3 4.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zm0 2a2.5 2.5 0 100 5 2.5 2.5 0 000-5z" />
+                  </svg>
+                  <cite>
+                    Captured by <b>{m.by}</b>, {m.from}
+                  </cite>
+                </small>
               </figcaption>
             </figure>
           ))}
