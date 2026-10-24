@@ -26,9 +26,9 @@ export const MOMENTS: Moment[] = [
     from: "Kochi",
   },
   {
-    label: "Couple's getaway",
-    caption: "Dressed in their best, lost in the morning mist",
-    image: photo("1715285977619-6d9357168f46"),
+    label: "Together",
+    caption: "Two travellers, a mirror-still lake and mountains all around",
+    image: photo("1720593445751-bef477facbb4"),
     by: "Anjali Menon",
     from: "Kozhikode",
   },
@@ -41,8 +41,8 @@ export const MOMENTS: Moment[] = [
   },
   {
     label: "Couple's getaway",
-    caption: "Laughing together after a long day of travel",
-    image: photo("1719857646787-38c9c5f79312"),
+    caption: "Wrapped up in each other as the sun sets over the sea",
+    image: photo("1709786204898-dc160b24f883"),
     by: "Faisal & Hana Rahman",
     from: "Malappuram",
   },
@@ -54,10 +54,10 @@ export const MOMENTS: Moment[] = [
     from: "Thiruvananthapuram",
   },
   {
-    label: "Couple's getaway",
-    caption: "A quiet moment together among the trees",
-    image: photo("1720105761832-927de5f2ecce"),
-    by: "Neha & Vishnu Varghese",
+    label: "Solo traveller",
+    caption: "Golden hour over endless green tea hills",
+    image: photo("1755547979233-f72467b637b3"),
+    by: "Neha Varghese",
     from: "Kozhikode",
   },
   {
