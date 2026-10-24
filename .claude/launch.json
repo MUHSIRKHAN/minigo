@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "bizpoint-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8935", "--directory", "/Users/dheerajt/Downloads/bizpoint/legacy"],
+      "port": 8935
+    },
+    {
+      "name": "bizpoint-nextjs",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "-p", "3001"],
+      "port": 3001
+    }
+  ]
+}

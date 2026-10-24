@@ -1,0 +1,669 @@
+:root{
+  --bg:#fafaf7; --bg-raised:#f2f1ea; --fg:#1d1c1a; --fg-muted:#5c584f; --border:#e6e3d9;
+  --brand:#125c3d; --brand-strong:#0c4530; --brand-tint:#e1ece5;
+  --accent:#c79a44; --accent-strong:#a97e33; --accent-tint:#f2e6c9; --accent-on:#19140a;
+  --display:var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --body:var(--font-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --max:1800px; --maxc:1400px;
+  /* Nav geometry as tokens so the hero can pull itself up by exactly the
+     nav's height (see .hero). --nav-h includes the 1px border-bottom that
+     header.nav adds on top of .nav-inner's box. */
+  --nav-inner-h:64px; --nav-h:calc(var(--nav-inner-h) + 1px);
+}
+@media(min-width:1024px){ :root{ --nav-inner-h:78px; } }
+*{box-sizing:border-box; margin:0; padding:0;}
+/* scroll-behavior:smooth removed deliberately — Lenis owns smoothed scroll
+   when JS runs; when it doesn't (reduced motion / no-JS), plain instant
+   native scroll is the correct, more accessible fallback rather than a
+   second, competing smoothing system. Anchor nav links (#formation etc.)
+   therefore jump instantly instead of CSS-easing to their target; general
+   wheel/trackpad scroll is what Lenis smooths. */
+html{overflow-x:hidden;}
+body{background:var(--bg); color:var(--fg); font-family:var(--body); -webkit-font-smoothing:antialiased; line-height:1.5;}
+a{color:inherit; text-decoration:none;}
+img{display:block; max-width:100%;}
+.display{font-family:var(--display); font-weight:600; letter-spacing:-0.02em;}
+.accent{color:var(--accent);}
+.muted{color:var(--fg-muted);}
+.wrap{max-width:var(--max); margin:0 auto; padding-left:20px; padding-right:20px;}
+.wrapc{max-width:var(--maxc); margin:0 auto; padding-left:24px; padding-right:24px;}
+@media(min-width:1024px){ .wrap{padding-left:32px; padding-right:32px;} .wrapc{padding-left:40px; padding-right:40px;} }
+section{border-top:1px solid var(--border);}
+
+/* ---------- NAV ---------- */
+header.nav{position:sticky; top:0; z-index:50; border-bottom:1px solid var(--border);
+  background:rgba(250,250,247,.85); backdrop-filter:blur(8px); color:var(--fg);
+  transition:background-color .5s ease, color .5s ease, border-color .5s ease;}
+header.nav.scrolled{background:var(--brand); color:var(--bg); border-color:transparent;}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; height:var(--nav-inner-h);}
+.brand{display:flex; align-items:center;}
+.brand .logo{height:40px; width:auto; transition:filter .5s ease;}
+/* Raster logo, so the scrolled-nav "recolour to cream" trick from the old
+   inline-SVG version is done with a filter instead of fill/stroke: at
+   brightness 0 every colour in the PNG collapses to black while alpha is
+   preserved, then invert(1) flips that black silhouette to white — same
+   visual result as the old per-path fill swap, works on any raster logo
+   regardless of its original colours. */
+header.nav.scrolled .brand .logo{filter:brightness(0) invert(1);}
+nav.links{display:none; gap:26px;}
+@media(min-width:1024px){ nav.links{display:flex; align-items:center;} }
+nav.links a{font-size:14.5px; color:var(--fg-muted); transition:color .4s;}
+nav.links a:hover{color:var(--fg);}
+header.nav.scrolled nav.links a{color:rgba(250,250,247,.8);}
+header.nav.scrolled nav.links a:hover{color:var(--bg);}
+/* .btn.nav-cta, not .nav-cta: this element also carries .btn, whose own
+   display:inline-flex (below) is equal specificity and later in source, so
+   it silently won the cascade and kept this visible on mobile regardless of
+   the media query. The compound selector outranks the single-class .btn
+   rule regardless of source order, so the hide actually takes effect. */
+.btn.nav-cta{display:none;}
+@media(min-width:1024px){ .btn.nav-cta{display:inline-flex;} }
+
+/* Mobile menu toggle — desktop nav/CTA are display:none below 1024px, so
+   without this control mobile visitors only see the logo. Keep the bars
+   currentColor so they flip with header.nav.scrolled (cream on brand). */
+.nav-menu-btn{display:inline-flex; align-items:center; justify-content:center;
+  width:44px; height:44px; margin-right:-10px; padding:0; border:none; border-radius:6px;
+  background:transparent; color:var(--fg); cursor:pointer;
+  transition:color .4s ease, background-color .2s ease;}
+.nav-menu-btn:hover{background:rgba(29,28,26,.06);}
+.nav-menu-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+header.nav.scrolled .nav-menu-btn{color:var(--bg);}
+header.nav.scrolled .nav-menu-btn:hover{background:rgba(250,250,247,.12);}
+header.nav.menu-open .nav-menu-btn{color:var(--fg);}
+header.nav.menu-open.scrolled .nav-menu-btn{color:var(--bg);}
+.nav-menu-btn__bars{position:relative; display:block; width:20px; height:14px;}
+.nav-menu-btn__bars span{position:absolute; left:0; right:0; height:2px; border-radius:1px;
+  background:currentColor; transition:transform .3s cubic-bezier(.16,1,.3,1), top .3s cubic-bezier(.16,1,.3,1), opacity .2s;}
+.nav-menu-btn__bars span:nth-child(1){top:0;}
+.nav-menu-btn__bars span:nth-child(2){top:6px;}
+.nav-menu-btn__bars span:nth-child(3){top:12px;}
+header.nav.menu-open .nav-menu-btn__bars span:nth-child(1){top:6px; transform:rotate(45deg);}
+header.nav.menu-open .nav-menu-btn__bars span:nth-child(2){opacity:0;}
+header.nav.menu-open .nav-menu-btn__bars span:nth-child(3){top:6px; transform:rotate(-45deg);}
+@media(min-width:1024px){ .nav-menu-btn{display:none;} }
+
+.nav-mobile{display:none; flex-direction:column; gap:8px; padding:8px 20px 24px;
+  border-top:1px solid var(--border); background:inherit;}
+header.nav.menu-open .nav-mobile{display:flex;}
+header.nav.menu-open.scrolled .nav-mobile{border-top-color:rgba(250,250,247,.15);}
+.nav-mobile__links{display:flex; flex-direction:column;}
+.nav-mobile__links a{padding:14px 0; font-size:16px; font-weight:500; color:var(--fg);
+  border-bottom:1px solid var(--border); transition:color .2s;}
+.nav-mobile__links a:hover{color:var(--brand);}
+header.nav.scrolled .nav-mobile__links a{color:rgba(250,250,247,.92); border-bottom-color:rgba(250,250,247,.15);}
+header.nav.scrolled .nav-mobile__links a:hover{color:var(--bg);}
+.nav-mobile__cta{align-self:flex-start; margin-top:16px;}
+header.nav.scrolled .nav-mobile__cta{background:var(--accent); color:var(--accent-on);}
+header.nav.scrolled .nav-mobile__cta::before{background:var(--accent-strong);}
+header.nav.scrolled .nav-mobile__cta span{color:var(--accent-on);}
+header.nav.scrolled .nav-mobile__cta:hover span{color:var(--bg);}
+@media(min-width:1024px){
+  .nav-mobile, header.nav.menu-open .nav-mobile{display:none;}
+}
+
+/* ---------- BUTTON ---------- */
+.btn{position:relative; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  overflow:hidden; border-radius:6px; padding:14px 28px; font-size:15px; font-weight:500; white-space:nowrap;
+  background:var(--brand); color:var(--bg); cursor:pointer; border:none;}
+.btn::before{content:""; position:absolute; inset:0; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .35s cubic-bezier(.16,1,.3,1);}
+.btn:hover::before{transform:scaleX(1);}
+.btn span{position:relative; z-index:1; transition:color .2s;}
+.btn:hover span{color:var(--accent-on);}
+.btn.sm{padding:10px 20px; font-size:13.5px;}
+.btn.outline{background:transparent; color:var(--fg); border:1px solid var(--border);}
+.btn.outline:hover span{color:var(--accent-on);}
+.btn.on-brand{background:var(--accent); color:var(--accent-on);}
+.btn.on-brand::before{background:var(--accent-strong);}
+.btn.on-brand span{color:var(--accent-on);}
+.btn.on-brand:hover span{color:var(--bg);}
+.btn.outline-light{background:transparent; color:var(--bg); border:1px solid rgba(250,250,247,.35);}
+.btn.outline-light:hover span{color:var(--accent-on);}
+
+/* ---------- HERO ---------- */
+/* Pulled up by exactly the sticky nav's height so the hero starts at the very
+   top of the viewport with the (translucent, backdrop-blurred) nav floating
+   over it — which is what that nav's rgba background + blur were built for,
+   and what .hero-content/.hero-seq__brand's padding-top already reserve
+   clearance for.
+   This is also what makes the pinned sequence sit still: ScrollTrigger pins at
+   "top top", so while the nav occupied 65px of flow the hero's top started
+   *below* the fold and the whole section had to slide up ~65px before the pin
+   could engage — a visible drift on the first flick of the wheel. Starting at
+   top:0 means the pin engages at scroll 0 and the hero never moves.
+   min-height pairs with it: without it the section would be 65px short of the
+   fold and the next section would peek in underneath. */
+.hero{position:relative; overflow:hidden; background:var(--fg); border-top:none;
+  margin-top:calc(-1 * var(--nav-h)); min-height:100svh;
+  display:flex; flex-direction:column;}
+
+/* Background is the scroll-linked canvas sequence (HeroSequence.tsx), which
+   carries its own cover-fit, camera push and contrast scrim. The old
+   Ken Burns image, vignette and film-grain layers were removed deliberately:
+   the hero is meant to read clean, with no bloom or noise over the footage. */
+/* No min-height below 1024px: forcing this to near-full-viewport height
+   pushed the trust row (now in normal flow below it, see .hero-trust-corner)
+   a further ~100svh down the page after it, opening a large empty gap of
+   bare footage between the chips and the trust line. Desktop keeps the
+   forced height, in the media query below, because the trust row there is
+   corner-pinned by position:absolute and doesn't depend on this box's
+   height at all — nothing to break by leaving it as-is. */
+/* flex:1 makes this absorb the hero's leftover height instead of leaving it
+   as dead space below the trust row. On mobile the hero is now a full 100svh
+   while this column is only as tall as its content, so without it the copy
+   stacked at the top and ~60px of empty footage sat under everything. Growing
+   the box lets its own justify-content:center actually centre the copy, and
+   pushes .hero-trust-corner onto the hero's bottom edge where it belongs.
+   padding-bottom is 32px rather than the old 72px for the same reason: that
+   larger value existed only to open the gap above the trust row back when the
+   two were simply stacked, and combined with the trust row's own fab
+   clearance it overran the 100svh hero by 20px on a 375x812 screen. */
+.hero-content{position:relative; display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+  text-align:left; margin:0; max-width:640px; padding-top:64px; padding-bottom:32px; flex:1 1 auto;}
+/* Full 100svh, not 100svh minus the nav: the hero now spans the whole
+   viewport (it's pulled up under the nav, see .hero), so subtracting the nav
+   height again would leave the copy centred against a box a nav-height short
+   of the fold and ride visibly high. padding-top (80px) still clears the
+   79px nav, so the copy never sits under it. */
+@media(min-width:1024px){ .hero-content{max-width:720px; min-height:100svh; padding-top:80px; padding-bottom:88px;} }
+.hero h1{max-width:44rem; padding-bottom:4px; font-size:3rem; line-height:.95; font-weight:500; color:var(--bg);}
+@media(min-width:640px){ .hero h1{font-size:4.25rem;} }
+@media(min-width:1024px){ .hero h1{font-size:5.5rem;} }
+.hero h1 .line{display:block;}
+.hero-desc{margin-top:20px; max-width:52ch; font-size:15.5px; line-height:1.6; color:rgba(250,250,247,.75);}
+@media(min-width:1024px){ .hero-desc{font-size:16px;} }
+.hero-chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+.hero-chip{padding:10px 18px; border-radius:999px; background:rgba(250,250,247,.08);
+  border:1px solid rgba(250,250,247,.22); color:var(--bg); font-size:13.5px; font-weight:500;
+  transition:background-color .3s, border-color .3s;}
+.hero-chip:hover{background:rgba(250,250,247,.16); border-color:rgba(250,250,247,.4);}
+/* Below 1024px this sits in normal flow, right after .hero-content. Because
+   .hero is a flex column and .hero-content grows to fill it, this row is
+   pushed onto the hero's bottom edge — and the hero being exactly 100svh and
+   pinned from scroll 0, that edge *is* the viewport's bottom edge, at every
+   scroll position.
+   That reliability is what lets the fixed WhatsApp fab be cleared vertically:
+   padding-bottom reserves the fab's whole footprint (56px circle + 20px fixed
+   inset) plus an 8px breathing gap, lifting this row's content clear of the
+   band the fab occupies.
+   It replaces an 84px padding-right that reserved the fab's *column* instead —
+   which was the only safe option while this row's flow position drifted with
+   content length and so couldn't be trusted to clear the fab vertically, but
+   which squeezed the trust line into ~130px beside the avatars and wrapped it
+   to three cramped lines.
+   It's a sibling of .wrap, not a child of it, so it carries no horizontal
+   inset of its own — give it .wrap's padding directly or it sits flush
+   against the viewport edge while the column above it doesn't.
+   Desktop keeps the floating corner, where the hero-card layout actually
+   leaves room for it, and drops padding entirely since position:absolute
+   there is offset from .hero itself, not from this padding box. */
+.hero-trust-corner{padding:0 20px 84px;}
+@media(min-width:1024px){
+  /* right clears the fab's column rather than its band: on desktop the fab is
+     right:32px and 56px wide, so anything ending nearer than 88px from the
+     edge runs underneath it — at the previous right:48px the trust line's last
+     word ("UAE.") sat behind the button. 104px is that 88px plus a 16px gap.
+     The clearance has to be horizontal here because the two genuinely share a
+     vertical band (fab bottom:32px, this bottom:28px); the mobile rule solves
+     the same collision the other way round, where this row spans the full
+     width and there is room below instead. */
+  .hero-trust-corner{position:absolute; right:104px; bottom:28px; z-index:1; padding:0;}
+}
+
+/* eyebrow badge above the H1 — keyword-carrying, real content, so (per
+   the pattern used throughout) never pre-hidden in CSS. */
+.hero-kicker{display:inline-flex; align-items:center; gap:8px; padding:8px 16px 8px 14px;
+  border-radius:999px; background:var(--accent-tint); color:var(--accent-strong);
+  font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; margin-bottom:20px;}
+.hero-kicker .dot{width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none;}
+
+.hero-cta{margin-top:28px;}
+
+.hero-trust-row{display:flex; align-items:center; gap:14px; margin-top:20px;}
+.hero-trust-row .hero-trust{margin-top:0;}
+.hero-avatars{display:flex; flex:none;}
+.hero-avatars span{width:32px; height:32px; border-radius:50%; margin-left:-8px;
+  display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:600;
+  color:var(--bg); background:var(--brand); border:2px solid rgba(250,250,247,.35);}
+.hero-avatars span:first-child{margin-left:0;}
+.hero-avatars span:nth-child(2){background:var(--accent-strong);}
+.hero-avatars span:nth-child(3){background:var(--fg);}
+.hero-avatars span:nth-child(4){background:var(--brand-strong);}
+.hero-avatars span:nth-child(5){background:var(--accent);}
+
+/* ground line — the single hero beat borrowed from the "Structural Grid"
+   direction. Pure decoration (no informational content), so it's safe to
+   default to invisible (scaleX 0) in CSS before JS ever runs. */
+.hero-groundline{position:absolute; left:0; right:0; top:38%; height:1px;
+  background:rgba(250,250,247,.22); transform:scaleX(0); transform-origin:left center; pointer-events:none;}
+
+/* faint vertical hairlines extending the groundline into a sparse
+   blueprint-style grid — fills the hero's empty background with texture
+   instead of clutter. Same "pure decoration, safe to default-hidden"
+   reasoning as the groundline above. */
+.hero-grid-lines{position:absolute; inset:0; pointer-events:none;}
+.hero-grid-lines .v{position:absolute; top:0; bottom:0; width:1px;
+  background:rgba(250,250,247,.12); transform:scaleY(0); transform-origin:top;}
+
+/* short supporting line under the H1 — real content, so (per the no-JS
+   rule used throughout) it is never pre-hidden in CSS, only animated by
+   JS once this script is confirmed running. */
+.hero-left{max-width:44rem;}
+.hero-trust{margin-top:20px; max-width:36ch; font-size:15px; line-height:1.55; color:rgba(250,250,247,.75);}
+@media(min-width:1024px){ .hero-trust{font-size:16px;} }
+
+/* curtain wipes — created by JS only, never present without it, so a
+   no-JS visitor can never end up with content stuck under a curtain. */
+.wipe-overlay{position:absolute; inset:0; pointer-events:none; z-index:5;}
+.wipe-overlay--caption{background:#0c0b09;}
+
+/* ---------- generic section heading ---------- */
+.sec-pad{padding-top:80px; padding-bottom:80px;}
+@media(min-width:1024px){ .sec-pad{padding-top:112px; padding-bottom:112px;} }
+.h-sec{font-family:var(--display); font-weight:600; font-size:1.875rem; line-height:1.15; letter-spacing:-.02em;}
+@media(min-width:1024px){ .h-sec{font-size:2.25rem;} }
+.kicker{font-size:13px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);}
+
+/* ---------- MANIFESTO ---------- */
+.manifesto{padding:96px 0;}
+@media(min-width:1024px){ .manifesto{padding:160px 0;} }
+.manifesto p{max-width:64rem; padding-bottom:4px; font-family:var(--display); font-weight:500; font-size:1.9rem; line-height:1.05; letter-spacing:-.02em;}
+@media(min-width:640px){ .manifesto p{font-size:2.75rem;} }
+@media(min-width:1024px){ .manifesto p{font-size:3.75rem;} }
+.manifesto em{font-style:italic; color:var(--accent);}
+
+/* ---------- SHOWCASE ---------- */
+.showcase{position:relative; height:78vh; overflow:hidden;}
+@media(min-width:1024px){ .showcase{height:100vh;} }
+.showcase .bg{position:absolute; inset:-10% 0; width:100%; height:120%; object-fit:cover;}
+.showcase .overlay{position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.25) 55%, rgba(0,0,0,.2));}
+.showcase .cap{position:absolute; inset:0; display:flex; align-items:flex-end;}
+.showcase .cap h2{max-width:48rem; padding-bottom:4px; font-family:var(--display); font-weight:500; color:#fff; font-size:2.25rem; line-height:.98; letter-spacing:-.02em;}
+@media(min-width:640px){ .showcase .cap h2{font-size:3rem;} }
+@media(min-width:1024px){ .showcase .cap h2{font-size:4.5rem;} }
+.showcase .cap .inner{position:relative; width:100%; max-width:var(--max); margin:0 auto; padding:0 20px 64px;}
+@media(min-width:1024px){ .showcase .cap .inner{padding:0 32px 96px;} }
+
+/* ---------- SERVICES ---------- */
+.svc-intro{display:grid; grid-template-columns:1fr; align-items:center; gap:32px;}
+@media(min-width:1024px){ .svc-intro{grid-template-columns:1fr auto 1fr; gap:48px;} }
+.svc-side{display:none;}
+@media(min-width:1024px){ .svc-side{display:block;} }
+.svc-side .box{position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:16px;}
+.svc-side img{width:100%; height:100%; object-fit:cover;}
+.svc-center{margin:0 auto; max-width:22ch; text-align:center;}
+.svc-center h2{padding-bottom:4px; font-family:var(--display); font-weight:500; font-size:2.25rem; line-height:.98; letter-spacing:-.02em;}
+@media(min-width:1024px){ .svc-center h2{font-size:3.75rem;} }
+.svc-center p{margin:20px auto 0; max-width:34ch; font-size:15px; color:var(--fg-muted);}
+.svc-cards{margin-top:64px; display:grid; grid-template-columns:1fr; gap:24px;}
+@media(min-width:640px){ .svc-cards{grid-template-columns:1fr 1fr;} }
+@media(min-width:1024px){ .svc-cards{margin-top:96px; grid-template-columns:repeat(3,1fr);} }
+.card{position:relative; display:block; aspect-ratio:4/5; overflow:hidden; border-radius:16px;}
+.card img{width:100%; height:100%; object-fit:cover; transition:transform .5s cubic-bezier(.16,1,.3,1);}
+.card:hover img{transform:scale(1.06);}
+.card .grad{position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.25) 45%, transparent);}
+.card .body{position:absolute; inset:auto 0 0 0; padding:28px; color:#fff;}
+.card .body h3{font-family:var(--display); font-weight:600; font-size:20px; letter-spacing:-.02em;}
+.card .body p{margin-top:8px; max-width:30ch; font-size:13.5px; line-height:1.5; color:rgba(255,255,255,.8);}
+.card .body .more{margin-top:20px; display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:500;}
+.card .body .more .ul{position:relative;}
+.card .body .more .ul::after{content:""; position:absolute; left:0; bottom:-2px; width:100%; height:1px; background:rgba(255,255,255,.4);}
+
+/* ---------- ABOUT ---------- */
+.about-checklist{margin-top:40px; display:grid; grid-template-columns:1fr; gap:16px 32px;}
+@media(min-width:640px){ .about-checklist{grid-template-columns:1fr 1fr;} }
+.about-checklist div{display:flex; gap:12px; align-items:flex-start; font-size:14.5px; color:var(--fg-muted);}
+.about-checklist .check{flex:none; margin-top:1px; width:20px; height:20px; border-radius:50%;
+  background:var(--brand-tint); color:var(--brand-strong); font-size:11px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;}
+
+/* Homepage-only About layout: copy beside a framed 2x2 mosaic, replacing the
+   plain checklist above for this section specifically. .about-checklist
+   itself is untouched — every service subpage still uses it as-is. */
+.about-grid{display:grid; grid-template-columns:1fr; gap:48px; align-items:center;}
+@media(min-width:1024px){ .about-grid{grid-template-columns:1.05fr .95fr; gap:64px;} }
+
+/* Framed like a piece of signage: rounded, elevated off the page with a soft
+   long shadow rather than a hard drop shadow, so it reads as inset rather
+   than pasted on. */
+.about-mosaic{display:grid; grid-template-columns:1fr 1fr; border-radius:20px; overflow:hidden;
+  box-shadow:0 44px 88px -34px rgba(29,28,26,.4), 0 1px 1px rgba(29,28,26,.06);}
+/* Height is content-driven (min-height as a floor, not a fixed aspect-ratio):
+   two of the four labels wrap to three lines while the others wrap to two,
+   and a fixed aspect-ratio clipped that third line on narrow screens. Grid
+   rows still size evenly within themselves, so the 2x2 block stays a block. */
+.about-tile{position:relative; display:flex; flex-direction:column; gap:14px;
+  padding:26px 24px; min-height:clamp(128px, 34vw, 172px); overflow:hidden;
+  transition:filter .35s ease;}
+@media(min-width:640px){ .about-tile{padding:32px 28px;} }
+.about-tile:hover{filter:brightness(1.1);}
+/* Checkerboard: dark / brand-green diagonally, matching the logo's two-tone
+   palette rather than introducing a third colour. */
+.about-tile:nth-child(1),.about-tile:nth-child(4){background:var(--fg);}
+.about-tile:nth-child(2),.about-tile:nth-child(3){background:var(--brand);}
+/* Soft top sheen on every tile — the "layering" that keeps four flat colour
+   blocks from reading as a flat colour swatch. Pure light, no texture, so it
+   holds up at any tile size. */
+.about-tile::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(165deg, rgba(255,255,255,.10), rgba(255,255,255,0) 46%);}
+.about-tile .chk{position:relative; flex:none; width:26px; height:26px; border-radius:50%;
+  border:1px solid rgba(199,154,68,.5); color:var(--accent); font-size:12px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;}
+.about-tile p{position:relative; max-width:20ch; font-size:14px; line-height:1.45;
+  color:var(--accent-tint);}
+@media(min-width:640px){ .about-tile p{font-size:14.5px;} }
+
+/* ---------- WHY CHOOSE US ---------- */
+.why-layout{margin-top:56px; display:grid; grid-template-columns:1fr; gap:40px; align-items:center;}
+@media(min-width:1024px){ .why-layout{grid-template-columns:.85fr 1.15fr; gap:64px;} }
+.why-photo{position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:16px;}
+.why-photo img{width:100%; height:100%; object-fit:cover;}
+
+/* ---------- PAGE HERO (interior pages, e.g. About Us) ---------- */
+.page-hero{position:relative; overflow:hidden; background:var(--fg); display:flex; align-items:center; min-height:340px;}
+@media(min-width:1024px){ .page-hero{min-height:420px;} }
+.page-hero .bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+.page-hero .overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(12,11,9,.8), rgba(12,11,9,.6));}
+.page-hero .inner{position:relative; z-index:1; padding-top:96px; padding-bottom:56px;}
+.page-hero h1{color:var(--bg); font-family:var(--display); font-weight:500; font-size:2.75rem; letter-spacing:-.02em;}
+@media(min-width:1024px){ .page-hero h1{font-size:3.75rem;} }
+.page-hero p{margin-top:16px; max-width:56ch; color:rgba(250,250,247,.8); font-size:15.5px; line-height:1.6;}
+
+/* ---------- VALUE / DETAIL CARDS (Core Values, Why Choose detail lists) ---------- */
+.values-grid{margin-top:56px; display:grid; grid-template-columns:1fr; gap:40px 32px;}
+@media(min-width:640px){ .values-grid{grid-template-columns:1fr 1fr;} }
+@media(min-width:1024px){ .values-grid.cols-3{grid-template-columns:repeat(3,1fr);} }
+.value-card{border-top:1px solid var(--border); padding-top:24px;}
+.value-card h3{font-family:var(--display); font-weight:600; font-size:1.375rem; letter-spacing:-.02em;}
+.value-card p{margin-top:12px; font-size:14.5px; line-height:1.55; color:var(--fg-muted);}
+.value-num{display:block; font-family:var(--display); font-weight:500; font-size:13px; color:var(--accent); letter-spacing:.04em; margin-bottom:10px;}
+
+/* ---------- VISION / MISSION SPLIT ---------- */
+.vm-grid{margin-top:56px; display:grid; grid-template-columns:1fr; gap:40px;}
+@media(min-width:1024px){ .vm-grid{grid-template-columns:1fr 1fr; gap:64px;} }
+.vm-card{border-top:1px solid var(--border); padding-top:24px;}
+.vm-card h3{font-family:var(--display); font-weight:600; font-size:1.5rem; letter-spacing:-.02em;}
+.vm-card p{margin-top:14px; font-size:15px; line-height:1.6; color:var(--fg-muted);}
+
+/* ---------- BLOG LISTING (Blogs page) ---------- */
+.post-grid{margin-top:56px; display:grid; grid-template-columns:1fr; gap:40px;}
+@media(min-width:640px){ .post-grid{grid-template-columns:1fr 1fr;} }
+@media(min-width:1024px){ .post-grid{grid-template-columns:repeat(3,1fr); gap:32px;} }
+.post-card{display:block;}
+.post-card .img{position:relative; aspect-ratio:4/3; overflow:hidden; border-radius:12px;}
+.post-card .img img{width:100%; height:100%; object-fit:cover; transition:transform .5s cubic-bezier(.16,1,.3,1);}
+.post-card:hover .img img{transform:scale(1.05);}
+.post-card h3{margin-top:16px; font-family:var(--display); font-weight:600; font-size:1.25rem; line-height:1.25; letter-spacing:-.02em;}
+.post-card p{margin-top:8px; font-size:14px; line-height:1.55; color:var(--fg-muted);}
+
+/* ---------- TAG (Blogs page) ---------- */
+.tag{display:inline-block; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--accent); border:1px solid var(--border); border-radius:999px; padding:5px 12px;}
+
+/* ---------- SERVICE DETAIL ROWS (Services page) ---------- */
+.svc-row{margin-top:56px; padding-top:56px; border-top:1px solid var(--border); display:grid; grid-template-columns:1fr; gap:32px; align-items:center;}
+@media(min-width:1024px){ .svc-row{grid-template-columns:1fr 1fr; gap:64px;} }
+.svc-row:first-child{margin-top:0; padding-top:0; border-top:none;}
+@media(min-width:1024px){ .svc-row.reverse .svc-row-photo{order:2;} .svc-row.reverse .svc-row-text{order:1;} }
+.svc-row-photo{position:relative; aspect-ratio:4/3; overflow:hidden; border-radius:16px;}
+.svc-row-photo img{width:100%; height:100%; object-fit:cover;}
+.svc-row-text h3{font-family:var(--display); font-weight:600; font-size:1.75rem; letter-spacing:-.02em;}
+.svc-row-text p{margin-top:14px; font-size:15px; line-height:1.6; color:var(--fg-muted);}
+.svc-row-list{margin-top:20px; display:flex; flex-direction:column; gap:10px;}
+.svc-row-list div{display:flex; gap:10px; align-items:flex-start; font-size:14px; color:var(--fg-muted);}
+
+/* ---------- SERVICE INDEX NAV (Services page) ---------- */
+.svc-index{margin-top:32px; display:flex; flex-wrap:wrap; gap:10px;}
+.svc-index a{font-size:13px; font-weight:500; padding:9px 18px; border:1px solid var(--border); border-radius:999px; color:var(--fg-muted); transition:border-color .3s, color .3s;}
+.svc-index a:hover{border-color:var(--accent); color:var(--fg);}
+
+/* ---------- SERVICE CATEGORY HEADER (Services page) ---------- */
+.svc-cat-head{max-width:60ch;}
+.svc-cat-head p{margin-top:10px; font-size:14.5px; line-height:1.55; color:var(--fg-muted);}
+
+/* ---------- GALLERY (Gallery page) ---------- */
+.gallery-grid{margin-top:56px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+@media(min-width:640px){ .gallery-grid{grid-template-columns:repeat(3,1fr);} }
+@media(min-width:1024px){ .gallery-grid{grid-template-columns:repeat(4,1fr); gap:24px;} }
+.gallery-item{position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:12px;}
+.gallery-item img{width:100%; height:100%; object-fit:cover; transition:transform .5s cubic-bezier(.16,1,.3,1);}
+.gallery-item:hover img{transform:scale(1.06);}
+
+/* ---------- BLOG DETAIL ---------- */
+.page-hero--short{min-height:280px;}
+@media(min-width:1024px){ .page-hero--short{min-height:340px;} }
+a.svc-row,a.post-card{text-decoration:none; color:inherit;}
+.blog-article{max-width:720px;}
+.blog-lede{font-size:1.125rem; line-height:1.65; color:var(--fg-muted); max-width:60ch;}
+.rich-text{margin-top:40px; font-size:15.5px; line-height:1.7; color:var(--fg-muted);}
+.rich-text p{margin-top:1.15em;}
+.rich-text p:first-child{margin-top:0;}
+.rich-text h2,.rich-text h3,.rich-text h4{
+  margin-top:1.75em; font-family:var(--display); font-weight:600; letter-spacing:-.02em; color:var(--fg);
+}
+.rich-text h2{font-size:1.5rem;}
+.rich-text h3{font-size:1.25rem;}
+.rich-text ul,.rich-text ol{margin-top:1em; padding-left:1.35em;}
+.rich-text li{margin-top:.45em;}
+.rich-text a{color:var(--accent); text-decoration:underline; text-underline-offset:2px;}
+.rich-text blockquote{
+  margin-top:1.5em; padding:16px 20px; border-left:3px solid var(--accent);
+  background:var(--bg-raised); color:var(--fg); font-style:italic;
+}
+.rich-text code{
+  font-size:.9em; padding:2px 6px; border-radius:4px; background:var(--bg-raised); color:var(--fg);
+}
+
+/* ---------- FAQ ---------- */
+/* Uses native <details>/<summary> rather than a JS-driven accordion — free
+   keyboard access and no-JS support, and the open/close itself is instant
+   (a direct user click, not scroll-linked motion), so it sits outside the
+   reduced-motion/scrub rules entirely. Only the chevron rotation and the
+   hover nudge are transform-only, click/hover-triggered CSS transitions —
+   same reasoning as the tile badge rotate elsewhere on the page: direct
+   interaction feedback, not automatic motion, so it's left ungated by
+   prefers-reduced-motion like the rest of the page's hover states.
+   The rows themselves are deliberately NOT in the universal .reveal batch
+   — they get their own drop-from-above entrance (see script), rather than
+   rising from below like everything else on the page. */
+.faq-list{margin-top:40px; display:flex; flex-direction:column;}
+.faq-item{border-top:1px solid var(--border); padding:28px 0;}
+.faq-item:last-child{border-bottom:1px solid var(--border);}
+.faq-item summary{display:flex; align-items:center; justify-content:space-between; gap:20px;
+  cursor:pointer; list-style:none; transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item:hover summary{transform:translateX(10px);}
+.faq-left{display:flex; align-items:baseline; gap:24px;}
+.faq-num{flex:none; font-family:var(--display); font-weight:500; font-size:15px; color:var(--fg-muted); min-width:24px;}
+.faq-q{font-family:var(--display); font-weight:600; font-size:17px; letter-spacing:-.02em;}
+@media(min-width:1024px){ .faq-q{font-size:19px;} }
+.faq-item .faq-icon{flex:none; width:28px; height:28px; border-radius:50%; border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--fg-muted);
+  transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.faq-item[open] .faq-icon{transform:rotate(45deg);}
+.faq-item p{margin-top:16px; margin-left:48px; max-width:66ch; font-size:14.5px; line-height:1.6; color:var(--fg-muted);}
+
+/* ---------- FINAL CTA ---------- */
+.final-cta{background:var(--brand); border-top:none;}
+
+/* ---------- STATS ---------- */
+.stats-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px 0;}
+@media(min-width:640px){ .stats-grid{grid-template-columns:repeat(3,1fr);} }
+@media(min-width:1024px){ .stats-grid{grid-template-columns:repeat(5,1fr);} }
+.stat{padding:0;}
+@media(min-width:1024px){ .stat{padding:0 32px; border-left:1px solid var(--border);} .stat:first-child{border-left:none; padding-left:0;} .stat:last-child{padding-right:0;} }
+.stat .num{font-family:var(--display); font-weight:600; font-size:2.25rem; letter-spacing:-.02em; color:var(--accent);}
+@media(min-width:1024px){ .stat .num{font-size:3rem;} }
+.stat p{margin-top:8px; max-width:20ch; font-size:13.5px; line-height:1.3; color:var(--fg-muted);}
+
+/* ---------- JURISDICTIONS ---------- */
+.jur-list{margin-top:48px; display:flex; flex-wrap:wrap; gap:8px 12px; border-top:1px solid var(--border); padding-top:40px;}
+.jur-list a{font-family:var(--display); font-weight:600; font-size:1.5rem; letter-spacing:-.02em; color:var(--fg-muted); transition:color .3s;}
+@media(min-width:1024px){ .jur-list a{font-size:2.25rem;} }
+.jur-list a:hover{color:var(--accent);}
+.jur-list a .comma{color:var(--border);}
+
+/* ---------- PROCESS ---------- */
+.proc-grid{margin-top:56px; display:grid; grid-template-columns:1fr; gap:48px 32px;}
+@media(min-width:640px){ .proc-grid{grid-template-columns:1fr 1fr;} }
+@media(min-width:1024px){ .proc-grid{grid-template-columns:repeat(4,1fr);} }
+.proc{border-top:1px solid var(--border); padding-top:24px;}
+.proc h3{font-family:var(--display); font-weight:600; font-size:1.5rem; letter-spacing:-.02em;}
+.proc p{margin-top:12px; font-size:14.5px; line-height:1.55; color:var(--fg-muted);}
+
+/* ---------- MARQUEE ---------- */
+.marquee{overflow:hidden; background:var(--bg-raised); padding:40px 0;}
+@media(min-width:1024px){ .marquee{padding:56px 0;} }
+/* no CSS keyframe here any more — the track's motion is a GSAP tween so
+   scroll velocity can drive its speed and skew (see script). */
+.marquee-track{display:flex; width:max-content; gap:20px;}
+.marquee-track .cell{position:relative; width:256px; height:160px; flex:none; overflow:hidden; border-radius:12px; border:1px solid var(--border);}
+@media(min-width:1024px){ .marquee-track .cell{width:320px; height:192px;} }
+.marquee-track img{width:100%; height:100%; object-fit:cover;}
+
+/* ---------- BLOG ---------- */
+.blog-grid{margin-top:56px; display:grid; grid-template-columns:1fr; gap:40px;}
+@media(min-width:1024px){ .blog-grid{grid-template-columns:1fr 1fr; gap:48px;} }
+.blog-feat .img{position:relative; aspect-ratio:4/3; overflow:hidden;}
+.blog-feat img,.blog-sec img{width:100%; height:100%; object-fit:cover;}
+.meta{margin-top:20px; font-size:13px; color:var(--fg-muted);}
+.meta .sep{color:var(--border);}
+.blog-feat h3{margin-top:8px; font-family:var(--display); font-weight:600; font-size:1.5rem; letter-spacing:-.02em;}
+@media(min-width:1024px){ .blog-feat h3{font-size:1.75rem;} }
+.blog-feat p{margin-top:12px; max-width:52ch; font-size:14.5px; line-height:1.55; color:var(--fg-muted);}
+.blog-col{display:flex; flex-direction:column; gap:40px;}
+.blog-sec{display:grid; grid-template-columns:1fr 1.3fr; gap:20px; border-top:1px solid var(--border); padding-top:24px;}
+.blog-sec .img{position:relative; aspect-ratio:4/3; overflow:hidden;}
+.blog-sec h3{margin-top:8px; font-family:var(--display); font-weight:600; font-size:1.125rem; letter-spacing:-.02em;}
+@media(min-width:1024px){ .blog-sec h3{font-size:1.25rem;} }
+.blog-sec .ex{margin-top:10px; font-size:13.5px; line-height:1.5; color:var(--fg-muted); display:none;}
+@media(min-width:640px){ .blog-sec .ex{display:block;} }
+
+/* ---------- CONTACT ---------- */
+.contact-grid{display:grid; grid-template-columns:1fr; gap:56px;}
+@media(min-width:1024px){ .contact-grid{grid-template-columns:.85fr 1fr; gap:80px;} }
+.contact p.lead{margin-top:16px; max-width:46ch; font-size:15.5px; line-height:1.55; color:var(--fg-muted);}
+.contact-info{margin-top:40px; display:flex; flex-direction:column; gap:20px; border-top:1px solid var(--border); padding-top:32px;}
+.contact-info a,.contact-info div{display:flex; gap:14px; font-size:14.5px; color:var(--fg-muted); transition:color .2s;}
+.contact-info a:hover{color:var(--fg);}
+.contact-info .dot{width:8px; height:8px; border-radius:50%; background:var(--accent); margin-top:7px; flex:none;}
+
+.map-embed{margin-top:72px; border-radius:16px; overflow:hidden; border:1px solid var(--border);}
+.map-embed iframe{display:block; width:100%; height:420px; border:0;}
+@media(max-width:640px){ .map-embed iframe{height:300px;} }
+form{display:flex; flex-direction:column; gap:20px;}
+.frow{display:grid; grid-template-columns:1fr; gap:20px;}
+@media(min-width:640px){ .frow{grid-template-columns:1fr 1fr;} }
+.field{display:flex; flex-direction:column; gap:8px;}
+.field label{font-size:13.5px; color:var(--fg-muted);}
+.field input,.field textarea{width:100%; border-radius:2px; border:1px solid var(--border); background:var(--bg-raised); padding:12px 16px; font-size:15px; color:var(--fg); font-family:var(--body); outline:none;}
+.field input:focus,.field textarea:focus{border-color:var(--accent);}
+.thanks{display:flex; flex-direction:column; justify-content:center; min-height:320px; border:1px solid var(--border); padding:40px;}
+.thanks h3{font-family:var(--display); font-weight:600; font-size:1.5rem; letter-spacing:-.02em;}
+.thanks p{margin-top:12px; max-width:40ch; font-size:14.5px; line-height:1.55; color:var(--fg-muted);}
+
+/* ---------- FOOTER ---------- */
+/* Deliberately un-animated throughout — the footer is a filing cabinet,
+   not a stage. No .reveal classes appear anywhere below. */
+footer{border-top:1px solid var(--border);}
+.foot-top{display:grid; grid-template-columns:1fr; gap:40px; padding-top:64px; padding-bottom:56px;}
+@media(min-width:768px){ .foot-top{grid-template-columns:minmax(200px,280px) 1fr; align-items:start;} }
+.foot-brand{max-width:280px;}
+.foot-brand .logo{height:64px; width:auto;}
+.foot-brand p{margin-top:16px; max-width:32ch; font-size:13.5px; line-height:1.5; color:var(--fg-muted);}
+.foot-social{display:flex; gap:12px; margin-top:20px;}
+.foot-social a{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:36px; height:36px; border-radius:999px; border:1px solid var(--border);
+  color:var(--fg-muted); transition:color .2s ease, border-color .2s ease;
+}
+.foot-social a:hover{color:var(--fg); border-color:var(--fg-muted);}
+.foot-social svg{width:16px; height:16px;}
+.foot-links{display:grid; grid-template-columns:1fr; gap:32px;}
+@media(min-width:560px){ .foot-links{grid-template-columns:repeat(2,1fr);} }
+@media(min-width:1024px){ .foot-links{grid-template-columns:repeat(3,1fr); gap:24px;} }
+.foot-col{min-width:0;}
+.foot-h{font-family:var(--display); font-weight:600; font-size:14px; letter-spacing:-.01em; margin-bottom:16px;}
+.foot-nav{display:flex; flex-direction:column; gap:10px;}
+.foot-nav a{font-size:13.5px; color:var(--fg-muted); transition:color .2s;}
+.foot-nav a:hover{color:var(--fg);}
+.foot-nav-cols{display:block; column-count:2; column-gap:20px;}
+.foot-nav-cols a{display:block; margin-bottom:10px; break-inside:avoid;}
+/* Below 560px every footer column goes full-width, which left Quick Links as
+   one tall six-item stack while the far longer Services list directly beneath
+   it was already flowing into two columns — lopsided, and a lot of dead
+   vertical space for six short links. Give it the same two-column treatment
+   at that width only; from 560px up the grid itself splits the columns and
+   the plain stack reads correctly again. */
+@media(max-width:559px){
+  .foot-col-quick .foot-nav{display:block; column-count:2; column-gap:20px;}
+  .foot-col-quick .foot-nav a{display:block; margin-bottom:10px; break-inside:avoid;}
+}
+.foot-contact{display:flex; flex-direction:column; gap:10px;}
+.foot-contact a,.foot-contact div{display:flex; gap:10px; font-size:13.5px; color:var(--fg-muted); transition:color .2s;}
+.foot-contact a:hover{color:var(--fg);}
+.foot-hours{margin-top:8px; font-size:13.5px; color:var(--fg-muted);}
+.foot-bot{border-top:1px solid var(--border);}
+.foot-bot .in{padding-top:24px; padding-bottom:24px; font-size:12.5px; color:var(--fg-muted); display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:space-between;}
+.foot-bot .in a{color:var(--fg-muted); transition:color .2s;}
+.foot-bot .in a:hover{color:var(--fg);}
+
+/* ---------- CUSTOM CURSOR + JURISDICTION PREVIEW ---------- */
+/* Both are pure UI chrome with no unique content — safe to default to
+   opacity:0 in CSS. Only ever made visible by the desktop-only JS layer. */
+#cursor{position:fixed; top:0; left:0; width:56px; height:56px; margin:-28px 0 0 -28px;
+  border-radius:50%; background:var(--brand); color:var(--bg); display:flex; align-items:center;
+  justify-content:center; font-size:12px; font-weight:600; letter-spacing:.02em;
+  pointer-events:none; z-index:999; opacity:0;}
+#cursor span{opacity:0; text-align:center; line-height:1.2;}
+.has-custom-cursor, .has-custom-cursor a, .has-custom-cursor button{cursor:none;}
+
+/* ---------- WHATSAPP FAB (all pages) ---------- */
+.whatsapp-fab{position:fixed; right:20px; bottom:20px; z-index:60; display:flex; align-items:center;
+  justify-content:center; width:56px; height:56px; border-radius:50%; background:#25d366; color:#fff;
+  box-shadow:0 10px 24px -8px rgba(0,0,0,.4); transition:transform .25s cubic-bezier(.16,1,.3,1);}
+.whatsapp-fab:hover{transform:scale(1.08);}
+.whatsapp-fab svg{width:30px; height:30px;}
+@media(min-width:1024px){ .whatsapp-fab{right:32px; bottom:32px;} }
+
+/* Real content (reveal blocks, hero copy) still lives in the raw HTML for
+   no-JS visitors and crawlers — nothing here is hidden unconditionally.
+   It's hidden only once `html.js` proves JS actually ran (set synchronously
+   in <head> before body paints, see layout.tsx), and only when motion is
+   allowed — SiteAnimations/HeroSequence skip their whole reveal setup under
+   reduced motion, so nothing would ever animate opacity back to 1 for them.
+   This closes the flash where the un-hidden HTML paints first and JS's own
+   hide-then-reveal happens a beat later, visible on every hard refresh. */
+@media not all and (prefers-reduced-motion: reduce){
+  html.js .reveal,
+  html.js .faq-item,
+  html.js .hero-kicker,
+  html.js .hero-desc,
+  html.js .hero-cta,
+  html.js .hero-chip,
+  html.js .hero-trust-corner{opacity:0;}
+  html.js .hero h1 .line{overflow:hidden;}
+  html.js .hero-seq__line-inner{transform:translateY(110%);}
+}
+
+/* ---------- MOBILE TOUCH TARGETS ----------
+   Every pill-shaped control on the site was sized for a mouse cursor and
+   landed between 39px and 42px tall — under the 44px minimum a fingertip
+   needs, and these are the densest tap zones on the site (ten service-index
+   pills wrap into a block where a mis-tap opens the wrong service). Only the
+   vertical padding grows, so the horizontal rhythm and the desktop look are
+   both untouched; scoped below 1024px to match the breakpoint used
+   throughout rather than shipping chunkier buttons to mouse users. */
+@media(max-width:1023px){
+  .hero-chip{padding-top:12px; padding-bottom:12px;}      /* 40.2 -> 44.2 */
+  .svc-index a{padding-top:12px; padding-bottom:12px;}    /* 39.1 -> 45.1 */
+  .btn.sm{padding-top:12px; padding-bottom:12px;}         /* 41.9 -> 45.9 */
+}
+
+@media(prefers-reduced-motion:reduce){
+  /* Defensive fallback only — nothing in this page is hidden by default
+     CSS, and the script's own top-level reduced-motion check means none
+     of the JS-authored hidden states below are ever created in the first
+     place. This exists purely as a belt-and-suspenders safety net. */
+  .reveal,.reveal-x{opacity:1!important; transform:none!important;}
+}
