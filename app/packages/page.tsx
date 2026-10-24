@@ -10,7 +10,7 @@ import { BUSINESS, SITE_URL, whatsappLink } from "../lib/site";
 
 const TITLE = `Tour Packages & Departure Dates | ${BUSINESS.name}`;
 const DESCRIPTION =
-  "Browse premium tour packages with fixed departure dates, transparent per-person prices and live seat availability.";
+  "Premium Vietnam, Kazakhstan, Tajikistan, Kashmir and Thailand tour packages from Kerala, with fixed departure dates, per-person prices in rupees and live seat availability.";
 const PATH = "/packages";
 
 export const metadata: Metadata = {
@@ -40,9 +40,22 @@ export default async function PackagesPage({
     ({ pkg }) => !activeRegion || pkg.region === activeRegion,
   );
 
+  const listSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Tour packages",
+    itemListElement: PACKAGES.map((pkg, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/packages/${pkg.slug}`,
+      name: pkg.title,
+    })),
+  };
+
   return (
     <>
       <Header />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
 
       <section className="page-hero">
         <Image className="bg" src={BUSINESS.ogImage} alt="" aria-hidden="true" fill sizes="100vw" priority />

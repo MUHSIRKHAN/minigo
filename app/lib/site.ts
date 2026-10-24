@@ -1,5 +1,10 @@
 // Every page, the header/footer, WhatsApp button and structured data read from here.
 // TODO: replace the placeholder domain below (and add the Instagram URL) once they exist.
+// The site only asks search engines to index it once a real domain is configured
+// (NEXT_PUBLIC_SITE_URL). Until then — a client demo on a *.vercel.app link — it
+// stays out of search results.
+export const IS_LIVE = Boolean(process.env.NEXT_PUBLIC_SITE_URL);
+
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://minigoholidays.com").replace(/\/$/, "");
 
 const streetAddress = "Door No. 2120, 1st Floor, Tower 2, Hilite Business Park";
@@ -34,6 +39,17 @@ export const BUSINESS = {
   // Share-card image must be a raster file on an absolute URL for most crawlers.
   ogImage:
     "https://images.unsplash.com/photo-1643029891412-92f9a81a8c16?w=1200&h=630&q=80&fm=jpg&fit=crop&auto=format",
+  keywords: [
+    "tour packages from Kerala",
+    "Kozhikode travel agency",
+    "Vietnam tour package",
+    "Kazakhstan tour package",
+    "Tajikistan tour package",
+    "Kashmir tour package",
+    "Thailand tour package",
+    "small group tours",
+    "premium holidays India",
+  ],
 } as const;
 
 export function whatsappLink(message: string): string {

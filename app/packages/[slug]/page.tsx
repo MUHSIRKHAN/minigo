@@ -33,19 +33,30 @@ export async function generateMetadata({
 
   const title = `${pkg.title} | ${BUSINESS.name}`;
   const url = `${SITE_URL}/packages/${pkg.slug}`;
+  const from = startingPrice(pkg);
+  const description = `${pkg.nights + 1}-day ${pkg.destination} tour package from Kerala${
+    from !== null ? `, from ${formatPrice(from)} per person` : ""
+  }. ${pkg.tagline}`;
   return {
     title,
-    description: pkg.summary,
+    description,
+    keywords: [
+      `${pkg.destination} tour package`,
+      `${pkg.destination} tour from Kerala`,
+      `${pkg.destination} tour from Kozhikode`,
+      `${pkg.destination} holiday package`,
+      `${pkg.style} holiday`,
+    ],
     alternates: { canonical: url },
     openGraph: {
       type: "website",
       url,
       siteName: BUSINESS.shortName,
       title,
-      description: pkg.summary,
+      description,
       images: [{ url: pkg.image, width: 1400, height: 933, alt: pkg.title }],
     },
-    twitter: { card: "summary_large_image", title, description: pkg.summary, images: [pkg.image] },
+    twitter: { card: "summary_large_image", title, description, images: [pkg.image] },
   };
 }
 
@@ -64,23 +75,59 @@ export default async function PackageDetailPage({
     .concat(PACKAGES.filter((p) => p.slug !== pkg.slug && p.region !== pkg.region))
     .slice(0, 3);
 
-  const tripSchema = {
+  const url = `${SITE_URL}/packages/${pkg.slug}`;
+  const prices = rows.map((r) => r.departure.price);
+  const anySeats = rows.some((r) => r.departure.seatsLeft > 0);
+  const schemaGraph = {
     "@context": "https://schema.org",
-    "@type": "TouristTrip",
-    name: pkg.title,
-    description: pkg.summary,
-    image: pkg.image,
-    touristType: pkg.style,
-    provider: { "@type": "TravelAgency", name: BUSINESS.name, url: SITE_URL },
-    ...(price !== null
-      ? { offers: { "@type": "Offer", price, priceCurrency: BUSINESS.currency, url: `${SITE_URL}/packages/${pkg.slug}` } }
-      : {}),
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "Tour packages", item: `${SITE_URL}/packages` },
+          { "@type": "ListItem", position: 3, name: pkg.title, item: url },
+        ],
+      },
+      {
+        "@type": "TouristTrip",
+        "@id": `${url}#trip`,
+        name: pkg.title,
+        description: pkg.summary,
+        image: pkg.image,
+        url,
+        touristType: pkg.style,
+        provider: { "@type": "TravelAgency", name: BUSINESS.name, url: SITE_URL },
+        itinerary: {
+          "@type": "ItemList",
+          itemListElement: pkg.itinerary.map((step, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${step.day}: ${step.title}`,
+            description: step.body,
+          })),
+        },
+        ...(prices.length
+          ? {
+              offers: {
+                "@type": "AggregateOffer",
+                priceCurrency: BUSINESS.currency,
+                lowPrice: Math.min(...prices),
+                highPrice: Math.max(...prices),
+                offerCount: prices.length,
+                availability: anySeats ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
+                url,
+              },
+            }
+          : {}),
+      },
+    ],
   };
 
   return (
     <>
       <Header />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(tripSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }} />
 
       <section className="page-hero">
         <Image className="bg" src={pkg.image} alt="" aria-hidden="true" fill sizes="100vw" priority />

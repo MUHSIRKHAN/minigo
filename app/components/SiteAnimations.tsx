@@ -131,6 +131,8 @@ export default function SiteAnimations() {
     let tickerCallback: ((time: number) => void) | null = null;
     let onWindowLoadBatches: (() => void) | null = null;
     const onWindowLoadRefresh = () => ScrollTrigger.refresh();
+    let resizeObserver: ResizeObserver | null = null;
+    let intersectionObserver: IntersectionObserver | null = null;
 
     function teardownSplit() {
       manifestoSplit?.revert();
@@ -381,6 +383,35 @@ export default function SiteAnimations() {
         });
       });
 
+      // Failsafe 1: re-measure scroll positions whenever the page height changes
+      // (late images or fonts, an opened FAQ). Stale positions are what can leave a
+      // reveal block hidden after the viewer has scrolled past where it should fire.
+      let refreshTimer = 0;
+      resizeObserver = new ResizeObserver(() => {
+        window.clearTimeout(refreshTimer);
+        refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 150);
+      });
+      resizeObserver.observe(document.body);
+
+      // Failsafe 2: anything that is on screen but still hidden a moment later is
+      // revealed regardless of what ScrollTrigger measured, so content never stays invisible.
+      const hidden = Array.from(document.querySelectorAll<HTMLElement>(".reveal, .faq-item"));
+      intersectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target as HTMLElement;
+            window.setTimeout(() => {
+              if (Number(getComputedStyle(el).opacity) < 0.5) {
+                gsap.to(el, { opacity: 1, y: 0, duration: DUR.standard, ease: EASE_OUT, overwrite: "auto" });
+              }
+            }, 900);
+          });
+        },
+        { rootMargin: "0px 0px -4% 0px", threshold: 0.01 },
+      );
+      hidden.forEach((el) => intersectionObserver?.observe(el));
+
       window.addEventListener("load", onWindowLoadRefresh);
       // Soft nav lands with images/fonts already warm — refresh after paint.
       requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -388,6 +419,8 @@ export default function SiteAnimations() {
 
     return () => {
       stopPrepare();
+      resizeObserver?.disconnect();
+      intersectionObserver?.disconnect();
       if (onWindowLoadBatches) window.removeEventListener("load", onWindowLoadBatches);
       window.removeEventListener("load", onWindowLoadRefresh);
       teardownSplit();

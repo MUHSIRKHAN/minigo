@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export type HeroSlide = { label: string; image: string; href: string };
+export type HeroSlide = { label: string; image: string; href: string; alt: string };
 
 const SLIDE_MS = 6500;
 
@@ -17,6 +17,9 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const count = slides.length;
+  // Only the current and upcoming slides are mounted, so the other photos are not
+  // downloaded up front (better load speed and Core Web Vitals).
+  const seen = useRef<Set<number>>(new Set([0]));
 
   const go = useCallback((i: number) => setIndex(((i % count) + count) % count), [count]);
 
@@ -37,18 +40,23 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
 
   return (
     <section id="top" className="mhero" style={{ ["--mhero-ms" as string]: `${SLIDE_MS}ms` }}>
-      {slides.map((slide, i) => (
+      {slides.map((slide, i) => {
+        seen.current.add(index);
+        seen.current.add((index + 1) % count);
+        if (!seen.current.has(i)) return null;
+        return (
         <div className={`mhero-slide${i === index ? " on" : ""}`} key={slide.label} aria-hidden={i !== index}>
           <Image
             src={slide.image}
-            alt=""
+            alt={slide.alt}
             fill
             sizes="100vw"
             quality={85}
             priority={i === 0}
           />
         </div>
-      ))}
+        );
+      })}
 
       <div className="wrap mhero-inner">
         <p className="mhero-place">{slides[index].label}</p>

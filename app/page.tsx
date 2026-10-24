@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +12,11 @@ import Testimonials from "./components/Testimonials";
 import Moments from "./components/Moments";
 import { formatPostDate, getBlogPosts, getGalleryImages, getMediaUrl } from "./lib/payload";
 import { PACKAGES, REGIONS, allUpcomingDepartures } from "./lib/packages";
-import { BUSINESS, DEFAULT_WHATSAPP_MESSAGE, whatsappLink } from "./lib/site";
+import { BUSINESS, DEFAULT_WHATSAPP_MESSAGE, SITE_URL, whatsappLink } from "./lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: SITE_URL },
+};
 
 const padTop96Bottom128: CSSProperties = { paddingTop: 96, paddingBottom: 128 };
 
@@ -66,11 +71,23 @@ export default async function Home() {
     label: pkg.destination.split(",")[0],
     image: pkg.image,
     href: `/packages/${pkg.slug}`,
+    alt: `${pkg.destination} — ${pkg.tagline}`,
   }));
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  };
 
   return (
     <>
       <Header />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <HeroSlider slides={heroSlides} />
 
