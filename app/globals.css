@@ -1051,3 +1051,22 @@ h1,h2,h3,.display,.h-sec,.manifesto p,.showcase .cap h2,.value-card h3,.vm-card 
 .up-meta{grid-template-columns:1fr 1fr; gap:12px 18px;}
 .up-meta div:first-child{grid-column:1 / -1;}
 .up-meta dd{white-space:nowrap;}
+
+/* Hero brand film: poster photo first, video fades in once playing */
+.mhero--film .mhero-slide img{transform:none; transition:none;}
+.mhero-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1.2s ease; filter:brightness(.82) saturate(1.05);}
+.mhero-video.on{opacity:1;}
+.mhero--film .mhero-place{transition:opacity .4s ease;}
+.mhero-pause{position:absolute; z-index:3; right:28px; top:24px; width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,.6); background:rgba(20,38,30,.45); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px); color:#fff; display:grid; place-items:center; cursor:pointer; transition:background-color .25s, color .25s;}
+.mhero-pause:hover{background:#fff; color:var(--brand);}
+.mhero-pause svg{width:16px; height:16px; fill:currentColor;}
+.mhero--film .mhero-inner{padding-bottom:110px;}
+@media(max-width:700px){
+  .mhero--film .mhero-inner{padding-bottom:72px;}
+  .mhero-pause{right:16px; top:16px; width:40px; height:40px;}
+}
+/* Lighter scrim for the film: keep the footage bright, darken only behind the text */
+.mhero.mhero--film::after{background:
+  linear-gradient(to top, rgba(18,34,27,.88) 0%, rgba(18,34,27,.55) 32%, rgba(18,34,27,.12) 62%, rgba(18,34,27,.28) 100%),
+  linear-gradient(to right, rgba(18,34,27,.35) 0%, rgba(18,34,27,0) 60%);}
+.mhero-video{filter:brightness(.94) saturate(1.06) contrast(1.03);}

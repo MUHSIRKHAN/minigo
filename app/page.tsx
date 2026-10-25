@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import HeroSlider from "./components/HeroSlider";
+import HeroVideo from "./components/HeroVideo";
 import PackageCard from "./components/PackageCard";
 import DepartureList from "./components/DepartureList";
 import EnquiryForm from "./components/EnquiryForm";
@@ -69,12 +69,6 @@ export default async function Home() {
 
   const departures = allUpcomingDepartures();
   const nextDepartures = departures.slice(0, 5);
-  const heroSlides = PACKAGES.map((pkg) => ({
-    label: pkg.destination.split(",")[0],
-    image: pkg.image,
-    href: `/packages/${pkg.slug}`,
-    alt: `${pkg.destination} — ${pkg.tagline}`,
-  }));
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -91,7 +85,7 @@ export default async function Home() {
       <Header />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <HeroSlider slides={heroSlides} />
+      <HeroVideo />
 
       {/* STATS */}
       <section>

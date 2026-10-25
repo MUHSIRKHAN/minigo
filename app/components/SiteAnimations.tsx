@@ -163,7 +163,7 @@ export default function SiteAnimations() {
         gsap.ticker.lagSmoothing(0);
 
         // ---- HERO ----
-        // The home hero (HeroSlider) animates itself — nothing here may touch
+        // The home hero (HeroVideo) animates itself — nothing here may touch
         // hero content, or the two would fight over the same transforms.
         gsap.from("#nav", { opacity: 0, y: -8, duration: DUR.micro, ease: EASE_OUT });
 
