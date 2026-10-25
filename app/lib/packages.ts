@@ -223,7 +223,7 @@ export const PACKAGES: TourPackage[] = [
     tagline: "Coral lagoons, snorkelling and island food on India's coral islands.",
     summary:
       "Two nights on the islands with snorkelling, kayaking, a glass-bottom boat ride, sightseeing by bike or scooter and the local seafood Lakshadweep is known for. Ship and flight tickets are not included.",
-    image: img("1572025310208-2fd6b91764c1", 2000),
+    image: "/assets/tours/lakshadweep.jpg",
     nights: 2,
     style: "Group departures",
     fromPrice: 13990,
@@ -259,7 +259,7 @@ export const PACKAGES: TourPackage[] = [
     tagline: "A beach resort in Calangute with North and South Goa sightseeing and train travel included.",
     summary:
       "Three nights at a beach resort in Calangute with a pool, North and South Goa sightseeing by private tempo, and sleeper train tickets both ways. Choose breakfast and dinner, or add lunch for all three meals.",
-    image: img("1614082242765-7c98ca0f3df3", 2000),
+    image: "/assets/tours/goa.jpg",
     nights: 3,
     groupSize: "4 sharing",
     style: "Group package",
@@ -526,7 +526,7 @@ export function nextDeparture(pkg: TourPackage, now = new Date()): Departure | n
 }
 
 export function departureStatus(d: Departure): { label: string; tone: "open" | "few" | "full" } {
-  if (d.closed) return { label: "Closed", tone: "full" };
+  if (d.closed) return { label: "Booking closed", tone: "full" };
   if (d.seatsLeft === null) return { label: "Ask for availability", tone: "open" };
   if (d.seatsLeft <= 0) return { label: "Sold out", tone: "full" };
   if (d.seatsLeft <= 4) return { label: `Only ${d.seatsLeft} seats left`, tone: "few" };

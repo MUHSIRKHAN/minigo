@@ -1186,3 +1186,9 @@ nav.links a{font-size:15px; font-weight:500;}
   .price-table td[data-label]::before{content:attr(data-label) " · "; font-weight:400; color:var(--fg-muted);}
   .ask-box .btn{width:100%;}
 }
+
+
+/* Let the photography show its colour: shade only behind the text */
+.pkg-card::after{background:linear-gradient(to top, rgba(18,34,27,.9) 0%, rgba(18,34,27,.62) 26%, rgba(18,34,27,.16) 50%, rgba(18,34,27,0) 66%);}
+.pkg-card .photo img{filter:saturate(1.08);}
+.page-hero .overlay{background:linear-gradient(180deg, rgba(18,34,27,.42) 0%, rgba(18,34,27,.3) 40%, rgba(18,34,27,.72) 100%);}

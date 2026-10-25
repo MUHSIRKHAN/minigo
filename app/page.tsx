@@ -67,7 +67,9 @@ export default async function Home() {
   const secondaryPosts = otherPosts.slice(0, 2);
   const marqueeImages = galleryImages.length > 0 ? [...galleryImages, ...galleryImages] : [];
 
-  const departures = allUpcomingDepartures().filter(({ departure }) => !departure.closed);
+  // Closed dates stay in the calendar (marked "Booking closed"); the counter shows only bookable ones.
+  const departures = allUpcomingDepartures();
+  const openDepartures = departures.filter(({ departure }) => !departure.closed);
   const nextDepartures = departures.slice(0, 5);
 
   const faqSchema = {
@@ -98,8 +100,8 @@ export default async function Home() {
               <p>Destinations across Asia</p>
             </div>
             <div className="stat reveal">
-              <div className="num" data-count={departures.length} data-suffix="">
-                {departures.length}
+              <div className="num" data-count={openDepartures.length} data-suffix="">
+                {openDepartures.length}
               </div>
               <p>Upcoming departures open to book</p>
             </div>

@@ -38,7 +38,7 @@ export default async function PackagesPage({
   const { region } = await searchParams;
   const activeRegion = REGIONS.find((r) => r === region) as Region | undefined;
   const packages = activeRegion ? PACKAGES.filter((p) => p.region === activeRegion) : PACKAGES;
-  const departures = allUpcomingDepartures().filter(({ departure }) => !departure.closed).filter(
+  const departures = allUpcomingDepartures().filter(
     ({ pkg }) => !activeRegion || pkg.region === activeRegion,
   );
 
