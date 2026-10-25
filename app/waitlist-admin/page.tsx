@@ -73,10 +73,8 @@ export default async function WaitlistAdmin({ searchParams }: { searchParams: Pr
           return (
             <div key={t.slug}>
               <span>{t.destination}</span>
-              <strong>
-                {n} / {t.goal}
-              </strong>
-              <small>{n >= t.goal ? "Ready to plan" : `${t.goal - n} more needed`}</small>
+              <strong>{t.goal ? `${n} / ${t.goal}` : n}</strong>
+              <small>{!t.goal ? "travellers interested" : n >= t.goal ? "Ready to plan" : `${t.goal - n} more needed`}</small>
             </div>
           );
         })}

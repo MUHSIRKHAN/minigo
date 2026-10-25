@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Jost } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import SiteAnimations from "./components/SiteAnimations";
 import WhatsAppButton from "./components/WhatsAppButton";
@@ -7,22 +7,15 @@ import GoogleTagManager from "./components/GoogleTagManager";
 import GoogleTagManagerNoscript from "./components/GoogleTagManagerNoscript";
 import { BUSINESS, IS_LIVE, SITE_URL } from "./lib/site";
 
-// Display: refined high-contrast serif for headings. Body: clean geometric sans.
-const cormorant = Cormorant_Garamond({
-  variable: "--font-display",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const jost = Jost({
-  variable: "--font-body",
+// One clean geometric sans for headings and text, close to the brand's poster lettering.
+const outfit = Outfit({
+  variable: "--font-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
 const DEFAULT_TITLE =
-  "Minigo Holidays | Premium Tours to Vietnam, Kazakhstan, Tajikistan, Kashmir & Lakshadweep";
+  "Minigo Holidays | Kashmir, Lakshadweep, Vietnam & Kazakhstan Tour Packages from Kerala";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -123,7 +116,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-IN"
-      className={`${cormorant.variable} ${jost.variable}`}
+      className={outfit.variable}
       suppressHydrationWarning
     >
       <body>

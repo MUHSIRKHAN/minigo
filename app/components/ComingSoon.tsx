@@ -120,8 +120,9 @@ export default function ComingSoon({ trips, tone = "raised" }: { trips: Upcoming
         <div className="up-grid">
           {trips.map((trip) => {
             const interest = trip.demoInterest + (counts[trip.slug] || 0);
-            const pct = Math.min(100, Math.round((interest / trip.goal) * 100));
-            const reached = interest >= trip.goal;
+            const goal = trip.goal ?? 0;
+            const pct = goal ? Math.min(100, Math.round((interest / goal) * 100)) : 0;
+            const reached = goal > 0 && interest >= goal;
             const isJoined = joined.includes(trip.slug);
             const [, route] = trip.title.split(": ");
             return (
@@ -139,26 +140,32 @@ export default function ComingSoon({ trips, tone = "raised" }: { trips: Upcoming
                       <dt>Planned for</dt>
                       <dd>{trip.season}</dd>
                     </div>
-                    <div>
-                      <dt>Length</dt>
-                      <dd>{trip.nights + 1} days</dd>
-                    </div>
-                    <div>
-                      <dt>Around</dt>
-                      <dd>{formatPrice(trip.estimate)}</dd>
-                    </div>
+                    {trip.nights ? (
+                      <div>
+                        <dt>Length</dt>
+                        <dd>{trip.nights + 1} days</dd>
+                      </div>
+                    ) : null}
+                    {trip.estimate ? (
+                      <div>
+                        <dt>Around</dt>
+                        <dd>{formatPrice(trip.estimate)}</dd>
+                      </div>
+                    ) : null}
                   </dl>
                   <div className="up-progress">
-                    <div
-                      className="up-bar"
-                      role="progressbar"
-                      aria-valuemin={0}
-                      aria-valuemax={trip.goal}
-                      aria-valuenow={Math.min(interest, trip.goal)}
-                      aria-label={`${interest} of ${trip.goal} travellers interested`}
-                    >
-                      <span style={{ width: `${pct}%` }} />
-                    </div>
+                    {goal ? (
+                      <div
+                        className="up-bar"
+                        role="progressbar"
+                        aria-valuemin={0}
+                        aria-valuemax={goal}
+                        aria-valuenow={Math.min(interest, goal)}
+                        aria-label={`${interest} of ${goal} travellers interested`}
+                      >
+                        <span style={{ width: `${pct}%` }} />
+                      </div>
+                    ) : null}
                     <p>
                       {interest > 0 ? (
                         <>
@@ -167,8 +174,10 @@ export default function ComingSoon({ trips, tone = "raised" }: { trips: Upcoming
                             <>
                               {" "}travellers interested<em> · Dates coming soon</em>
                             </>
+                          ) : goal ? (
+                            <> of {goal} travellers interested</>
                           ) : (
-                            <> of {trip.goal} travellers interested</>
+                            <> travellers interested</>
                           )}
                         </>
                       ) : (
@@ -218,8 +227,10 @@ export default function ComingSoon({ trips, tone = "raised" }: { trips: Upcoming
             ) : (
               <form className="wl-form" onSubmit={submit}>
                 <p className="wl-note">
-                  No payment and no commitment. Planned for {active.season}, around{" "}
-                  {formatPrice(active.estimate)} per person.
+                  No payment and no commitment.
+                  {active.estimate
+                    ? ` Planned for ${active.season}, around ${formatPrice(active.estimate)} per person.`
+                    : ` ${active.season}.`}
                 </p>
                 <div className="field">
                   <label htmlFor="wl-name">Your name</label>

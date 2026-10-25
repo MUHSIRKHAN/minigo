@@ -14,11 +14,12 @@ export type UpcomingTrip = {
   image: string;
   /** When we expect to run it, shown as-is */
   season: string;
-  nights: number;
-  /** Rough per-person price in rupees; shown as "around ₹…" */
-  estimate: number;
-  /** Travellers needed before we confirm dates */
-  goal: number;
+  /** Omitted until the duration is decided */
+  nights?: number;
+  /** Rough per-person price in rupees; shown as "around ₹…". Omitted until known. */
+  estimate?: number;
+  /** Travellers needed before we confirm dates; without it no progress bar is shown */
+  goal?: number;
   /** Months offered in the form's "preferred month" dropdown */
   months: string[];
   demoInterest: number;
@@ -28,6 +29,16 @@ const img = (id: string) =>
   `https://images.unsplash.com/photo-${id}?w=1400&q=80&fm=jpg&fit=crop&auto=format`;
 
 export const UPCOMING: UpcomingTrip[] = [
+  {
+    slug: "tajikistan-pamir-highway",
+    destination: "Tajikistan",
+    title: "Tajikistan: The Pamir Highway",
+    summary: "High mountain roads, turquoise lakes and remote villages on one of the world's great road journeys.",
+    image: img("1788072714390-505500746762"),
+    season: "Dates to be announced",
+    months: [],
+    demoInterest: 0,
+  },
   {
     slug: "uzbekistan-silk-road",
     destination: "Uzbekistan",

@@ -12,7 +12,7 @@ import { BUSINESS, SITE_URL, whatsappLink } from "../lib/site";
 
 const TITLE = `Tour Packages & Departure Dates | ${BUSINESS.name}`;
 const DESCRIPTION =
-  "Premium Vietnam, Kazakhstan, Tajikistan, Kashmir and Lakshadweep tour packages from Kerala, with fixed departure dates, per-person prices in rupees and live seat availability.";
+  "Kashmir, Lakshadweep, Goa, Golden Triangle, Hyderabad, Vietnam and Kazakhstan tour packages from Kerala: group departures and private trips, with per-person prices in rupees.";
 const PATH = "/packages";
 
 export const metadata: Metadata = {
@@ -38,7 +38,7 @@ export default async function PackagesPage({
   const { region } = await searchParams;
   const activeRegion = REGIONS.find((r) => r === region) as Region | undefined;
   const packages = activeRegion ? PACKAGES.filter((p) => p.region === activeRegion) : PACKAGES;
-  const departures = allUpcomingDepartures().filter(
+  const departures = allUpcomingDepartures().filter(({ departure }) => !departure.closed).filter(
     ({ pkg }) => !activeRegion || pkg.region === activeRegion,
   );
 
@@ -66,8 +66,8 @@ export default async function PackagesPage({
           <p className="kicker reveal">Tour Packages</p>
           <h1 className="reveal">Journeys with a date in the diary.</h1>
           <p className="reveal">
-            Every package below runs on fixed departure dates with a per-person price and live seat
-            availability — pick a trip, pick a date, and we take care of the rest.
+            Group tours on fixed dates and private trips on dates that suit you, each with a clear
+            per-person price — pick a trip and we take care of the rest.
           </p>
         </div>
       </section>

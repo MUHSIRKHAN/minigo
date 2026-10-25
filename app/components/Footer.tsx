@@ -12,8 +12,8 @@ export default function Footer() {
         <div className="foot-brand">
           <Image className="logo" src={BUSINESS.logo} alt={BUSINESS.name} width={558} height={615} />
           <p>
-            {BUSINESS.tagline} Premium small-group and private tours to Vietnam, Kazakhstan,
-            Tajikistan, Kashmir and Lakshadweep.
+            {BUSINESS.tagline} Group tours and private trips to Kashmir, Lakshadweep, Goa, Vietnam,
+            Kazakhstan and across India.
           </p>
           {BUSINESS.instagramUrl ? (
             <div className="foot-social">

@@ -7,7 +7,7 @@ import { PACKAGES, REGIONS, allUpcomingDepartures } from "../lib/packages";
 import { BUSINESS, DEFAULT_WHATSAPP_MESSAGE, SITE_URL, whatsappLink } from "../lib/site";
 
 const TITLE = `About Us | ${BUSINESS.name}`;
-const DESCRIPTION = `${BUSINESS.name} is a premium travel and tour company building small-group and private journeys with handpicked stays, expert local guides and dated departures.`;
+const DESCRIPTION = `${BUSINESS.name} is a Kozhikode travel company planning group tours and private trips across India and Asia, with clear prices and a team that looks after you throughout.`;
 const PATH = "/about";
 
 // The upcoming-departures count is computed at render time, so regenerate hourly.
@@ -30,15 +30,15 @@ export const metadata: Metadata = {
 
 const VALUES = [
   { title: "Thoughtful pacing", body: "Itineraries with space to breathe — fewer hotel changes, unhurried mornings and time to wander." },
-  { title: "Honest pricing", body: "A clear per-person price for every departure, with exactly what is and is not included spelled out." },
+  { title: "Honest pricing", body: "A clear per-person price for every tour, with what is and is not included spelled out." },
   { title: "Local first", body: "Guides, drivers and hosts who live where you travel, so you meet a place through the people who know it." },
-  { title: "Small by design", body: "Small groups and private departures keep every trip personal, flexible and low-impact." },
+  { title: "Trips for everyone", body: "Group tours, couple and honeymoon packages, family trips and college tours, each planned around the people travelling." },
   { title: "Care throughout", body: "One team from your first enquiry to the moment you are home, reachable before, during and after your trip." },
   { title: "Responsible travel", body: "We choose partners who treat their staff, communities and environment well, and we travel lightly." },
 ];
 
 export default function AboutPage() {
-  const departures = allUpcomingDepartures().length;
+  const departures = allUpcomingDepartures().filter(({ departure }) => !departure.closed).length;
 
   return (
     <>
@@ -52,7 +52,7 @@ export default function AboutPage() {
           <h1 className="reveal">Travel, beautifully planned.</h1>
           <p className="reveal">
             {BUSINESS.name} designs premium tour packages for travellers who want the story, not
-            just the sights — with dated departures, small groups and a team behind you the whole
+            just the sights — with group departures, private trips and a team behind you the whole
             way.
           </p>
         </div>

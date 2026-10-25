@@ -23,10 +23,10 @@ export const metadata: Metadata = {
 const padTop96Bottom128: CSSProperties = { paddingTop: 96, paddingBottom: 128 };
 
 const WHY_US = [
-  "Fixed departure dates & transparent prices",
+  "Group departures and private trips, with clear prices",
   "Handpicked hotels, houseboats, lodges and homestays",
-  "Expert local guides on every tour",
-  "Small groups for a more personal trip",
+  "A Malayali coordinator on Kashmir group tours",
+  "Trips for couples, families, friends and colleges",
   "Tailor-made itineraries on request",
   "One team from first enquiry to return home",
 ];
@@ -41,15 +41,15 @@ const PROCESS = [
 const FAQS = [
   {
     q: "How do your departure dates work?",
-    a: "Each tour runs on fixed departure dates listed on its page, with a per-person price and live seat availability. If your preferred date is full, join the waitlist or ask us for a private departure.",
+    a: "Group tours such as Kashmir, Vietnam, Kazakhstan and Lakshadweep run on fixed dates listed on each tour page. Goa, the Golden Triangle, Delhi–Agra and Hyderabad run on dates that suit your group. If a date is full, message us for the next one.",
   },
   {
     q: "What is included in the price?",
-    a: "Every package lists exactly what is included — usually accommodation, breakfast, internal transfers, guides and the activities in the itinerary — and what is not, such as international flights and travel insurance.",
+    a: "Each tour page lists what is included and what is not. If a detail isn't listed yet, message us and we'll send it before you book.",
   },
   {
     q: "When is the best time to visit each destination?",
-    a: "Vietnam is at its best from November to March, Lakshadweep from October to May, Kashmir in spring and autumn, and Kazakhstan and Tajikistan from late May to September. Our departure dates follow those seasons.",
+    a: "Our Kashmir group tours run in November, December and January for the snow. Lakshadweep departures are from February to April, Vietnam from November to January, and Kazakhstan in December and February. Goa, the Golden Triangle and Hyderabad run on dates that suit your group.",
   },
   {
     q: "Can I travel on different dates or customise a tour?",
@@ -67,7 +67,7 @@ export default async function Home() {
   const secondaryPosts = otherPosts.slice(0, 2);
   const marqueeImages = galleryImages.length > 0 ? [...galleryImages, ...galleryImages] : [];
 
-  const departures = allUpcomingDepartures();
+  const departures = allUpcomingDepartures().filter(({ departure }) => !departure.closed);
   const nextDepartures = departures.slice(0, 5);
 
   const faqSchema = {
@@ -133,10 +133,9 @@ export default async function Home() {
             <div className="reveal">
               <p className="body-copy">
                 A great holiday is rarely about ticking off sights — it is the pace, the people and
-                the places you stay. {BUSINESS.name} builds premium tours to Vietnam, Kazakhstan,
-                Tajikistan, Kashmir and Lakshadweep around handpicked stays, knowledgeable local
-                guides and itineraries with room to breathe, then puts real dates and clear prices
-                on every one so planning is simple.
+                the places you stay. {BUSINESS.name} plans group tours and private trips to Kashmir,
+                Lakshadweep, Goa, the Golden Triangle, Hyderabad, Vietnam and Kazakhstan, with good
+                hotels, sensible pacing and clear prices, so planning is simple.
               </p>
               <div style={{ marginTop: 32, display: "flex", gap: 16, flexWrap: "wrap" }}>
                 <Link href="/about" className="btn">
@@ -209,7 +208,7 @@ export default async function Home() {
               <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
                 Why travel with us
               </h2>
-              <p className="sub reveal">Small groups. Local experts. Nothing left to chance.</p>
+              <p className="sub reveal">Clear prices. Real dates. Nothing left to chance.</p>
               <div className="about-checklist">
                 {WHY_US.map((item) => (
                   <div className="reveal" key={item}>

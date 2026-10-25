@@ -89,8 +89,8 @@ export default function HeroVideo() {
         </p>
         <h1 className="display">Extraordinary journeys, effortlessly planned.</h1>
         <p className="sub">
-          Premium small-group and private journeys to Vietnam, Kazakhstan, Tajikistan, Kashmir and
-          Lakshadweep &mdash; for couples, families and friends, on dated departures you can book today.
+          Group tours and private trips to Kashmir, Lakshadweep, Goa, Vietnam, Kazakhstan and across
+          India &mdash; for couples, families and friends.
         </p>
         <div className="mhero-cta">
           <Link href="/packages" className="btn on-brand">

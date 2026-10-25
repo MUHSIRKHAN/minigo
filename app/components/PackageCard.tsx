@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   departureStatus,
+  durationText,
   formatDate,
   formatPrice,
   nextDeparture,
@@ -13,7 +14,8 @@ export default function PackageCard({ pkg }: { pkg: TourPackage }) {
   const price = startingPrice(pkg);
   const next = nextDeparture(pkg);
   const status = next ? departureStatus(next) : null;
-  // "Vietnam: Hanoi, Ha Long & Hoi An" → the country is the label, the route is the title.
+  const duration = durationText(pkg, true);
+  // "Kashmir: Srinagar, Gulmarg…" → the destination is the label, the route is the title.
   const [, route] = pkg.title.split(": ");
 
   return (
@@ -28,8 +30,8 @@ export default function PackageCard({ pkg }: { pkg: TourPackage }) {
       </div>
 
       <span className="tag tag-date">
-        <small>Next departure</small>
-        {next ? formatDate(next.date) : "Dates soon"}
+        <small>{next ? "Next departure" : "Travel dates"}</small>
+        {next ? formatDate(next.date) : pkg.datesOnRequest ? "Any date, on request" : "Coming soon"}
       </span>
       {status && status.tone === "few" ? <span className="tag tag-alert">{status.label}</span> : null}
 
@@ -40,8 +42,8 @@ export default function PackageCard({ pkg }: { pkg: TourPackage }) {
         <div className="foot">
           <p className="facts">
             <span className="from">From</span>
-            <strong>{price !== null ? formatPrice(price) : "On request"}</strong>
-            <span className="len">{pkg.nights + 1} days</span>
+            <strong>{formatPrice(price)}</strong>
+            {duration ? <span className="len">{duration}</span> : null}
           </p>
           <span className="go" aria-hidden="true">
             &rarr;

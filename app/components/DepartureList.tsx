@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { departureStatus, formatDate, formatPrice, type Departure, type TourPackage } from "../lib/packages";
+import { departureStatus, durationText, formatDate, formatPrice, type Departure, type TourPackage } from "../lib/packages";
 import { BUSINESS, whatsappLink } from "../lib/site";
 
 export type DepartureRow = { pkg: TourPackage; departure: Departure };
@@ -18,14 +18,13 @@ function Row({ pkg, departure, showPackage }: DepartureRow & { showPackage: bool
           <Link href={`/packages/${pkg.slug}`} className="dep-pkg">
             {pkg.title}
           </Link>
-        ) : (
-          <span className="dep-sub">
-            {pkg.nights + 1} days · {pkg.nights} nights
-          </span>
-        )}
+        ) : durationText(pkg) ? (
+          <span className="dep-sub">{durationText(pkg)}</span>
+        ) : null}
       </div>
       <div className="dep-price">
-        {formatPrice(departure.price)}
+        <span>From </span>
+        {formatPrice(pkg.fromPrice)}
         <span> / person</span>
       </div>
       <div className={`dep-status ${status.tone}`}>
@@ -34,8 +33,13 @@ function Row({ pkg, departure, showPackage }: DepartureRow & { showPackage: bool
       </div>
       <div className="dep-actions">
         {soldOut ? (
-          <Link href={enquiry} className="btn outline sm">
-            <span>Join waitlist</span>
+          <Link
+            href={whatsappLink(`Hi ${BUSINESS.name}, the ${formatDate(departure.date)} date for "${pkg.title}" is full. Which other dates are available?`)}
+            className="btn outline sm"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>Ask about other dates</span>
           </Link>
         ) : (
           <>

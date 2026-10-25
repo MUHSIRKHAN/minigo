@@ -8,15 +8,34 @@ import PackageCard from "../../components/PackageCard";
 import DepartureList from "../../components/DepartureList";
 import {
   PACKAGES,
+  durationText,
   formatPrice,
   getPackage,
   startingPrice,
   upcomingDepartures,
+  type TourPackage,
 } from "../../lib/packages";
 import { BUSINESS, SITE_URL, whatsappLink } from "../../lib/site";
 
 // Departure lists hide past dates at render time, so regenerate hourly.
 export const revalidate = 3600;
+
+/** Shown wherever a detail isn't published yet, so the page never guesses. */
+function AskForDetails({ pkg, what }: { pkg: TourPackage; what: string }) {
+  return (
+    <div className="ask-box reveal">
+      <p>Contact us for the {what} of this tour. We&rsquo;ll share the latest details on WhatsApp or by email.</p>
+      <Link
+        href={whatsappLink(`Hi ${BUSINESS.name}, could you share the ${what} for "${pkg.title}"?`)}
+        className="btn sm"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span>Ask on WhatsApp</span>
+      </Link>
+    </div>
+  );
+}
 
 export function generateStaticParams() {
   return PACKAGES.map((p) => ({ slug: p.slug }));
@@ -34,9 +53,10 @@ export async function generateMetadata({
   const title = `${pkg.title} | ${BUSINESS.name}`;
   const url = `${SITE_URL}/packages/${pkg.slug}`;
   const from = startingPrice(pkg);
-  const description = `${pkg.nights + 1}-day ${pkg.destination} tour package from Kerala${
-    from !== null ? `, from ${formatPrice(from)} per person` : ""
-  }. ${pkg.tagline}`;
+  const duration = durationText(pkg, true);
+  const description = `${pkg.destination} tour package from Kerala${duration ? ` (${duration})` : ""}, from ${formatPrice(
+    from,
+  )} per person. ${pkg.tagline}`;
   return {
     title,
     description,
@@ -76,8 +96,14 @@ export default async function PackageDetailPage({
     .slice(0, 3);
 
   const url = `${SITE_URL}/packages/${pkg.slug}`;
-  const prices = rows.map((r) => r.departure.price);
-  const anySeats = rows.some((r) => r.departure.seatsLeft > 0);
+  const duration = durationText(pkg);
+  const onRequest = Boolean(pkg.datesOnRequest) && rows.length === 0;
+  const prices = [
+    pkg.fromPrice,
+    ...(pkg.priceOptions ?? []).map((o) => o.price),
+    ...(pkg.priceTable?.rows ?? []).flatMap((r) => r.prices),
+  ];
+  const anySeats = pkg.datesOnRequest || rows.some((r) => !r.departure.closed && r.departure.seatsLeft !== 0);
   const schemaGraph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -98,15 +124,19 @@ export default async function PackageDetailPage({
         url,
         touristType: pkg.style,
         provider: { "@type": "TravelAgency", name: BUSINESS.name, url: SITE_URL },
-        itinerary: {
-          "@type": "ItemList",
-          itemListElement: pkg.itinerary.map((step, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: `${step.day}: ${step.title}`,
-            description: step.body,
-          })),
-        },
+        ...(pkg.itinerary.length
+          ? {
+              itinerary: {
+                "@type": "ItemList",
+                itemListElement: pkg.itinerary.map((step, i) => ({
+                  "@type": "ListItem",
+                  position: i + 1,
+                  name: `${step.day}: ${step.title}`,
+                  description: step.body,
+                })),
+              },
+            }
+          : {}),
         ...(prices.length
           ? {
               offers: {
@@ -159,17 +189,15 @@ export default async function PackageDetailPage({
           <div className="pkg-facts reveal">
             <div>
               <span className="k">Duration</span>
-              <span className="v">
-                {pkg.nights + 1} days · {pkg.nights} nights
-              </span>
+              <span className="v">{duration ?? "Ask us"}</span>
             </div>
             <div>
               <span className="k">From</span>
-              <span className="v">{price !== null ? `${formatPrice(price)} pp` : "On request"}</span>
+              <span className="v">{formatPrice(price)} pp</span>
             </div>
             <div>
               <span className="k">Group</span>
-              <span className="v" style={{ fontSize: "1.15rem" }}>{pkg.groupSize}</span>
+              <span className="v" style={{ fontSize: "1.15rem" }}>{pkg.groupSize ?? "Ask us"}</span>
             </div>
             <div>
               <span className="k">Style</span>
@@ -206,17 +234,99 @@ export default async function PackageDetailPage({
         </div>
       </section>
 
+      {pkg.priceOptions || pkg.priceTable ? (
+        <section id="prices">
+          <div className="wrapc" style={{ paddingTop: 16, paddingBottom: 80 }}>
+            <p className="kicker reveal">Prices</p>
+            <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "40ch" }}>
+              Choose your option.
+            </h2>
+            {pkg.priceOptions ? (
+              <div className="price-opts">
+                {pkg.priceOptions.map((o) => (
+                  <div className="price-opt reveal" key={o.label}>
+                    <span className="k">{o.label}</span>
+                    <strong>{formatPrice(o.price)}</strong>
+                    <span className="n">{o.note}</span>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+            {pkg.priceTable ? (
+              <div className="price-table reveal">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Itinerary</th>
+                      <th scope="col">Days</th>
+                      {pkg.priceTable.columns.map((c) => (
+                        <th scope="col" key={c}>
+                          {c}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pkg.priceTable.rows.map((r) => (
+                      <tr key={r.name}>
+                        <th scope="row">{r.name}</th>
+                        <td className="days">{r.days}</td>
+                        {r.prices.map((amount, i) => (
+                          <td key={pkg.priceTable!.columns[i]} data-label={pkg.priceTable!.columns[i]}>
+                            {formatPrice(amount)}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
+            {pkg.priceNote ? <p className="price-note reveal">{pkg.priceNote}</p> : null}
+            {pkg.hotels ? (
+              <div className="price-hotels reveal">
+                <span className="k">Hotels</span>
+                <ul>
+                  {pkg.hotels.map((h) => (
+                    <li key={h}>{h}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
+
       <section id="departures" style={{ background: "var(--bg-raised)" }}>
         <div className="wrapc" style={{ paddingTop: 80, paddingBottom: 96 }}>
           <p className="kicker reveal">Departure dates</p>
           <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "40ch" }}>
-            Choose your departure.
+            {onRequest ? "Travel on your dates." : "Choose your departure."}
           </h2>
-          <DepartureList rows={rows} />
-          <p className="reveal" style={{ marginTop: 16, fontSize: "13px", color: "var(--fg-muted)" }}>
-            Prices are per person based on twin sharing. Seat availability changes quickly — an
-            enquiry holds your place while we confirm details.
-          </p>
+          {onRequest ? (
+            <div className="ask-box reveal">
+              <p>
+                This tour runs on dates that suit your group{pkg.groupSize ? ` (${pkg.groupSize.toLowerCase()})` : ""}.
+                Tell us when you&rsquo;d like to travel and we&rsquo;ll confirm availability and the final price.
+              </p>
+              <Link
+                href={whatsappLink(`Hi ${BUSINESS.name}, we would like to plan "${pkg.title}". Our preferred dates are: `)}
+                className="btn sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>Plan dates on WhatsApp</span>
+              </Link>
+            </div>
+          ) : (
+            <>
+              <DepartureList rows={rows} />
+              <p className="reveal" style={{ marginTop: 16, fontSize: "13px", color: "var(--fg-muted)" }}>
+                Prices shown are starting prices per person. Seat availability changes quickly — an enquiry holds your
+                place while we confirm details.
+              </p>
+            </>
+          )}
         </div>
       </section>
 
@@ -226,6 +336,7 @@ export default async function PackageDetailPage({
           <h2 className="h-sec reveal" style={{ marginTop: 12, maxWidth: "40ch" }}>
             Day by day.
           </h2>
+          {pkg.itinerary.length === 0 ? <AskForDetails pkg={pkg} what="day-by-day itinerary" /> : null}
           <div className="faq-list">
             {pkg.itinerary.map((step, i) => (
               <details className="faq-item" key={step.day} open={i === 0}>
@@ -248,6 +359,7 @@ export default async function PackageDetailPage({
           <div className="pkg-cols">
             <div>
               <p className="kicker reveal">What&rsquo;s included</p>
+              {pkg.included.length === 0 ? <AskForDetails pkg={pkg} what="full list of inclusions" /> : null}
               <div className="pkg-list">
                 {pkg.included.map((item) => (
                   <div className="reveal" key={item}>
@@ -259,6 +371,7 @@ export default async function PackageDetailPage({
             </div>
             <div>
               <p className="kicker reveal">Not included</p>
+              {pkg.notIncluded.length === 0 ? <AskForDetails pkg={pkg} what="exclusions" /> : null}
               <div className="pkg-list no">
                 {pkg.notIncluded.map((item) => (
                   <div className="reveal" key={item}>
@@ -269,6 +382,16 @@ export default async function PackageDetailPage({
               </div>
             </div>
           </div>
+          {pkg.notes ? (
+            <div className="pkg-notes reveal">
+              <span className="k">Good to know</span>
+              <ul>
+                {pkg.notes.map((n) => (
+                  <li key={n}>{n}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
       </section>
 
