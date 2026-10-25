@@ -1,9 +1,9 @@
 // Every page, the header/footer, WhatsApp button and structured data read from here.
-// TODO: replace the placeholder domain below (and add the Instagram URL) once they exist.
-// The site only asks search engines to index it once a real domain is configured
-// (NEXT_PUBLIC_SITE_URL). Until then — a client demo on a *.vercel.app link — it
-// stays out of search results.
-export const IS_LIVE = Boolean(process.env.NEXT_PUBLIC_SITE_URL);
+// TODO: add the Instagram URL once it exists.
+// Search engines are asked to index the site only when the real domain is configured
+// (NEXT_PUBLIC_SITE_URL) AND indexing is switched on (ALLOW_INDEXING=true) — kept off
+// until the sample reviews and moments are replaced with real ones.
+export const IS_LIVE = Boolean(process.env.NEXT_PUBLIC_SITE_URL) && process.env.ALLOW_INDEXING === "true";
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://minigoholidays.com").replace(/\/$/, "");
 
