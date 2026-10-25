@@ -13,7 +13,7 @@ export default function Footer() {
           <Image className="logo" src={BUSINESS.logo} alt={BUSINESS.name} width={558} height={615} />
           <p>
             {BUSINESS.tagline} Premium small-group and private tours to Vietnam, Kazakhstan,
-            Tajikistan, Kashmir and Thailand.
+            Tajikistan, Kashmir and Lakshadweep.
           </p>
           {BUSINESS.instagramUrl ? (
             <div className="foot-social">

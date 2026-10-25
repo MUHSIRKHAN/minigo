@@ -49,7 +49,7 @@ const FAQS = [
   },
   {
     q: "When is the best time to visit each destination?",
-    a: "Vietnam and Thailand are at their best from November to March, Kashmir in spring and autumn, and Kazakhstan and Tajikistan from late May to September. Our departure dates follow those seasons.",
+    a: "Vietnam is at its best from November to March, Lakshadweep from October to May, Kashmir in spring and autumn, and Kazakhstan and Tajikistan from late May to September. Our departure dates follow those seasons.",
   },
   {
     q: "Can I travel on different dates or customise a tour?",
@@ -134,7 +134,7 @@ export default async function Home() {
               <p className="body-copy">
                 A great holiday is rarely about ticking off sights — it is the pace, the people and
                 the places you stay. {BUSINESS.name} builds premium tours to Vietnam, Kazakhstan,
-                Tajikistan, Kashmir and Thailand around handpicked stays, knowledgeable local
+                Tajikistan, Kashmir and Lakshadweep around handpicked stays, knowledgeable local
                 guides and itineraries with room to breathe, then puts real dates and clear prices
                 on every one so planning is simple.
               </p>

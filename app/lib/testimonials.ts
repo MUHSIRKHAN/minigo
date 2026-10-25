@@ -42,11 +42,11 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     name: "Priya & Arjun Das",
     from: "Bengaluru",
-    trip: "Thailand: Bangkok, Phuket & Krabi",
+    trip: "Lakshadweep: Agatti, Bangaram & Thinnakara",
     when: "February 2026",
     rating: 4.5,
     quote:
-      "Our private longtail day around Phi Phi was worth the whole trip. One transfer ran a little late, but the team called ahead and fixed it within minutes. We would book with them again.",
+      "Snorkelling in Bangaram's lagoon felt like swimming in an aquarium, and the entry permits were all sorted before we flew. One boat transfer waited on the tide, but the team kept us posted the whole time. We would book with them again.",
     photo: portrait("1515766024017-689e434ef22b"),
   },
   {

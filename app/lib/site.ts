@@ -20,7 +20,7 @@ export const BUSINESS = {
   // The line printed under the logo, spelled exactly as in the logo artwork.
   logoTagline: "Go Anywhere, stay Prepared",
   description:
-    "Minigo Holidays designs premium small-group and private tours to Vietnam, Kazakhstan, Tajikistan, Kashmir and Thailand — handpicked stays, expert local guides and fixed departure dates you can book today.",
+    "Minigo Holidays designs premium small-group and private tours to Vietnam, Kazakhstan, Tajikistan, Kashmir and Lakshadweep — handpicked stays, expert local guides and fixed departure dates you can book today.",
   streetAddress,
   addressLocality,
   addressRegion,
@@ -48,7 +48,8 @@ export const BUSINESS = {
     "Kazakhstan tour package",
     "Tajikistan tour package",
     "Kashmir tour package",
-    "Thailand tour package",
+    "Lakshadweep tour package",
+    "Lakshadweep tour from Kochi",
     "small group tours",
     "premium holidays India",
   ],

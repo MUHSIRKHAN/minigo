@@ -12,7 +12,7 @@ import { BUSINESS, SITE_URL, whatsappLink } from "../lib/site";
 
 const TITLE = `Tour Packages & Departure Dates | ${BUSINESS.name}`;
 const DESCRIPTION =
-  "Premium Vietnam, Kazakhstan, Tajikistan, Kashmir and Thailand tour packages from Kerala, with fixed departure dates, per-person prices in rupees and live seat availability.";
+  "Premium Vietnam, Kazakhstan, Tajikistan, Kashmir and Lakshadweep tour packages from Kerala, with fixed departure dates, per-person prices in rupees and live seat availability.";
 const PATH = "/packages";
 
 export const metadata: Metadata = {

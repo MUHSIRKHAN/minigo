@@ -68,9 +68,9 @@ export const MOMENTS: Moment[] = [
     from: "Kochi",
   },
   {
-    label: "Thailand",
-    caption: "Taking in the Andaman islands from above",
-    image: photo("1510381291098-5f7abba6eadd"),
+    label: "Lakshadweep",
+    caption: "Spotting the coral islands on the flight in",
+    image: photo("1572431447238-425af66a273b"),
     by: "Priya & Arjun Das",
     from: "Bengaluru",
   },

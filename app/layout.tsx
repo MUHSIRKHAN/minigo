@@ -22,7 +22,7 @@ const jost = Jost({
 });
 
 const DEFAULT_TITLE =
-  "Minigo Holidays | Premium Tours to Vietnam, Kazakhstan, Tajikistan, Kashmir & Thailand";
+  "Minigo Holidays | Premium Tours to Vietnam, Kazakhstan, Tajikistan, Kashmir & Lakshadweep";
 
 export const viewport: Viewport = {
   width: "device-width",
