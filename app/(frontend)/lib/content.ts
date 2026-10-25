@@ -9,8 +9,25 @@ import { MOMENTS, type Moment } from "./moments";
 
 const lines = (rows: { text: string }[] | null | undefined) => (rows ?? []).map((r) => r.text);
 
+/**
+ * True once the admin's database has been loaded (it holds at least one tour, shown or hidden).
+ * Until then, and if the database can't be reached, the site keeps showing its built-in content,
+ * so connecting a new, empty database never blanks out the live site.
+ */
+const cmsReady = cache(async (): Promise<boolean> => {
+  if (!cmsConfigured) return false;
+  try {
+    const cms = await getCms();
+    const { totalDocs } = await cms.count({ collection: "trips" });
+    return totalDocs > 0;
+  } catch (error) {
+    console.error("Admin database unavailable; showing built-in content", error);
+    return false;
+  }
+});
+
 export const getPackages = cache(async (): Promise<TourPackage[]> => {
-  if (!cmsConfigured) return PACKAGES;
+  if (!(await cmsReady())) return PACKAGES;
   const cms = await getCms();
   const { docs } = await cms.find({
     collection: "trips",
@@ -67,7 +84,7 @@ export async function getPackage(slug: string): Promise<TourPackage | undefined>
 }
 
 export const getUpcomingTrips = cache(async (): Promise<UpcomingTrip[]> => {
-  if (!cmsConfigured) return UPCOMING;
+  if (!(await cmsReady())) return UPCOMING;
   const cms = await getCms();
   const { docs } = await cms.find({
     collection: "upcoming-trips",
@@ -92,7 +109,7 @@ export const getUpcomingTrips = cache(async (): Promise<UpcomingTrip[]> => {
 });
 
 export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
-  if (!cmsConfigured) return TESTIMONIALS;
+  if (!(await cmsReady())) return TESTIMONIALS;
   const cms = await getCms();
   const { docs } = await cms.find({
     collection: "testimonials",
@@ -113,7 +130,7 @@ export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
 });
 
 export const getMoments = cache(async (): Promise<Moment[]> => {
-  if (!cmsConfigured) return MOMENTS;
+  if (!(await cmsReady())) return MOMENTS;
   const cms = await getCms();
   const { docs } = await cms.find({
     collection: "moments",

@@ -11,6 +11,8 @@ import { TESTIMONIALS } from "../app/(frontend)/lib/testimonials";
 import { MOMENTS } from "../app/(frontend)/lib/moments";
 
 const uploaded = new Map<string, string>();
+/** Where to read the site's own photos ("/assets/…") from when not running on this computer. */
+let assetOrigin: string | undefined;
 
 /**
  * Stores a photo in the admin's photo library (the R2 bucket when set up).
@@ -21,8 +23,13 @@ async function photo(payload: Payload, url: string, alt: string): Promise<string
   const known = uploaded.get(url);
   if (known) return known;
   let data: Buffer;
-  if (url.startsWith("/")) {
+  if (url.startsWith("/") && !assetOrigin) {
     data = await readFile(path.join(process.cwd(), "public", url));
+  } else if (url.startsWith("/")) {
+    // On Vercel the site's own files aren't on the server's disk; read them from the live site.
+    const res = await fetch(new URL(url, assetOrigin));
+    if (!res.ok) throw new Error(`Could not download ${url} from ${assetOrigin} (${res.status})`);
+    data = Buffer.from(await res.arrayBuffer());
   } else {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`Could not download ${url} (${res.status})`);
@@ -54,7 +61,8 @@ const lines = (items: string[]) => items.map((text) => ({ text }));
 // Calendar dates are entered as India time, the way the admin's date picker stores them.
 const indiaDay = (iso: string) => new Date(`${iso}T00:00:00+05:30`).toISOString();
 
-export async function seed(payload: Payload): Promise<string[]> {
+export async function seed(payload: Payload, options: { assetOrigin?: string } = {}): Promise<string[]> {
+  assetOrigin = options.assetOrigin;
   const log: string[] = [];
   const console = { log: (line: string) => log.push(line.trim()) };
   console.log("Loading the website's tours and content into the admin…");
