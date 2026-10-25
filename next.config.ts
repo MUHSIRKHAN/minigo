@@ -19,6 +19,8 @@ const nextConfig: NextConfig = {
     localPatterns: [{ pathname: "/api/media/file/**" }, { pathname: "/assets/**" }],
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
+      // Photos uploaded in the admin (Vercel Blob)
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
       ...(s3PublicUrl
         ? [
             {

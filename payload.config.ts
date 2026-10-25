@@ -5,6 +5,7 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { nodemailerAdapter } from "@payloadcms/email-nodemailer";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import sharp from "sharp";
 
 import { Users } from "./cms/collections/Users";
@@ -20,6 +21,7 @@ import { ContactSubmissions } from "./cms/collections/ContactSubmissions";
 import { s3Configured } from "./cms/storage";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
+const blobConfigured = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
 export default buildConfig({
   // The admin runs on its own subdomain (ADMIN_URL); admin links and password-reset emails use it.
@@ -68,9 +70,18 @@ export default buildConfig({
   sharp,
   typescript: { outputFile: path.resolve(dirname, "cms/payload-types.ts") },
   plugins: [
-    // Photos go to the Cloudflare R2 bucket (S3-compatible) when it is set up; otherwise they are saved on this computer (local testing only).
+    // Photos go to Vercel Blob when the project has a Blob store (BLOB_READ_WRITE_TOKEN, added by Vercel).
+    // Uploads go straight from the browser to Blob, so photos over Vercel's 4.5 MB request limit work too.
+    vercelBlobStorage({
+      enabled: blobConfigured,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      clientUploads: true,
+      collections: { media: { prefix: "media", disablePayloadAccessControl: true } },
+    }),
+    // Alternative: a Cloudflare R2 bucket (S3-compatible), used when set up and Blob isn't.
+    // Without either, photos are saved on this computer (local testing only).
     s3Storage({
-      enabled: s3Configured,
+      enabled: s3Configured && !blobConfigured,
       collections: {
         media: {
           prefix: "media",

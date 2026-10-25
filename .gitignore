@@ -54,3 +54,4 @@ docs/.venv/
 
 # temporary bundle used by npm run generate:types
 /.gentypes
+/.payload-config.bundle.mjs
