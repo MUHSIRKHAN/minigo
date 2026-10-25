@@ -45,3 +45,9 @@ docs/.venv/
 
 # docs build
 docs/.venv/
+
+# local admin uploads (production uses Cloudflare R2)
+/media
+
+# original AI clips and photos for the hero film (large; kept locally, not deployed)
+/media-source
