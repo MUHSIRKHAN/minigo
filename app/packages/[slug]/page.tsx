@@ -325,6 +325,19 @@ export default async function PackageDetailPage({
                 Prices shown are starting prices per person. Seat availability changes quickly — an enquiry holds your
                 place while we confirm details.
               </p>
+              <div className="ask-box reveal">
+                <p>
+                  Prefer different dates? This trip is also available on any date you choose, on request.
+                </p>
+                <Link
+                  href={whatsappLink(`Hi ${BUSINESS.name}, we would like "${pkg.title}" on our own dates. Our preferred dates are: `)}
+                  className="btn sm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>Ask for your dates</span>
+                </Link>
+              </div>
             </>
           )}
         </div>

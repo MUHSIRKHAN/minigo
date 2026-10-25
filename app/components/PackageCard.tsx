@@ -31,7 +31,8 @@ export default function PackageCard({ pkg }: { pkg: TourPackage }) {
 
       <span className="tag tag-date">
         <small>{next ? "Next departure" : "Travel dates"}</small>
-        {next ? formatDate(next.date) : pkg.datesOnRequest ? "Any date, on request" : "Coming soon"}
+        {next ? formatDate(next.date) : "Any date, on request"}
+        {next ? <em className="tag-alt">or any date on request</em> : null}
       </span>
       {status && status.tone === "few" ? <span className="tag tag-alert">{status.label}</span> : null}
 

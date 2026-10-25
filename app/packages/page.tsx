@@ -66,8 +66,8 @@ export default async function PackagesPage({
           <p className="kicker reveal">Tour Packages</p>
           <h1 className="reveal">Journeys with a date in the diary.</h1>
           <p className="reveal">
-            Group tours on fixed dates and private trips on dates that suit you, each with a clear
-            per-person price — pick a trip and we take care of the rest.
+            Join a group departure or travel on any date you choose — every trip is available on
+            request, each with a clear per-person price.
           </p>
         </div>
       </section>

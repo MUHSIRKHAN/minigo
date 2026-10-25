@@ -41,7 +41,7 @@ const PROCESS = [
 const FAQS = [
   {
     q: "How do your departure dates work?",
-    a: "Group tours such as Kashmir, Vietnam, Kazakhstan and Lakshadweep run on fixed dates listed on each tour page. Goa, the Golden Triangle, Delhi–Agra and Hyderabad run on dates that suit your group. If a date is full, message us for the next one.",
+    a: "Kashmir, Vietnam, Kazakhstan and Lakshadweep have group departures on fixed dates, listed on each tour page. Every trip, including these, can also be arranged on any date you choose, on request. Just message us with your dates.",
   },
   {
     q: "What is included in the price?",
@@ -159,7 +159,7 @@ export default async function Home() {
           <h2 className="h-sec reveal" style={{ marginTop: 14 }}>
             Explore our trips
           </h2>
-          <p className="sub reveal">Remarkable journeys to inspire the mind.</p>
+          <p className="sub reveal">Join a group departure, or travel on any date you choose. Every trip is available on request.</p>
           <div className="pkg-grid">
             {PACKAGES.map((pkg) => (
               <PackageCard key={pkg.slug} pkg={pkg} />
