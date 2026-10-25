@@ -7,6 +7,7 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import sharp from "sharp";
+import { attachDatabasePool } from "@vercel/functions";
 
 import { Users } from "./cms/collections/Users";
 import { Media } from "./cms/collections/Media";
@@ -66,7 +67,18 @@ export default buildConfig({
         })
       : undefined,
   // MongoDB Atlas (free M0 cluster). Vercel's MongoDB Atlas integration sets MONGODB_URI.
-  db: mongooseAdapter({ url: process.env.DATABASE_URL || process.env.MONGODB_URI || "" }),
+  // Idle connections are closed after a few seconds so a paused Vercel function never wakes
+  // up holding a connection Atlas has already dropped (see onInit).
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URL || process.env.MONGODB_URI || "",
+    connectOptions: { maxIdleTimeMS: 5000 },
+  }),
+  onInit: async (payload) => {
+    if (!process.env.VERCEL) return;
+    // Keeps the function alive just long enough to close idle connections before Vercel pauses it.
+    const client = (payload.db as { connection?: { getClient?: () => unknown } }).connection?.getClient?.();
+    if (client) attachDatabasePool(client as Parameters<typeof attachDatabasePool>[0]);
+  },
   sharp,
   typescript: { outputFile: path.resolve(dirname, "cms/payload-types.ts") },
   plugins: [
