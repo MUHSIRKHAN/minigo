@@ -29,11 +29,18 @@ export default function PackageCard({ pkg }: { pkg: TourPackage }) {
         />
       </div>
 
-      <span className="tag tag-date">
-        <small>{next ? "Next departure" : "Travel dates"}</small>
-        {next ? formatDate(next.date) : "Any date, on request"}
-        {next ? <em className="tag-alt">or any date on request</em> : null}
-      </span>
+      <div className="pkg-dates">
+        <span className="pd-main">
+          <svg className="pd-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V2zm12 8H5v9h14v-9z" />
+          </svg>
+          <span className="pd-text">
+            <small>{next ? "Next departure" : "Travel dates"}</small>
+            <strong>{next ? formatDate(next.date) : "Any date, on request"}</strong>
+          </span>
+        </span>
+        {next ? <span className="pd-any">Or any date on request</span> : null}
+      </div>
       {status && status.tone === "few" ? <span className="tag tag-alert">{status.label}</span> : null}
 
       <div className="body">

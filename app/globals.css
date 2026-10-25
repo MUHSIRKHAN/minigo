@@ -1187,5 +1187,15 @@ nav.links a{font-size:15px; font-weight:500;}
   .ask-box .btn{width:100%;}
 }
 
-/* Trip card date tag: second line for any-date bookings */
-.pkg-card .tag .tag-alt{display:block; margin-top:3px; font-style:normal; font-size:11px; font-weight:500; opacity:.85;}
+/* Trip card dates: a frosted white pill with a calendar icon, and a slim
+   translucent pill underneath for "any date on request" */
+.pkg-dates{position:absolute; top:16px; left:16px; z-index:2; display:flex; flex-direction:column; align-items:flex-start; gap:7px;}
+.pd-main{display:inline-flex; align-items:center; gap:10px; padding:7px 14px 7px 7px; border-radius:14px;
+  background:rgba(255,255,255,.93); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-shadow:0 8px 24px rgba(10,22,16,.18); color:var(--fg);}
+.pd-icon{flex:none; width:32px; height:32px; padding:7px; border-radius:10px; background:var(--brand-tint); fill:var(--brand);}
+.pd-text small{display:block; font-size:11px; font-weight:500; line-height:1.2; color:var(--fg-muted);}
+.pd-text strong{display:block; font-size:14.5px; font-weight:600; line-height:1.25; letter-spacing:-.01em; color:var(--fg);}
+.pd-any{display:inline-flex; align-items:center; gap:7px; padding:5px 12px 5px 10px; border-radius:999px; font-size:11.5px; font-weight:500; color:#fff;
+  background:rgba(18,34,27,.5); border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);}
+.pd-any::before{content:""; width:6px; height:6px; border-radius:50%; background:#a8dcc0;}
+.pkg-card .tag-alert{top:16px; right:16px; padding:7px 12px; border-radius:999px; font-size:12px; font-weight:600; color:#a8432b; background:#fff; box-shadow:0 8px 24px rgba(10,22,16,.18);}
