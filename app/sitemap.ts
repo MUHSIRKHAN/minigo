@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "./lib/site";
-import { getBlogPosts } from "./lib/payload";
-import { PACKAGES } from "./lib/packages";
+import { SITE_URL } from "./(frontend)/lib/site";
+import { getBlogPosts } from "./(frontend)/lib/payload";
+import { getPackages } from "./(frontend)/lib/content";
 
 const STATIC_ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
   { path: "", priority: 1, changeFrequency: "weekly" },
@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route.priority,
   }));
 
-  const packageEntries: MetadataRoute.Sitemap = PACKAGES.map((pkg) => ({
+  const packageEntries: MetadataRoute.Sitemap = (await getPackages()).map((pkg) => ({
     url: `${SITE_URL}/packages/${pkg.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
