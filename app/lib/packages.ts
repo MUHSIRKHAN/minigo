@@ -99,7 +99,7 @@ export const PACKAGES: TourPackage[] = [
     tagline: "Six private itineraries from Hanoi and Halong Bay to Da Nang and Ho Chi Minh City.",
     summary:
       "Choose from six private trips for 3–4 travellers: from four days in Hanoi with an overnight cruise in Halong Bay to a week from the north to the south. Prices are per person on twin sharing, with 3-star or 4-star hotels.",
-    image: img("1643029891412-92f9a81a8c16", 2000),
+    image: "/assets/tours/vietnam.jpg",
     nights: null,
     durationLabel: "4–7 days",
     groupSize: "3–4 people",
