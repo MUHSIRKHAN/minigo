@@ -259,7 +259,7 @@ export const PACKAGES: TourPackage[] = [
     tagline: "A beach resort in Calangute with North and South Goa sightseeing and train travel included.",
     summary:
       "Three nights at a beach resort in Calangute with a pool, North and South Goa sightseeing by private tempo, and sleeper train tickets both ways. Choose breakfast and dinner, or add lunch for all three meals.",
-    image: img("1642516864959-0b3a40416c13", 2000),
+    image: img("1614082242765-7c98ca0f3df3", 2000),
     nights: 3,
     groupSize: "4 sharing",
     style: "Group package",
