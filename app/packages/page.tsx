@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PackageCard from "../components/PackageCard";
 import DepartureList from "../components/DepartureList";
+import ComingSoon from "../components/ComingSoon";
+import { UPCOMING } from "../lib/upcoming";
 import { PACKAGES, REGIONS, allUpcomingDepartures, type Region } from "../lib/packages";
 import { BUSINESS, SITE_URL, whatsappLink } from "../lib/site";
 
@@ -108,6 +110,8 @@ export default async function PackagesPage({
           <DepartureList rows={departures} showPackage visible={6} />
         </div>
       </section>
+
+      <ComingSoon trips={UPCOMING} tone="plain" />
 
       <section className="final-cta">
         <div className="wrapc" style={{ paddingTop: 96, paddingBottom: 96, textAlign: "center" }}>

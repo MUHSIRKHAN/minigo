@@ -10,6 +10,8 @@ import DepartureList from "./components/DepartureList";
 import EnquiryForm from "./components/EnquiryForm";
 import Testimonials from "./components/Testimonials";
 import Moments from "./components/Moments";
+import ComingSoon from "./components/ComingSoon";
+import { UPCOMING } from "./lib/upcoming";
 import { formatPostDate, getBlogPosts, getGalleryImages, getMediaUrl } from "./lib/payload";
 import { PACKAGES, REGIONS, allUpcomingDepartures } from "./lib/packages";
 import { BUSINESS, DEFAULT_WHATSAPP_MESSAGE, SITE_URL, whatsappLink } from "./lib/site";
@@ -193,8 +195,10 @@ export default async function Home() {
         </div>
       </section>
 
+      <ComingSoon trips={UPCOMING} />
+
       {/* WHY CHOOSE US */}
-      <section style={{ background: "var(--bg-raised)" }}>
+      <section>
         <div className="wrapc" style={padTop96Bottom128}>
           <div className="why-layout">
             <div className="why-photo reveal">
