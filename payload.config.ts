@@ -22,7 +22,10 @@ import { s3Configured } from "./cms/storage";
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default buildConfig({
-  serverURL: process.env.NEXT_PUBLIC_SITE_URL || undefined,
+  // The admin runs on its own subdomain (ADMIN_URL); admin links and password-reset emails use it.
+  serverURL: process.env.ADMIN_URL || process.env.NEXT_PUBLIC_SITE_URL || undefined,
+  // Admin logins are accepted only from Minigo's own addresses.
+  csrf: [process.env.ADMIN_URL, process.env.NEXT_PUBLIC_SITE_URL].filter((u): u is string => Boolean(u)),
   secret: process.env.PAYLOAD_SECRET || "",
   admin: {
     user: Users.slug,

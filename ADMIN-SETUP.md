@@ -1,7 +1,7 @@
 # Minigo Holidays: admin, database, photos and domain
 
-The website has its own admin at **/admin** (for example `https://minigoholidays.com/admin` once the domain is
-connected). It runs inside the same website on Vercel, so there is nothing extra to host or pay for.
+The website lives on **minigoholidays.com** and the admin on its own subdomain, **admin.minigoholidays.com**.
+Both run from the same project on Vercel, so there is nothing extra to host or pay for.
 
 Use the **new Minigo email** for every account below, so the business owns all of them.
 
@@ -73,19 +73,34 @@ Vercel → **minigo-holidays** project → **Settings** → **Environment Variab
 2. Load the current tours, reviews and photos into the new database. The values from Steps 1, 2 and 4 are added to
    the local `.env.local` file on this computer, then `npm run dev` and open `http://localhost:3003/api/seed`.
    This only fills empty sections, so it is safe to run again.
-3. Open **/admin** on the live site. The first visit asks you to **create the admin account**: use the Minigo email
-   and a strong password. That is the admin login; keep it safe. "Forgot password?" emails work once Step 3 is set.
+3. Open the admin (before the domain is connected: `https://minigo-holidays.vercel.app/admin`). The first visit asks you
+   to **create the admin account**: use the Minigo email and a strong password. That is the admin login; keep it safe.
+   "Forgot password?" emails work once Step 3 is set.
 
-## Step 6: Connect the domain
+## Step 6: Connect the domain and the admin subdomain
 
 1. **Buy the domain** if you haven't yet (for example `minigoholidays.com`). Cloudflare Registrar sells domains at cost,
    and you already have the Cloudflare account from Step 2.
-2. Vercel → project → **Settings** → **Domains** → add `minigoholidays.com` and `www.minigoholidays.com`.
-3. Vercel shows the DNS records to add (usually an **A** record for the main domain and a **CNAME** for `www`).
-   Add exactly those at the domain's DNS (Cloudflare → your domain → DNS). Set the Cloudflare proxy to **DNS only** (grey cloud).
-4. When Vercel shows the domain as **Valid**, add the environment variable `NEXT_PUBLIC_SITE_URL` = `https://minigoholidays.com`
-   and redeploy. This makes the site's links, sitemap and admin use the real domain, **and lets Google index the site**.
-5. From then on, use the admin at `https://minigoholidays.com/admin`.
+2. Vercel → project → **Settings** → **Domains** → add all three:
+   - `minigoholidays.com` (the website)
+   - `www.minigoholidays.com` (choose **Redirect to minigoholidays.com**)
+   - `admin.minigoholidays.com` (the admin)
+3. Vercel shows the DNS records to add: usually an **A** record for `minigoholidays.com` and **CNAME** records for `www`
+   and `admin`. Add exactly those at the domain's DNS (Cloudflare → your domain → DNS), with the proxy set to
+   **DNS only** (grey cloud).
+4. When Vercel shows all three as **Valid**, add two environment variables and redeploy:
+
+   | Name | Value |
+   | --- | --- |
+   | `NEXT_PUBLIC_SITE_URL` | `https://minigoholidays.com` |
+   | `ADMIN_URL` | `https://admin.minigoholidays.com` |
+
+   From then on:
+   - `admin.minigoholidays.com` opens the admin login straight away and is hidden from Google.
+   - `minigoholidays.com/admin` (and the old vercel.app address) forward to `admin.minigoholidays.com`.
+   - Website pages opened on the admin subdomain forward to `minigoholidays.com`.
+   - Admin logins are accepted only on Minigo's own addresses, and password-reset emails link to the admin subdomain.
+   - **Google can index the website** (because `NEXT_PUBLIC_SITE_URL` is set) — see the checklist below first.
 
 ## Before Google indexes the site (Step 6.4)
 

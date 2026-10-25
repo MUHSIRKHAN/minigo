@@ -11,10 +11,18 @@ export const cmsConfigured = Boolean((process.env.DATABASE_URL || process.env.MO
 
 export const getCms = () => getPayload({ config });
 
-/** Public address of an uploaded photo (the S3 bucket, or /api/media/file/… when testing locally). */
+/**
+ * Public address of an uploaded photo: the R2 bucket's address, or, when photos are stored
+ * on the site itself (no bucket), a relative /api/media/file/… path so it loads from
+ * whichever address the visitor is on (main domain or admin subdomain).
+ */
+export function publicFileUrl(url: string | null | undefined): string {
+  return (url ?? "").replace(/^https?:\/\/[^/]+(\/api\/media\/file\/)/, "$1");
+}
+
 export function mediaUrl(media: string | Media | null | undefined): string {
   if (!media || typeof media === "string") return "";
-  return media.url ?? "";
+  return publicFileUrl(media.url);
 }
 
 /** Payload stores calendar dates as timestamps; turn one back into the day the admin picked, in India time. */

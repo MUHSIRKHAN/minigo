@@ -1,4 +1,4 @@
-import { cmsConfigured, getCms } from "./cms";
+import { cmsConfigured, getCms, publicFileUrl } from "./cms";
 
 export type PayloadMedia = {
   id: string;
@@ -64,7 +64,7 @@ export type GalleryImage = {
 function mediaUrl(media: string | PayloadMedia | null | undefined): string {
   if (!media) return "";
   if (typeof media === "string") return media;
-  return media.url ?? "";
+  return publicFileUrl(media.url);
 }
 
 export function getMediaUrl(media: string | PayloadMedia | null | undefined): string {
