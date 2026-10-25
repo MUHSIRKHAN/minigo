@@ -1,90 +1,106 @@
-# Minigo Holidays admin: setup
+# Minigo Holidays: admin, database, photos and domain
 
-The website now has its own admin at **/admin** (for example `https://minigo-holidays.vercel.app/admin`).
-It is built with Payload CMS and runs inside the same Next.js site, so there is nothing extra to host.
+The website has its own admin at **/admin** (for example `https://minigoholidays.com/admin` once the domain is
+connected). It runs inside the same website on Vercel, so there is nothing extra to host or pay for.
 
-## What you can manage
+Use the **new Minigo email** for every account below, so the business owns all of them.
+
+---
+
+## What the admin manages
 
 | Admin section | What it controls on the website |
 | --- | --- |
-| **Trips → Tour packages** | Every tour: photos, text, itinerary, what's included, and each **departure date, price (₹) and seats left**. |
-| **Trips → Coming soon trips** | Trips without dates yet: travellers needed, rough price, months offered. Each one shows its waitlist sign-ups. |
-| **Trips → Waitlist sign-ups** | Everyone who joined a waitlist, with WhatsApp number, travellers, preferred month, and a status (New, Contacted, Booked). |
-| **Enquiries** | Messages from the enquiry form, with a status (New, Replied, Booked). |
-| **Website content → Reviews** | Testimonials: photo, name, rating and review. |
-| **Website content → Travellers' best moments** | The photo gallery on the home page with "Captured by" credits (first 8 shown). |
-| **Website content → Gallery** | Photos on the Gallery page. |
-| **Website content → Journal** | Blog posts (draft or published). |
-| **Admin → Photos** | Every uploaded photo, stored in the Cloudflare R2 bucket. |
+| **Trips → Tour packages** | Each tour, in four tabs: **Overview** (photo, text, highlights, length, group), **Prices** (from price, price options such as group / couple, or a price table like Vietnam's), **Dates** (each date with seats left, or "Booking closed"; or tick "No fixed dates"), **Itinerary & inclusions** (day by day, included, not included, hotels, good to know). |
+| **Trips → Coming soon trips** | Trips without dates yet, with their waitlist sign-ups. |
+| **Trips → Waitlist sign-ups** | Everyone who joined a waitlist, with a status (New, Contacted, Booked). |
+| **Enquiries** | Messages from the enquiry form, with a status. |
+| **Website content** | Reviews, Travellers' best moments, Gallery, Journal (blog). |
+| **Admin → Photos** | Every uploaded photo (stored in Cloudflare R2). |
 
-Changes show on the website straight away (on the next page visit). Untick **Show on website** to hide something without deleting it.
+- Saving updates the website straight away.
+- Untick **Show on website** to hide something without deleting it.
+- Leave a section empty if it isn't confirmed: the website then shows "Contact us for …" instead of guessing.
+- Until the database is connected, the website keeps showing its built-in tours, so nothing breaks.
 
-Until the database is connected, the website keeps showing the built-in sample content, so nothing breaks.
+---
 
-## One-time setup (about 20 minutes)
+## Step 1: MongoDB Atlas (database, free)
 
-You need three things: a MongoDB database, a Cloudflare R2 photo bucket and a secret key. All three go into
-**Vercel → minigo-holidays → Settings → Environment Variables** (tick Production, Preview and Development).
+1. Sign up at **mongodb.com/atlas** with the Minigo email.
+2. Create a **free M0 cluster**, provider AWS, region **Mumbai (ap-south-1)**.
+3. **Database Access** → Add new database user → username `minigo`, choose **Autogenerate password**, copy it somewhere safe.
+4. **Network Access** → Add IP address → **Allow access from anywhere** (`0.0.0.0/0`). Vercel has no fixed address, so this is needed; the password protects the database.
+5. **Connect** → Drivers → copy the connection string. Put your password in it and add `minigo` after `.net/`:
+   `mongodb+srv://minigo:YOUR-PASSWORD@cluster0.xxxxx.mongodb.net/minigo?retryWrites=true&w=majority`
 
-### 1. Database (MongoDB Atlas, free)
+Keep this string private. It goes into Vercel in Step 4 as `DATABASE_URL`.
 
-1. Sign up at [mongodb.com/atlas](https://www.mongodb.com/atlas) and create a **free M0 cluster**, region **Mumbai (ap-south-1)**.
-2. **Database Access:** add a database user with a strong password.
-3. **Network Access:** add `0.0.0.0/0` (allow from anywhere). Vercel's servers have no fixed address, so this is needed.
-4. **Connect → Drivers:** copy the connection string and put your password in it. Add the database name after `.net/`, for example
-   `mongodb+srv://minigo:PASSWORD@cluster0.xxxxx.mongodb.net/minigo?retryWrites=true&w=majority`
-5. Add it in Vercel as `DATABASE_URL`.
+## Step 2: Cloudflare R2 (photo storage, free up to 10 GB)
 
-(Vercel → Storage → **MongoDB Atlas** does the same steps for you and sets `MONGODB_URI`, which also works.)
+1. Sign up at **dash.cloudflare.com** with the Minigo email. Open **R2 Object Storage** and activate it (a card is asked for; the free allowance covers this site).
+2. **Create bucket** → name `minigo-holidays-media`, location **Asia-Pacific**.
+3. Open the bucket → **Settings** → **Public Development URL** (r2.dev) → **Enable**. Copy the address, like `https://pub-xxxxxxxx.r2.dev`.
+4. Back on the R2 overview → **Manage API tokens** → **Create API token** → permission **Object Read & Write**, **apply to specific bucket** `minigo-holidays-media` → Create.
+   Copy the **Access Key ID**, the **Secret Access Key** and the **S3 endpoint** (`https://<account-id>.r2.cloudflarestorage.com`). The secret is shown only once.
 
-### 2. Photo storage (Cloudflare R2, free up to 10 GB)
+## Step 3: Gmail app password (emails for enquiries, waitlist and admin password reset)
 
-R2 has no charge when visitors view photos, so it stays free for a site like this.
+1. Sign in to the Minigo Gmail account → **Google Account** → **Security** → turn on **2-Step Verification**.
+2. Search for **App passwords** → create one called `Minigo website` → copy the 16-letter password.
 
-1. Sign up at [dash.cloudflare.com](https://dash.cloudflare.com) → **R2 Object Storage** → **Create bucket**, for example `minigo-holidays-media`, location **Asia-Pacific**.
-   (R2 asks for a card to activate, but the free allowance is 10 GB storage plus millions of uploads and views a month.)
-2. Open the bucket → **Settings** → **Public access** → enable the **r2.dev subdomain**, and copy the address (`https://pub-xxxx.r2.dev`).
-   Later you can connect your own domain instead, for example `photos.minigoholidays.com`.
-3. R2 overview → **Manage API tokens** → **Create API token**: permission **Object Read & Write**, limited to this bucket.
-   Copy the **Access Key ID**, **Secret Access Key** and the **S3 endpoint** (`https://<account-id>.r2.cloudflarestorage.com`).
-4. Add these environment variables in Vercel:
+## Step 4: Put the values into Vercel
 
-   | Name | Value |
-   | --- | --- |
-   | `S3_BUCKET` | `minigo-holidays-media` |
-   | `S3_ENDPOINT` | `https://<account-id>.r2.cloudflarestorage.com` |
-   | `S3_REGION` | `auto` |
-   | `S3_ACCESS_KEY_ID` | the Access Key ID |
-   | `S3_SECRET_ACCESS_KEY` | the Secret Access Key |
-   | `S3_PUBLIC_URL` | `https://pub-xxxx.r2.dev` |
+Vercel → **minigo-holidays** project → **Settings** → **Environment Variables**. Add each one for **Production** and **Preview**:
 
-### 3. Secret key
+| Name | Value |
+| --- | --- |
+| `DATABASE_URL` | the MongoDB connection string from Step 1 |
+| `PAYLOAD_SECRET` | a long random value, at least 32 characters (protects admin logins; never share it) |
+| `S3_BUCKET` | `minigo-holidays-media` |
+| `S3_ENDPOINT` | the R2 S3 endpoint from Step 2 |
+| `S3_REGION` | `auto` |
+| `S3_ACCESS_KEY_ID` | the R2 Access Key ID |
+| `S3_SECRET_ACCESS_KEY` | the R2 Secret Access Key |
+| `S3_PUBLIC_URL` | the `https://pub-….r2.dev` address |
+| `GMAIL_USER` | the Minigo Gmail address |
+| `GMAIL_APP_PASSWORD` | the 16-letter app password from Step 3 |
+| `CONTACT_TO_EMAIL` | the address that should receive enquiries and waitlist sign-ups |
 
-Add `PAYLOAD_SECRET` with a long random value (at least 32 characters). It protects admin logins. Never share it.
+## Step 5: Deploy, load the tours, create the admin login
 
-### 4. Deploy and create the admin login
+1. Deploy the admin version of the site (Claude does this).
+2. Load the current tours, reviews and photos into the new database. The values from Steps 1, 2 and 4 are added to
+   the local `.env.local` file on this computer, then `npm run dev` and open `http://localhost:3003/api/seed`.
+   This only fills empty sections, so it is safe to run again.
+3. Open **/admin** on the live site. The first visit asks you to **create the admin account**: use the Minigo email
+   and a strong password. That is the admin login; keep it safe. "Forgot password?" emails work once Step 3 is set.
 
-1. Redeploy the site (Vercel → Deployments → Redeploy, or `npx vercel --prod`).
-2. Open `/admin`. The first visit asks you to **create the admin account** (email and password). That is the only login; keep it safe.
+## Step 6: Connect the domain
 
-### 5. Load the current sample content (optional)
+1. **Buy the domain** if you haven't yet (for example `minigoholidays.com`). Cloudflare Registrar sells domains at cost,
+   and you already have the Cloudflare account from Step 2.
+2. Vercel → project → **Settings** → **Domains** → add `minigoholidays.com` and `www.minigoholidays.com`.
+3. Vercel shows the DNS records to add (usually an **A** record for the main domain and a **CNAME** for `www`).
+   Add exactly those at the domain's DNS (Cloudflare → your domain → DNS). Set the Cloudflare proxy to **DNS only** (grey cloud).
+4. When Vercel shows the domain as **Valid**, add the environment variable `NEXT_PUBLIC_SITE_URL` = `https://minigoholidays.com`
+   and redeploy. This makes the site's links, sitemap and admin use the real domain, **and lets Google index the site**.
+5. From then on, use the admin at `https://minigoholidays.com/admin`.
 
-To start with the trips, reviews and photos that are on the site today, run this once on your computer
-with the same environment variables (`npx vercel env pull .env.local` copies them):
+## Before Google indexes the site (Step 6.4)
 
-```bash
-npm run seed
-```
+- **Reviews and Travellers' best moments are samples** (stock photos and made-up names). Replace them with real
+  travellers' reviews and photos, used with permission, or untick **Show on website**. Never publish invented reviews as genuine.
+- **Coming soon trips:** set **Extra count shown** to `0` so only real sign-ups are counted.
+- Check every tour's dates, prices and inclusions one last time.
 
-It only fills sections that are empty, so it is safe to run again. Then edit or replace everything with your real tours.
-
-## Optional extras
-
-- **Email alerts for enquiries and waitlist sign-ups:** set `GMAIL_USER`, `GMAIL_APP_PASSWORD` (a Gmail app password) and `CONTACT_TO_EMAIL`.
-- **Real domain:** set `NEXT_PUBLIC_SITE_URL=https://yourdomain.com`. This also lets Google index the site.
+---
 
 ## For developers
 
-- Admin config: `payload.config.ts`; collections in `cms/collections/`.
-- The site reads content with Payload's Local API in `app/(frontend)/lib/content.ts` and `payload.ts`.
-- `npm run generate:types` refreshes `cms/payload-types.ts`.
+- Admin config: `payload.config.ts`; collections in `cms/collections/`; admin branding in `cms/admin/`.
+- The site reads content through `app/(frontend)/lib/content.ts` (and `payload.ts` for journal and gallery), falling back to
+  the built-in data in `app/(frontend)/lib/*.ts` when `DATABASE_URL` / `PAYLOAD_SECRET` are not set.
+- After changing a collection run `npm run generate:types` (bundles the config with esbuild; Payload's own CLI fails on
+  some Node versions). The admin import map regenerates itself when `npm run dev` starts.
+- `GET /api/seed` (development only) fills empty collections from the built-in data, uploading photos to R2 when configured.
