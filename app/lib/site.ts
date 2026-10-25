@@ -16,9 +16,9 @@ const addressCountry = "India";
 export const BUSINESS = {
   name: "Minigo Holidays",
   shortName: "Minigo Holidays",
-  tagline: "Go anywhere, stay prepared.",
+  tagline: "Go Anywhere, Stay Prepared.",
   // The line printed under the logo, spelled exactly as in the logo artwork.
-  logoTagline: "Go Anywhere, stay Prepared",
+  logoTagline: "Go Anywhere, Stay Prepared",
   description:
     "Minigo Holidays plans group tours and private trips from Kerala to Kashmir, Lakshadweep, Goa, the Golden Triangle, Hyderabad, Vietnam and Kazakhstan, with clear prices and a team that looks after you from enquiry to return.",
   streetAddress,
