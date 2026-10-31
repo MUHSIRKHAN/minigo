@@ -78,9 +78,9 @@ export default function HeroVideo() {
           aria-hidden="true"
           onPlaying={() => setPlaying(true)}
         >
-          {/* Tall screens (phones held upright) see only the middle of the frame, so they get
-              that middle cut at full resolution instead of a smaller copy of the whole film. */}
-          <source src="/assets/hero/hero-phone.mp4" type="video/mp4" media="(max-aspect-ratio: 2/3)" />
+          {/* Phones held upright show the film in a square frame above the copy (see globals.css),
+              so they get that square middle cut at full resolution. */}
+          <source src="/assets/hero/hero-phone-square.mp4" type="video/mp4" media="(max-aspect-ratio: 2/3)" />
           <source src="/assets/hero/hero-desktop.mp4" type="video/mp4" />
         </video>
       ) : null}

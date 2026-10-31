@@ -1070,6 +1070,16 @@ h1,h2,h3,.display,.h-sec,.manifesto p,.showcase .cap h2,.value-card h3,.vm-card 
   linear-gradient(to top, rgba(18,34,27,.88) 0%, rgba(18,34,27,.55) 32%, rgba(18,34,27,.12) 62%, rgba(18,34,27,.28) 100%),
   linear-gradient(to right, rgba(18,34,27,.35) 0%, rgba(18,34,27,0) 60%);}
 .mhero-video{filter:brightness(.94) saturate(1.06) contrast(1.03);}
+/* Phones held upright: the film sits in a square frame with the copy below it. A full-height
+   frame would show only a narrow strip of the wide film, enlarged until it looks soft.
+   The same media query picks the square phone cut in HeroVideo.tsx. */
+@media(max-aspect-ratio:2/3){
+  .mhero.mhero--film{display:block; min-height:0; background:#12221b;}
+  .mhero--film .mhero-slide,.mhero--film .mhero-video{bottom:auto; height:100vw;}
+  /* 2px taller than the film so its solid base covers the film's bottom edge (no seam). */
+  .mhero.mhero--film::after{bottom:auto; height:calc(100vw + 2px); background:linear-gradient(to bottom, rgba(18,34,27,.3) 0%, rgba(18,34,27,0) 20%, rgba(18,34,27,0) 50%, rgba(18,34,27,.8) 78%, #12221b 100%);}
+  .mhero--film .mhero-inner{padding-top:calc(100vw - 110px); padding-bottom:56px;}
+}
 
 /* ======================================================================
    TYPE & BUTTONS — one clean sans (Outfit), sentence case throughout,
