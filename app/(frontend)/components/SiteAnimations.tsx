@@ -46,6 +46,9 @@ export default function SiteAnimations() {
       const anchor = (e.target as Element | null)?.closest?.("a[href]");
       if (!(anchor instanceof HTMLAnchorElement)) return;
       if (!isSoftNavAnchor(anchor, e)) return;
+      // Same page, new query (the tour region filter): the per-route effect below does
+      // not re-run, so killing this page's scroll triggers would leave its reveals dead.
+      if (new URL(anchor.href).pathname === window.location.pathname) return;
       prepareClientNav();
     }
     document.addEventListener("click", onSoftNavClick, true);
@@ -134,6 +137,8 @@ export default function SiteAnimations() {
     let resizeObserver: ResizeObserver | null = null;
     let intersectionObserver: IntersectionObserver | null = null;
     let counterObserver: IntersectionObserver | null = null;
+    let lateRevealObserver: IntersectionObserver | null = null;
+    let mutationObserver: MutationObserver | null = null;
 
     function teardownSplit() {
       manifestoSplit?.revert();
@@ -426,6 +431,35 @@ export default function SiteAnimations() {
       );
       hidden.forEach((el) => intersectionObserver?.observe(el));
 
+      // Failsafe 3: reveal blocks added after this route set up (a filter swapping the
+      // tour cards) are hidden by CSS but were never wired above; fade each in when it
+      // scrolls into view.
+      lateRevealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            lateRevealObserver?.unobserve(entry.target);
+            gsap.to(entry.target, { opacity: 1, y: 0, duration: DUR.standard, ease: EASE_OUT, overwrite: "auto" });
+          });
+        },
+        { rootMargin: "0px 0px -8% 0px" },
+      );
+      mutationObserver = new MutationObserver((records) => {
+        records.forEach((record) =>
+          record.addedNodes.forEach((node) => {
+            if (!(node instanceof HTMLElement)) return;
+            const added = node.matches(".reveal, .faq-item") ? [node] : [];
+            added.push(...Array.from(node.querySelectorAll<HTMLElement>(".reveal, .faq-item")));
+            added.forEach((el) => {
+              if (el.style.opacity) return; // already handled by GSAP
+              gsap.set(el, { y: REVEAL_Y });
+              lateRevealObserver?.observe(el);
+            });
+          }),
+        );
+      });
+      mutationObserver.observe(document.body, { childList: true, subtree: true });
+
       window.addEventListener("load", onWindowLoadRefresh);
       // Soft nav lands with images/fonts already warm — refresh after paint.
       requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -436,6 +470,8 @@ export default function SiteAnimations() {
       resizeObserver?.disconnect();
       intersectionObserver?.disconnect();
       counterObserver?.disconnect();
+      mutationObserver?.disconnect();
+      lateRevealObserver?.disconnect();
       if (onWindowLoadBatches) window.removeEventListener("load", onWindowLoadBatches);
       window.removeEventListener("load", onWindowLoadRefresh);
       teardownSplit();
